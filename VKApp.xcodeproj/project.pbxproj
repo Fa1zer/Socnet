@@ -11,6 +11,14 @@
 		E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3137E782850FAFE005FC3F9 /* SceneDelegate.swift */; };
 		E3137E802850FB00005FC3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3137E7F2850FB00005FC3F9 /* Assets.xcassets */; };
 		E3137E832850FB00005FC3F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3137E812850FB00005FC3F9 /* LaunchScreen.storyboard */; };
+		E31FBE632863401900D41304 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE622863401900D41304 /* TabBarController.swift */; };
+		E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE652863420800D41304 /* MainCoordinator.swift */; };
+		E31FBE6A286346B200D41304 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E31FBE6C286346B200D41304 /* Localizable.strings */; };
+		E31FBE7028634A8D00D41304 /* ProfileCoordnator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE6F28634A8D00D41304 /* ProfileCoordnator.swift */; };
+		E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE7128634C8C00D41304 /* SavedCoordinator.swift */; };
+		E31FBE7528634FA700D41304 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = E31FBE7428634FA700D41304 /* KeychainAccess */; };
+		E31FBE7828634FD500D41304 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E31FBE7728634FD500D41304 /* SnapKit */; };
+		E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE792863649100D41304 /* RegistrationCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +28,14 @@
 		E3137E7F2850FB00005FC3F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3137E822850FB00005FC3F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3137E842850FB00005FC3F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E31FBE622863401900D41304 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		E31FBE652863420800D41304 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		E31FBE6B286346B200D41304 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E31FBE6D2863470B00D41304 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		E31FBE6E2863470D00D41304 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E31FBE6F28634A8D00D41304 /* ProfileCoordnator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordnator.swift; sourceTree = "<group>"; };
+		E31FBE7128634C8C00D41304 /* SavedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCoordinator.swift; sourceTree = "<group>"; };
+		E31FBE792863649100D41304 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E31FBE7528634FA700D41304 /* KeychainAccess in Frameworks */,
+				E31FBE7828634FD500D41304 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +71,8 @@
 		E3137E752850FAFE005FC3F9 /* VKApp */ = {
 			isa = PBXGroup;
 			children = (
+				E31FBE672863465900D41304 /* Localization */,
+				E31FBE6128633FE100D41304 /* Navigation */,
 				E3137E8A2850FB23005FC3F9 /* Supporting Files */,
 			);
 			path = VKApp;
@@ -77,6 +97,34 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		E31FBE6128633FE100D41304 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				E31FBE622863401900D41304 /* TabBarController.swift */,
+				E31FBE64286341A700D41304 /* Coordinators */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		E31FBE64286341A700D41304 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				E31FBE652863420800D41304 /* MainCoordinator.swift */,
+				E31FBE6F28634A8D00D41304 /* ProfileCoordnator.swift */,
+				E31FBE7128634C8C00D41304 /* SavedCoordinator.swift */,
+				E31FBE792863649100D41304 /* RegistrationCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		E31FBE672863465900D41304 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				E31FBE6C286346B200D41304 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -93,6 +141,10 @@
 			dependencies = (
 			);
 			name = VKApp;
+			packageProductDependencies = (
+				E31FBE7428634FA700D41304 /* KeychainAccess */,
+				E31FBE7728634FD500D41304 /* SnapKit */,
+			);
 			productName = VKApp;
 			productReference = E3137E732850FAFE005FC3F9 /* VKApp.app */;
 			productType = "com.apple.product-type.application";
@@ -119,8 +171,13 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = E3137E6A2850FAFE005FC3F9;
+			packageReferences = (
+				E31FBE7328634FA700D41304 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				E31FBE7628634FD500D41304 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = E3137E742850FAFE005FC3F9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -136,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3137E832850FB00005FC3F9 /* LaunchScreen.storyboard in Resources */,
+				E31FBE6A286346B200D41304 /* Localizable.strings in Resources */,
 				E3137E802850FB00005FC3F9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,8 +205,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */,
+				E31FBE632863401900D41304 /* TabBarController.swift in Sources */,
+				E31FBE7028634A8D00D41304 /* ProfileCoordnator.swift in Sources */,
+				E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */,
 				E3137E772850FAFE005FC3F9 /* AppDelegate.swift in Sources */,
 				E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */,
+				E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,8 +222,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				E3137E822850FB00005FC3F9 /* Base */,
+				E31FBE6D2863470B00D41304 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E31FBE6C286346B200D41304 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E31FBE6B286346B200D41304 /* en */,
+				E31FBE6E2863470D00D41304 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -170,6 +243,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -230,6 +304,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -354,6 +429,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E31FBE7328634FA700D41304 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		E31FBE7628634FD500D41304 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E31FBE7428634FA700D41304 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E31FBE7328634FA700D41304 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		E31FBE7728634FD500D41304 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E31FBE7628634FD500D41304 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E3137E6B2850FAFE005FC3F9 /* Project object */;
 }
