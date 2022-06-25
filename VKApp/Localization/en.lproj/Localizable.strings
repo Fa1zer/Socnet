@@ -9,3 +9,8 @@
 "Feed" = "Feed";
 "Profile" = "Profile";
 "Saved" = "Saved";
+"Error" = "Error";
+"Failed to get data" = "Failed to get data.";
+"Failed to send data" = "Failed to send data.";
+"Not Found" = "Not Found.";
+"It took too long to request" = "It took too long to request.";
