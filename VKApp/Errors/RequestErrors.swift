@@ -8,5 +8,5 @@
 import Foundation
 
 enum RequestErrors: Error {
-    case badURL, notFound, decodeFailed, encodeFailed, dataError, tooMuchTime
+    case badURL, statusCodeError(Int?), decodeFailed, encodeFailed, dataError, tooMuchTime, someError(Error)
 }
