@@ -9,3 +9,8 @@
 "Feed" = "Лента";
 "Profile" = "Профиль";
 "Saved" = "Сохранённые";
+"Error" = "Ошибка";
+"Failed to get data" = "Не удалось получить данные.";
+"Failed to send data" = "Не удалось отправить данные.";
+"Not Found" = "Не найдено.";
+"It took too long to request" = "Запрос занял слишком много времени.";
