@@ -13,13 +13,14 @@ final class DataManager {
     private var userToken: String?
    
 //    MARK: Post User
-    func postUser(user: User, didNotComplete: @escaping (LogInErrors) -> Void, didComplete: @escaping () -> Void) throws {
+    func postUser(user: User, didNotComplete: @escaping (LogInErrors) -> Void, didComplete: @escaping () -> Void) {
         do {
             var request = URLRequest(url: self.urlConstructor.newUser())
+            let data = ["email" : user.email, "password" : user.passwordHash]
             
             request.httpMethod = HTTPMethods.POST.rawValue
             request.setValue(HTTPHeaders.applicationJson.rawValue, forHTTPHeaderField: HTTPHeaders.contentType.rawValue)
-            request.httpBody = try JSONEncoder().encode(user)
+            request.httpBody = try JSONEncoder().encode(data)
             
             URLSession.shared.dataTask(with: request) { _, response, error in
                 if let error = error {

@@ -20,6 +20,7 @@ final class RegistrationCoordinator {
     }
     
     let navigationController = UINavigationController()
+    private let dataManager = DataManager()
     
     func start() {
         self.goToTabBar()
@@ -30,7 +31,7 @@ final class RegistrationCoordinator {
     }
     
     private func goToTabBar() {
-        let tabBarController = TabBarController()
+        let tabBarController = TabBarController(dataManager: self.dataManager)
         
         tabBarController.coordinatorDelegate = self
         

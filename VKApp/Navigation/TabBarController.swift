@@ -17,11 +17,22 @@ protocol TabBarCoordinatable {
 
 final class TabBarController: UITabBarController, RegistrationCoordinatable {
     
-    var coordinatorDelegate: RegistrationCoordinator?
+    init(dataManager: DataManager) {
+        self.dataManager = dataManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    private let mainCoordinator = MainCoordinator()
-    private let profileCoordinator = ProfileCoordnator()
-    private let savedCoordinator = SavedCoordnator()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var coordinatorDelegate: RegistrationCoordinator?
+    private let dataManager: DataManager
+    
+    private var mainCoordinator: MainCoordinator { MainCoordinator(dataManager: self.dataManager) }
+    private var profileCoordinator: ProfileCoordnator { ProfileCoordnator(dataManager: self.dataManager) }
+    private var savedCoordinator: SavedCoordnator { SavedCoordnator(dataManager: self.dataManager) }
     
     override func viewDidLoad() {
         super.viewDidLoad()

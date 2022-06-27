@@ -23,6 +23,7 @@
 		E344EE2428686659007ABF86 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE2328686659007ABF86 /* HTTPHeaders.swift */; };
 		E344EE262868727E007ABF86 /* SignInErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE252868727E007ABF86 /* SignInErrors.swift */; };
 		E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE2728687634007ABF86 /* LogInErrors.swift */; };
+		E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C404712869E5C60004C5AE /* RegistrationManager.swift */; };
 		E3F50B8B286756A0008A842D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F50B8A286756A0008A842D /* User.swift */; };
 		E3F50B8D28675769008A842D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F50B8C28675769008A842D /* Post.swift */; };
 		E3F50B90286757A8008A842D /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F50B8F286757A8008A842D /* Comment.swift */; };
@@ -53,6 +54,7 @@
 		E344EE2328686659007ABF86 /* HTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaders.swift; sourceTree = "<group>"; };
 		E344EE252868727E007ABF86 /* SignInErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInErrors.swift; sourceTree = "<group>"; };
 		E344EE2728687634007ABF86 /* LogInErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInErrors.swift; sourceTree = "<group>"; };
+		E3C404712869E5C60004C5AE /* RegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
 		E3F50B8A286756A0008A842D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E3F50B8C28675769008A842D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		E3F50B8F286757A8008A842D /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -98,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
-				E3F50B9C28675FCB008A842D /* Errors */,
+				E3C4046F2869E5590004C5AE /* RegistrationManager */,
 				E3F50B9F2867753D008A842D /* DataManager */,
 				E3F50B93286758F7008A842D /* URLConstructor */,
 				E3F50B892867568C008A842D /* DataModels */,
@@ -155,6 +157,23 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		E3C4046F2869E5590004C5AE /* RegistrationManager */ = {
+			isa = PBXGroup;
+			children = (
+				E3C404712869E5C60004C5AE /* RegistrationManager.swift */,
+				E3F50B9C28675FCB008A842D /* Errors */,
+			);
+			path = RegistrationManager;
+			sourceTree = "<group>";
+		};
+		E3C404702869E58E0004C5AE /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				E3F50B9A28675C98008A842D /* RequestErrors.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
 		E3F50B892867568C008A842D /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,7 +198,6 @@
 		E3F50B9C28675FCB008A842D /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				E3F50B9A28675C98008A842D /* RequestErrors.swift */,
 				E344EE252868727E007ABF86 /* SignInErrors.swift */,
 				E344EE2728687634007ABF86 /* LogInErrors.swift */,
 			);
@@ -192,6 +210,7 @@
 				E3F50BA028677556008A842D /* DataManager.swift */,
 				E344EE21286865C0007ABF86 /* HTTPMethods.swift */,
 				E344EE2328686659007ABF86 /* HTTPHeaders.swift */,
+				E3C404702869E58E0004C5AE /* Errors */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -291,6 +310,7 @@
 				E3F50B8D28675769008A842D /* Post.swift in Sources */,
 				E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */,
 				E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */,
+				E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */,
 				E3F50B9B28675C99008A842D /* RequestErrors.swift in Sources */,
 				E344EE22286865C0007ABF86 /* HTTPMethods.swift in Sources */,
 				E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */,

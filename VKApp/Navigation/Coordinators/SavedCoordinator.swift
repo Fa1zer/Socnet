@@ -14,12 +14,16 @@ protocol SavedCoordnatable {
 
 final class SavedCoordnator: TabBarCoordinatable {
     
-    init() {
+    init(dataManager: DataManager) {
+        self.dataManager = dataManager
+        
         self.setupViews()
         self.start()
     }
     
     var tabBarDelegate: TabBarController?
+    private let dataManager: DataManager
+        
     let navigationController = UINavigationController()
     
     func start() {
