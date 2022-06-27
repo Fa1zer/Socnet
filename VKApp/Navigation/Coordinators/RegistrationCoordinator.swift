@@ -23,14 +23,25 @@ final class RegistrationCoordinator {
     private let dataManager = DataManager()
     
     func start() {
-        self.goToTabBar()
+        self.goToRegistration(registrationMode: .logIn)
     }
     
     private func setupViews() {
         self.navigationController.navigationBar.isHidden = true
     }
     
-    private func goToTabBar() {
+    func goToRegistration(registrationMode: RegistrationMode) {
+        let router = RegistrationRouter()
+        let interactor = RegistrationInteractor(dataManager: self.dataManager)
+        let presenter = RegistrationPresenter(interactor: interactor, router: router, registrationMode: registrationMode)
+        let viewController = RegistrationViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = self
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func goToTabBar() {
         let tabBarController = TabBarController(dataManager: self.dataManager)
         
         tabBarController.coordinatorDelegate = self

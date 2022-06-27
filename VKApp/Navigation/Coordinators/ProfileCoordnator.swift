@@ -30,6 +30,10 @@ final class ProfileCoordnator: TabBarCoordinatable {
         
     }
     
+    func goToRegistration() {
+        self.tabBarDelegate?.goToRegistration()
+    }
+    
     private func setupViews() {
         self.navigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Profile", comment: ""),

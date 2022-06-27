@@ -14,3 +14,11 @@
 "Failed to send data" = "Failed to send data.";
 "Not Found" = "Not Found.";
 "It took too long to request" = "It took too long to request.";
+"Yes" = "Yes";
+"No" = "No";
+"Email is not valid" = "Email isn't valid.";
+"Password is too short" = "Password is too short.";
+"Password must contain at least 8 characters" = "Password must contain at least 8 characters.";
+"Log In" = "Log In";
+"Sign In" = "Sign In";
+"Password" = "Password";
