@@ -19,7 +19,7 @@ struct User: Codable {
     var images: [String]
     var image: String?
     
-    init(id: UUID? = nil, email: String, passwordHash: String, name: String, work: String = "", subscribers: [UUID] = [], subscribtions: [UUID] = [], images: [String] = [], image: String? = nil) {
+    init(id: UUID? = nil, email: String, passwordHash: String, name: String = "", work: String = "", subscribers: [UUID] = [], subscribtions: [UUID] = [], images: [String] = [], image: String? = nil) {
         self.id = id
         self.email = email
         self.passwordHash = passwordHash
