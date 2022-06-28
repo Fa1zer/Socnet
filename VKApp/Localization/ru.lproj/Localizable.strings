@@ -14,3 +14,11 @@
 "Failed to send data" = "Не удалось отправить данные.";
 "Not Found" = "Не найдено.";
 "It took too long to request" = "Запрос занял слишком много времени.";
+"Yes" = "Да";
+"No" = "Нет";
+"Email is not valid" = "Email не действителен.";
+"Password is too short" = "Пароль слишком короткий.";
+"Password must contain at least 8 characters" = "Пароль дожен содержать как минимум 8 символов.";
+"Log In" = "Зарегистрироваться";
+"Sign In" = "Войти";
+"Password" = "Пароль";

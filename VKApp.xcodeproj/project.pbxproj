@@ -23,7 +23,15 @@
 		E344EE2428686659007ABF86 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE2328686659007ABF86 /* HTTPHeaders.swift */; };
 		E344EE262868727E007ABF86 /* SignInErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE252868727E007ABF86 /* SignInErrors.swift */; };
 		E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE2728687634007ABF86 /* LogInErrors.swift */; };
+		E3A90D47286A2D520053F1CD /* RegistrationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D46286A2D520053F1CD /* RegistrationMode.swift */; };
+		E3A90D4A286A31CF0053F1CD /* CustomUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D49286A31CF0053F1CD /* CustomUIViewController.swift */; };
+		E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D4B286A3A7F0053F1CD /* CustomColor.swift */; };
+		E3A90D4E286A4B0B0053F1CD /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D4D286A4B0B0053F1CD /* CustomScrollView.swift */; };
 		E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C404712869E5C60004C5AE /* RegistrationManager.swift */; };
+		E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */; };
+		E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */; };
+		E3DEE6A8286A19CC0003D543 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A7286A19CC0003D543 /* RegistrationPresenter.swift */; };
+		E3DEE6AA286A19EF0003D543 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A9286A19EF0003D543 /* RegistrationViewController.swift */; };
 		E3F50B8B286756A0008A842D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F50B8A286756A0008A842D /* User.swift */; };
 		E3F50B8D28675769008A842D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F50B8C28675769008A842D /* Post.swift */; };
 		E3F50B90286757A8008A842D /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F50B8F286757A8008A842D /* Comment.swift */; };
@@ -54,7 +62,15 @@
 		E344EE2328686659007ABF86 /* HTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaders.swift; sourceTree = "<group>"; };
 		E344EE252868727E007ABF86 /* SignInErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInErrors.swift; sourceTree = "<group>"; };
 		E344EE2728687634007ABF86 /* LogInErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInErrors.swift; sourceTree = "<group>"; };
+		E3A90D46286A2D520053F1CD /* RegistrationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationMode.swift; sourceTree = "<group>"; };
+		E3A90D49286A31CF0053F1CD /* CustomUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIViewController.swift; sourceTree = "<group>"; };
+		E3A90D4B286A3A7F0053F1CD /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		E3A90D4D286A4B0B0053F1CD /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		E3C404712869E5C60004C5AE /* RegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
+		E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
+		E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationInteractor.swift; sourceTree = "<group>"; };
+		E3DEE6A7286A19CC0003D543 /* RegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPresenter.swift; sourceTree = "<group>"; };
+		E3DEE6A9286A19EF0003D543 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		E3F50B8A286756A0008A842D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E3F50B8C28675769008A842D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		E3F50B8F286757A8008A842D /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -100,6 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E3A90D48286A31A40053F1CD /* CustomUIElements */,
+				E3DEE6A2286A192C0003D543 /* RegistrationModule */,
 				E3C4046F2869E5590004C5AE /* RegistrationManager */,
 				E3F50B9F2867753D008A842D /* DataManager */,
 				E3F50B93286758F7008A842D /* URLConstructor */,
@@ -157,6 +175,16 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		E3A90D48286A31A40053F1CD /* CustomUIElements */ = {
+			isa = PBXGroup;
+			children = (
+				E3A90D49286A31CF0053F1CD /* CustomUIViewController.swift */,
+				E3A90D4B286A3A7F0053F1CD /* CustomColor.swift */,
+				E3A90D4D286A4B0B0053F1CD /* CustomScrollView.swift */,
+			);
+			path = CustomUIElements;
+			sourceTree = "<group>";
+		};
 		E3C4046F2869E5590004C5AE /* RegistrationManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +200,18 @@
 				E3F50B9A28675C98008A842D /* RequestErrors.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		E3DEE6A2286A192C0003D543 /* RegistrationModule */ = {
+			isa = PBXGroup;
+			children = (
+				E3A90D46286A2D520053F1CD /* RegistrationMode.swift */,
+				E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */,
+				E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */,
+				E3DEE6A7286A19CC0003D543 /* RegistrationPresenter.swift */,
+				E3DEE6A9286A19EF0003D543 /* RegistrationViewController.swift */,
+			);
+			path = RegistrationModule;
 			sourceTree = "<group>";
 		};
 		E3F50B892867568C008A842D /* DataModels */ = {
@@ -300,22 +340,30 @@
 				E3F50BA128677556008A842D /* DataManager.swift in Sources */,
 				E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */,
 				E31FBE632863401900D41304 /* TabBarController.swift in Sources */,
+				E3A90D47286A2D520053F1CD /* RegistrationMode.swift in Sources */,
 				E344EE262868727E007ABF86 /* SignInErrors.swift in Sources */,
 				E3F50B9528675931008A842D /* BaseURL.swift in Sources */,
 				E3F50B8B286756A0008A842D /* User.swift in Sources */,
+				E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */,
+				E3DEE6A8286A19CC0003D543 /* RegistrationPresenter.swift in Sources */,
 				E31FBE7028634A8D00D41304 /* ProfileCoordnator.swift in Sources */,
 				E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */,
+				E3A90D4E286A4B0B0053F1CD /* CustomScrollView.swift in Sources */,
 				E3F50B90286757A8008A842D /* Comment.swift in Sources */,
 				E3137E772850FAFE005FC3F9 /* AppDelegate.swift in Sources */,
+				E3DEE6AA286A19EF0003D543 /* RegistrationViewController.swift in Sources */,
 				E3F50B8D28675769008A842D /* Post.swift in Sources */,
 				E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */,
 				E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */,
 				E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */,
 				E3F50B9B28675C99008A842D /* RequestErrors.swift in Sources */,
+				E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */,
+				E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */,
 				E344EE22286865C0007ABF86 /* HTTPMethods.swift in Sources */,
 				E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */,
 				E3F50B97286759B0008A842D /* URLPaths.swift in Sources */,
 				E3F50B9228675845008A842D /* UserToken.swift in Sources */,
+				E3A90D4A286A31CF0053F1CD /* CustomUIViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
