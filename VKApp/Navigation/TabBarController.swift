@@ -41,8 +41,8 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
         self.setupViews()
     }
     
-    func goToRegistration() {
-        self.coordinatorDelegate?.goToRegistration(registrationMode: .sigIn)
+    func goToOnboarding() {
+        self.coordinatorDelegate?.goToOnboarding()
     }
     
     private func setupNavigationControllers() {
