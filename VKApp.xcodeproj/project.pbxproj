@@ -32,6 +32,10 @@
 		E3A90D4A286A31CF0053F1CD /* CustomUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D49286A31CF0053F1CD /* CustomUIViewController.swift */; };
 		E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D4B286A3A7F0053F1CD /* CustomColor.swift */; };
 		E3A90D4E286A4B0B0053F1CD /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D4D286A4B0B0053F1CD /* CustomScrollView.swift */; };
+		E3B169FF286F101700792BF9 /* EditRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B169FE286F101700792BF9 /* EditRouter.swift */; };
+		E3B16A01286F102700792BF9 /* EditInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B16A00286F102700792BF9 /* EditInteractor.swift */; };
+		E3B16A03286F103B00792BF9 /* EditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B16A02286F103B00792BF9 /* EditPresenter.swift */; };
+		E3B16A05286F104A00792BF9 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B16A04286F104A00792BF9 /* EditViewController.swift */; };
 		E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C404712869E5C60004C5AE /* RegistrationManager.swift */; };
 		E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */; };
 		E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */; };
@@ -76,6 +80,10 @@
 		E3A90D49286A31CF0053F1CD /* CustomUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIViewController.swift; sourceTree = "<group>"; };
 		E3A90D4B286A3A7F0053F1CD /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		E3A90D4D286A4B0B0053F1CD /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
+		E3B169FE286F101700792BF9 /* EditRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRouter.swift; sourceTree = "<group>"; };
+		E3B16A00286F102700792BF9 /* EditInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInteractor.swift; sourceTree = "<group>"; };
+		E3B16A02286F103B00792BF9 /* EditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPresenter.swift; sourceTree = "<group>"; };
+		E3B16A04286F104A00792BF9 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		E3C404712869E5C60004C5AE /* RegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
 		E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
 		E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationInteractor.swift; sourceTree = "<group>"; };
@@ -126,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E3B169FB286F0F7D00792BF9 /* EditModule */,
 				E3A90D48286A31A40053F1CD /* CustomUIElements */,
 				E3DEE6A2286A192C0003D543 /* RegistrationModule */,
 				E3A1B221286AD9E800D666CE /* OnboardingModule */,
@@ -214,6 +223,17 @@
 				E3A90D4D286A4B0B0053F1CD /* CustomScrollView.swift */,
 			);
 			path = CustomUIElements;
+			sourceTree = "<group>";
+		};
+		E3B169FB286F0F7D00792BF9 /* EditModule */ = {
+			isa = PBXGroup;
+			children = (
+				E3B169FE286F101700792BF9 /* EditRouter.swift */,
+				E3B16A00286F102700792BF9 /* EditInteractor.swift */,
+				E3B16A02286F103B00792BF9 /* EditPresenter.swift */,
+				E3B16A04286F104A00792BF9 /* EditViewController.swift */,
+			);
+			path = EditModule;
 			sourceTree = "<group>";
 		};
 		E3C4046F2869E5590004C5AE /* RegistrationManager */ = {
@@ -366,8 +386,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3B16A01286F102700792BF9 /* EditInteractor.swift in Sources */,
 				E344EE2428686659007ABF86 /* HTTPHeaders.swift in Sources */,
+				E3B169FF286F101700792BF9 /* EditRouter.swift in Sources */,
 				E3F50B9928675A9D008A842D /* URLConstructor.swift in Sources */,
+				E3B16A05286F104A00792BF9 /* EditViewController.swift in Sources */,
 				E3F50BA128677556008A842D /* DataManager.swift in Sources */,
 				E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */,
 				E31FBE632863401900D41304 /* TabBarController.swift in Sources */,
@@ -386,6 +409,7 @@
 				E3F50B90286757A8008A842D /* Comment.swift in Sources */,
 				E3137E772850FAFE005FC3F9 /* AppDelegate.swift in Sources */,
 				E3DEE6AA286A19EF0003D543 /* RegistrationViewController.swift in Sources */,
+				E3B16A03286F103B00792BF9 /* EditPresenter.swift in Sources */,
 				E3F50B8D28675769008A842D /* Post.swift in Sources */,
 				E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */,
 				E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */,

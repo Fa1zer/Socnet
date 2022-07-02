@@ -54,7 +54,7 @@ class OnboardingViewController: UIViewController {
         let view = UIButton()
         
         view.setTitle(NSLocalizedString("I have an account", comment: ""), for: .normal)
-        view.setTitleColor(.black, for: .normal)
+        view.setTitleColor(.textColor, for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -63,7 +63,6 @@ class OnboardingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.presenter.signIn(didComplete: self.presenter.goToTabBar)
         self.setupViews()
     }
     
