@@ -30,8 +30,8 @@ final class ProfileCoordnator: TabBarCoordinatable {
         
     }
     
-    func goToRegistration() {
-        self.tabBarDelegate?.goToRegistration()
+    func goToOnboarding() {
+        self.tabBarDelegate?.goToOnboarding()
     }
     
     private func setupViews() {

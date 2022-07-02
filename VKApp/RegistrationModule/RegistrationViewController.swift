@@ -118,14 +118,16 @@ class RegistrationViewController: UIViewController {
     
     private func setupViews() {
         self.view.backgroundColor = .backgroundColor
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationItem.backButtonTitle = NSLocalizedString("Back", comment: "")
         
         if self.presenter.registrationMode == .logIn {
-            self.titleLabel.text = NSLocalizedString("Log In", comment: "")
+            self.titleLabel.text = NSLocalizedString("Log In Title", comment: "")
             self.registrationButton.setTitle(NSLocalizedString("Log In", comment: ""), for: .normal)
             self.registrationButton.addTarget(self, action: #selector(self.logIn), for: .touchUpInside)
         } else {
-            self.titleLabel.text = NSLocalizedString("Sing In", comment: "")
+            self.titleLabel.text = NSLocalizedString("Sign In Title", comment: "")
             self.registrationButton.setTitle(NSLocalizedString("Sign In", comment: ""), for: .normal)
             self.registrationButton.addTarget(self, action: #selector(self.signIn), for: .touchUpInside)
         }
@@ -177,7 +179,7 @@ class RegistrationViewController: UIViewController {
                 self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
             }
         } didComplete: {
-            // push controller
+            self.signIn()
         }
     }
     
