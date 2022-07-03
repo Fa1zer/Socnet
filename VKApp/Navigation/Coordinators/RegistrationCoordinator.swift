@@ -38,10 +38,6 @@ final class RegistrationCoordinator {
         }
     }
     
-    private func setupViews() {
-        self.navigationController.navigationBar.isHidden = true
-    }
-    
     func goToRegistration(registrationMode: RegistrationMode) {
         let router = RegistrationRouter()
         let interactor = RegistrationInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
@@ -83,5 +79,8 @@ final class RegistrationCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    private func setupViews() {
+        self.navigationController.navigationBar.isHidden = true
+    }
+    
 }
-

@@ -132,6 +132,12 @@ class EditViewController: UIViewController {
         self.title = NSLocalizedString("Edit", comment: "")
         self.view.backgroundColor = .backgroundColor
         
+        if let user = self.presenter.user {
+            self.avatarImageView.image = UIImage(data: Data(base64Encoded: user.image ?? "") ?? Data())
+            self.nameTextField.text = user.name
+            self.workNameTextField.text = user.work
+        }
+        
         self.imagePickerController.delegate = self
         
         self.avatarImageView.isUserInteractionEnabled = true
