@@ -18,7 +18,8 @@ final class URLConstructor {
     }
     
     private init() {
-        self.baseURLString = URL(string: BaseURLs.default.rawValue) ?? URL(fileURLWithPath: "")
+//        self.baseURLString = URL(string: BaseURLs.default.rawValue) ?? URL(fileURLWithPath: "")
+        self.baseURLString = URL(string: BaseURLs.local.rawValue) ?? URL(fileURLWithPath: "")
     }
     
     static let `default` = URLConstructor.init()

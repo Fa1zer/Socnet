@@ -17,10 +17,6 @@ final class OnboardingPresenter {
     private let interactor: OnboardingInteractor
     private let router: OnboardingRouter
     
-    func signIn(didComplete: @escaping () -> Void) {
-        self.interactor.signIn(didComplete: didComplete)
-    }
-    
     func goToTabBar() {
         self.router.goToTabBar()
     }

@@ -26,7 +26,9 @@ final class DataManager {
                 if let error = error {
                     print("❌ Error: \(error.localizedDescription)")
                     
-                    didNotComplete(.someError(error))
+                    DispatchQueue.main.async {
+                        didNotComplete(.someError(error))
+                    }
                     
                     return
                 }
@@ -35,12 +37,16 @@ final class DataManager {
                       httpURLResponse.statusCode == 200 else {
                     print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                     
-                    didNotComplete(.requestError(.statusCodeError((response as? HTTPURLResponse)?.statusCode)))
+                    DispatchQueue.main.async {
+                        didNotComplete(.requestError(.statusCodeError((response as? HTTPURLResponse)?.statusCode)))
+                    }
                     
                     return
                 }
                 
-                didComplete()
+                    DispatchQueue.main.async {
+                        didComplete()
+                    }
             }
             .resume()
         } catch {
@@ -68,7 +74,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -77,7 +85,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
-                didNotComplete(.requestError(.statusCodeError((response as? HTTPURLResponse)?.statusCode)))
+                DispatchQueue.main.async {
+                    didNotComplete(.requestError(.statusCodeError((response as? HTTPURLResponse)?.statusCode)))
+                }
                 
                 return
             }
@@ -85,7 +95,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.requestError(.dataError))
+                DispatchQueue.main.async {
+                    didNotComplete(.requestError(.dataError))
+                }
                 
                 return
             }
@@ -93,14 +105,18 @@ final class DataManager {
             guard let userToken = try? JSONDecoder().decode(UserToken.self, from: data) else {
                 print("❌ Error: decode failed")
                 
-                didNotComplete(.requestError(.decodeFailed))
+                DispatchQueue.main.async {
+                    didNotComplete(.requestError(.decodeFailed))
+                }
                 
                 return
             }
             
-            self.userToken = userToken.value
-            
-            didComplete()
+            DispatchQueue.main.async { [ weak self ] in
+                self?.userToken = userToken.value
+                
+                didComplete()
+            }
         }
         .resume()
     }
@@ -119,7 +135,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -128,7 +146,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
-                didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                 return
             }
@@ -136,7 +156,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
@@ -144,12 +166,16 @@ final class DataManager {
             guard let user = try? JSONDecoder().decode(User.self, from: data) else {
                 print("❌ Error: decode failed")
                 
-                didNotComplete(.decodeFailed)
+                DispatchQueue.main.async {
+                    didNotComplete(.decodeFailed)
+                }
                 
                 return
             }
             
-            didComplete(user)
+            DispatchQueue.main.async {
+                didComplete(user)
+            }
         }
         .resume()
     }
@@ -172,7 +198,9 @@ final class DataManager {
                 if let error = error {
                     print("❌ Error: \(error.localizedDescription)")
                     
-                    didNotComplete(.someError(error))
+                    DispatchQueue.main.async {
+                        didNotComplete(.someError(error))
+                    }
                     
                     return
                 }
@@ -181,12 +209,16 @@ final class DataManager {
                       httpURLResponse.statusCode == 200 else {
                     print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                     
+                    DispatchQueue.main.async {
                         didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                    }
                     
                         return
                 }
                 
-                didComplete()
+                DispatchQueue.main.async {
+                    didComplete()
+                }
             }
             .resume()
         } catch {
@@ -202,7 +234,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -211,7 +245,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
+                DispatchQueue.main.async {
                     didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                     return
             }
@@ -219,7 +255,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
@@ -227,12 +265,16 @@ final class DataManager {
             guard let users = try? JSONDecoder().decode([User].self, from: data) else {
                 print("❌ Error: decoder failed")
                 
-                didNotComplete(.decodeFailed)
+                DispatchQueue.main.async {
+                    didNotComplete(.decodeFailed)
+                }
                 
                 return
             }
             
-            didComplete(users)
+            DispatchQueue.main.async {
+                didComplete(users)
+            }
         }
         .resume()
     }
@@ -243,7 +285,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -252,7 +296,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
+                DispatchQueue.main.async {
                     didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                     return
             }
@@ -260,7 +306,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
@@ -268,12 +316,16 @@ final class DataManager {
             guard let user = try? JSONDecoder().decode(User.self, from: data) else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
             
-            didComplete(user)
+            DispatchQueue.main.async {
+                didComplete(user)
+            }
         }
         .resume()
     }
@@ -284,7 +336,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -293,7 +347,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
-                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                DispatchQueue.main.async {
+                        didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                     return
             }
@@ -301,7 +357,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
@@ -309,12 +367,16 @@ final class DataManager {
             guard let posts = try? JSONDecoder().decode([Post].self, from: data) else {
                 print("❌ Error: decoder failed")
                 
-                didNotComplete(.decodeFailed)
+                DispatchQueue.main.async {
+                    didNotComplete(.decodeFailed)
+                }
                 
                 return
             }
             
-            didComplete(posts)
+            DispatchQueue.main.async {
+                didComplete(posts)
+            }
         }
         .resume()
     }
@@ -325,7 +387,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -334,7 +398,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
-                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                DispatchQueue.main.async {
+                        didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                     return
             }
@@ -342,7 +408,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
@@ -350,12 +418,16 @@ final class DataManager {
             guard let posts = try? JSONDecoder().decode([Post].self, from: data) else {
                 print("❌ Error: decoder failed")
                 
-                didNotComplete(.decodeFailed)
+                DispatchQueue.main.async {
+                    didNotComplete(.decodeFailed)
+                }
                 
                 return
             }
             
-            didComplete(posts)
+            DispatchQueue.main.async {
+                didComplete(posts)
+            }
         }
         .resume()
     }
@@ -366,7 +438,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -375,7 +449,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
+                DispatchQueue.main.async {
                     didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                     return
             }
@@ -383,7 +459,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
@@ -391,12 +469,16 @@ final class DataManager {
             guard let comments = try? JSONDecoder().decode([Comment].self, from: data) else {
                 print("❌ Error: decoder failed")
                 
-                didNotComplete(.decodeFailed)
+                DispatchQueue.main.async {
+                    didNotComplete(.decodeFailed)
+                }
                 
                 return
             }
             
-            didComplete(comments)
+            DispatchQueue.main.async {
+                didComplete(comments)
+            }
         }
         .resume()
     }
@@ -419,7 +501,9 @@ final class DataManager {
                 if let error = error {
                     print("❌ Error: \(error.localizedDescription)")
                     
-                    didNotComplete(.someError(error))
+                    DispatchQueue.main.async {
+                        didNotComplete(.someError(error))
+                    }
                     
                     return
                 }
@@ -428,12 +512,16 @@ final class DataManager {
                       httpURLResponse.statusCode == 200 else {
                     print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                     
-                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                    DispatchQueue.main.async {
+                        didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                    }
                     
                     return
                 }
                 
-                didComplete()
+                DispatchQueue.main.async {
+                    didComplete()
+                }
             }
             .resume()
         } catch {
@@ -458,7 +546,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -467,12 +557,16 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
-                didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                 return
             }
             
-            didComplete()
+            DispatchQueue.main.async {
+                didComplete()
+            }
         }
         .resume()
     }
@@ -483,7 +577,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -492,7 +588,9 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
-                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                DispatchQueue.main.async {
+                        didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                     return
             }
@@ -500,7 +598,9 @@ final class DataManager {
             guard let data = data else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
@@ -508,12 +608,16 @@ final class DataManager {
             guard let user = try? JSONDecoder().decode(User.self, from: data) else {
                 print("❌ Error: data is equal to nil")
                 
-                didNotComplete(.dataError)
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
                 
                 return
             }
             
-            didComplete(user)
+            DispatchQueue.main.async {
+                didComplete(user)
+            }
         }
         .resume()
     }
@@ -536,7 +640,9 @@ final class DataManager {
                 if let error = error {
                     print("❌ Error: \(error.localizedDescription)")
                     
-                    didNotComplete(.someError(error))
+                    DispatchQueue.main.async {
+                        didNotComplete(.someError(error))
+                    }
                     
                     return
                 }
@@ -545,12 +651,16 @@ final class DataManager {
                       httpURLResponse.statusCode == 200 else {
                     print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                     
-                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                    DispatchQueue.main.async {
+                        didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                    }
                     
                     return
                 }
                 
-                didComplete()
+                DispatchQueue.main.async {
+                    didComplete()
+                }
             }
             .resume()
         } catch {
@@ -575,7 +685,9 @@ final class DataManager {
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
                 
-                didNotComplete(.someError(error))
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
                 
                 return
             }
@@ -584,12 +696,16 @@ final class DataManager {
                   httpURLResponse.statusCode == 200 else {
                 print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
                 
-                didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
                 
                 return
             }
             
-            didComplete()
+            DispatchQueue.main.async {
+                didComplete()
+            }
         }
         .resume()
     }

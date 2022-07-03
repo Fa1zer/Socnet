@@ -31,4 +31,8 @@ final class RegistrationPresenter {
         self.router.goToTabBar()
     }
     
+    func goToEdit() {
+        self.router.goToEdit()
+    }
+    
 }

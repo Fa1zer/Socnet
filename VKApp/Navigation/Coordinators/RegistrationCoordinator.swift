@@ -25,7 +25,17 @@ final class RegistrationCoordinator {
     private var registrationManager: RegistrationManager { RegistrationManager(dataManager: self.dataManager) }
     
     func start() {
-        self.goToOnboarding()
+        guard let (email, password) = self.keychainManager.getKeychainData() else {
+            self.goToOnboarding()
+
+            return
+        }
+
+        self.registrationManager.signIn(email: email, password: password) { _ in
+            self.goToOnboarding()
+        } didComplete: {
+            self.goToTabBar()
+        }
     }
     
     private func setupViews() {
@@ -45,7 +55,7 @@ final class RegistrationCoordinator {
     
     func goToOnboarding() {
         let router = OnboardingRouter()
-        let interactor = OnboardingInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
+        let interactor = OnboardingInteractor()
         let presenter = OnboardingPresenter(interactor: interactor, router: router)
         let viewController = OnboardingViewController(presenter: presenter)
         
@@ -60,6 +70,17 @@ final class RegistrationCoordinator {
         tabBarController.coordinatorDelegate = self
         
         self.navigationController.pushViewController(tabBarController, animated: true)
+    }
+    
+    func goToEdit() {
+        let router = EditRouter()
+        let interactor = EditInteractor(dataManager: self.dataManager)
+        let presenter = EditPresenter(interactor: interactor, router: router)
+        let viewController = EditViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = self
+        
+        self.navigationController.pushViewController(viewController, animated: true)
     }
     
 }

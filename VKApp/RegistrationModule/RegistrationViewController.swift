@@ -194,7 +194,12 @@ class RegistrationViewController: UIViewController {
                 self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
             }
         } didComplete: {
-            self.presenter.goToTabBar()
+            
+            if self.presenter.registrationMode == .sigIn {
+                self.presenter.goToTabBar()
+            } else {
+                self.presenter.goToEdit()
+            }
         }
     }
     
