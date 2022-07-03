@@ -19,10 +19,14 @@
 		E31FBE7528634FA700D41304 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = E31FBE7428634FA700D41304 /* KeychainAccess */; };
 		E31FBE7828634FD500D41304 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E31FBE7728634FD500D41304 /* SnapKit */; };
 		E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE792863649100D41304 /* RegistrationCoordinator.swift */; };
+		E321D9FD2871A04900F524B4 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E321D9FC2871A04900F524B4 /* PostTableViewCell.swift */; };
+		E321D9FF2871A2C600F524B4 /* PostTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E321D9FE2871A2C600F524B4 /* PostTableViewHeaderFooterView.swift */; };
+		E321DA022871A5BF00F524B4 /* CommentTableVIewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E321DA012871A5BF00F524B4 /* CommentTableVIewCell.swift */; };
 		E344EE22286865C0007ABF86 /* HTTPMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE21286865C0007ABF86 /* HTTPMethods.swift */; };
 		E344EE2428686659007ABF86 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE2328686659007ABF86 /* HTTPHeaders.swift */; };
 		E344EE262868727E007ABF86 /* SignInErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE252868727E007ABF86 /* SignInErrors.swift */; };
 		E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E344EE2728687634007ABF86 /* LogInErrors.swift */; };
+		E39D4F022870A54D00E00F8B /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39D4F012870A54D00E00F8B /* PostView.swift */; };
 		E3A1B223286ADA4500D666CE /* OnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B222286ADA4500D666CE /* OnboardingRouter.swift */; };
 		E3A1B225286ADA5D00D666CE /* OnboardingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B224286ADA5D00D666CE /* OnboardingInteractor.swift */; };
 		E3A1B227286ADA6D00D666CE /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B226286ADA6D00D666CE /* OnboardingPresenter.swift */; };
@@ -67,10 +71,14 @@
 		E31FBE6F28634A8D00D41304 /* ProfileCoordnator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordnator.swift; sourceTree = "<group>"; };
 		E31FBE7128634C8C00D41304 /* SavedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCoordinator.swift; sourceTree = "<group>"; };
 		E31FBE792863649100D41304 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
+		E321D9FC2871A04900F524B4 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		E321D9FE2871A2C600F524B4 /* PostTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		E321DA012871A5BF00F524B4 /* CommentTableVIewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableVIewCell.swift; sourceTree = "<group>"; };
 		E344EE21286865C0007ABF86 /* HTTPMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethods.swift; sourceTree = "<group>"; };
 		E344EE2328686659007ABF86 /* HTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaders.swift; sourceTree = "<group>"; };
 		E344EE252868727E007ABF86 /* SignInErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInErrors.swift; sourceTree = "<group>"; };
 		E344EE2728687634007ABF86 /* LogInErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInErrors.swift; sourceTree = "<group>"; };
+		E39D4F012870A54D00E00F8B /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		E3A1B222286ADA4500D666CE /* OnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRouter.swift; sourceTree = "<group>"; };
 		E3A1B224286ADA5D00D666CE /* OnboardingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInteractor.swift; sourceTree = "<group>"; };
 		E3A1B226286ADA6D00D666CE /* OnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
@@ -134,6 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E39D4EFA2870A4E600E00F8B /* PostViews */,
+				E321DA002871A59500F524B4 /* CommentTableVIewCell */,
 				E3B169FB286F0F7D00792BF9 /* EditModule */,
 				E3A90D48286A31A40053F1CD /* CustomUIElements */,
 				E3DEE6A2286A192C0003D543 /* RegistrationModule */,
@@ -194,6 +204,24 @@
 				E31FBE6C286346B200D41304 /* Localizable.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		E321DA002871A59500F524B4 /* CommentTableVIewCell */ = {
+			isa = PBXGroup;
+			children = (
+				E321DA012871A5BF00F524B4 /* CommentTableVIewCell.swift */,
+			);
+			path = CommentTableVIewCell;
+			sourceTree = "<group>";
+		};
+		E39D4EFA2870A4E600E00F8B /* PostViews */ = {
+			isa = PBXGroup;
+			children = (
+				E39D4F012870A54D00E00F8B /* PostView.swift */,
+				E321D9FC2871A04900F524B4 /* PostTableViewCell.swift */,
+				E321D9FE2871A2C600F524B4 /* PostTableViewHeaderFooterView.swift */,
+			);
+			path = PostViews;
 			sourceTree = "<group>";
 		};
 		E3A1B221286AD9E800D666CE /* OnboardingModule */ = {
@@ -402,6 +430,7 @@
 				E3F50B8B286756A0008A842D /* User.swift in Sources */,
 				E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */,
 				E3DEE6A8286A19CC0003D543 /* RegistrationPresenter.swift in Sources */,
+				E321D9FF2871A2C600F524B4 /* PostTableViewHeaderFooterView.swift in Sources */,
 				E31FBE7028634A8D00D41304 /* ProfileCoordnator.swift in Sources */,
 				E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */,
 				E3A90D4E286A4B0B0053F1CD /* CustomScrollView.swift in Sources */,
@@ -413,15 +442,18 @@
 				E3F50B8D28675769008A842D /* Post.swift in Sources */,
 				E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */,
 				E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */,
+				E321D9FD2871A04900F524B4 /* PostTableViewCell.swift in Sources */,
 				E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */,
 				E3F50B9B28675C99008A842D /* RequestErrors.swift in Sources */,
 				E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */,
 				E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */,
 				E344EE22286865C0007ABF86 /* HTTPMethods.swift in Sources */,
+				E39D4F022870A54D00E00F8B /* PostView.swift in Sources */,
 				E3A1B223286ADA4500D666CE /* OnboardingRouter.swift in Sources */,
 				E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */,
 				E3F50B97286759B0008A842D /* URLPaths.swift in Sources */,
 				E3F50B9228675845008A842D /* UserToken.swift in Sources */,
+				E321DA022871A5BF00F524B4 /* CommentTableVIewCell.swift in Sources */,
 				E3A1B229286ADA7900D666CE /* OnboardingViewController.swift in Sources */,
 				E3A90D4A286A31CF0053F1CD /* CustomUIViewController.swift in Sources */,
 			);

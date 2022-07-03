@@ -14,6 +14,8 @@ final class EditPresenter {
         self.router = router
     }
     
+    var user: User?
+    
     private let interacotor: EditInteractor
     private let router: EditRouter
     
