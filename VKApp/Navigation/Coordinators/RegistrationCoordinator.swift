@@ -70,8 +70,8 @@ final class RegistrationCoordinator {
     
     func goToEdit() {
         let router = EditRouter()
-        let interactor = EditInteractor(dataManager: self.dataManager)
-        let presenter = EditPresenter(interactor: interactor, router: router)
+        let interactor = EditInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
+        let presenter = EditPresenter(interactor: interactor, router: router, isFirstEdit: true)
         let viewController = EditViewController(presenter: presenter)
         
         router.coordinatorDelegate = self

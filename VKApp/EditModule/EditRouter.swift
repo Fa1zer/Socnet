@@ -15,4 +15,8 @@ final class EditRouter: RegistrationCoordinatable {
         self.coordinatorDelegate?.goToTabBar()
     }
     
+    func goToOnboarding() {
+        self.coordinatorDelegate?.goToOnboarding()
+    }
+    
 }

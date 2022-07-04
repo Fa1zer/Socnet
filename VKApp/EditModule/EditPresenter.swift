@@ -9,13 +9,15 @@ import Foundation
 
 final class EditPresenter {
     
-    init(interactor: EditInteractor, router: EditRouter) {
+    init(interactor: EditInteractor, router: EditRouter, isFirstEdit: Bool) {
         self.interacotor = interactor
         self.router = router
+        self.isFirstEdit = isFirstEdit
     }
     
     var user: User?
     
+    let isFirstEdit: Bool
     private let interacotor: EditInteractor
     private let router: EditRouter
     
@@ -23,8 +25,20 @@ final class EditPresenter {
         self.interacotor.editUser(user: user, didComplete: didComplete, didNotComplete: didNotComplete)
     }
     
+    func logOut(didComplete: @escaping () -> Void, didNotComplete: @escaping (SignInErrors) -> Void) {
+        self.interacotor.logOut(didComplete: didComplete, didNotComplete: didNotComplete)
+    }
+    
+    func deleteKeychainData() {
+        self.interacotor.deleteKeychainData()
+    }
+    
     func goToTabBar() {
         self.router.goToTabBar()
+    }
+    
+    func goToOnboarding() {
+        self.router.goToOnboarding()
     }
     
 }

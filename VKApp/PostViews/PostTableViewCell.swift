@@ -10,35 +10,27 @@ import SnapKit
 
 class PostTableViewCell: UITableViewCell {
     
-    init(likeAction: @escaping (Post) -> Void, commentAction: @escaping (Post) -> Void, avatarAction: @escaping (UUID) -> Void, post: Post, user: User, isSelected: Bool) {
-        self.likeAction = likeAction
-        self.commentAction = commentAction
-        self.post = post
-        self.user = user
-        self.likeButtonIsSelected = isSelected
+    static let cellID = "post"
+    
+    var likeAction: ((Post) -> Void)?
+    var commentAction: ((Post) -> Void)?
+    var avatarAction: ((UUID) -> Void)?
+    var post: Post?
+    var user: User?
+    var likeButtonIsSelected: Bool?
+    
+    private var postView: PostView {
+        let view = PostView()
         
-        super.init(style: .default, reuseIdentifier: nil)
+        view.post = self.post
+        view.user = self.user
+        view.avatarAction = self.avatarAction
+        view.commentAction = self.commentAction
+        view.likeAction = self.likeAction
+        view.likeButtonIsSelected = self.likeButtonIsSelected
+        
+        return view
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private let likeAction: (Post) -> Void
-    private let commentAction: (Post) -> Void
-    private let avatarAction: (UUID) -> Void
-    private let post: Post
-    private let user: User
-    private let likeButtonIsSelected: Bool
-    
-    private var postView: PostView { PostView(
-        likeAction: self.likeAction,
-        commentAction: self.commentAction,
-        avatarAction: self.avatarAction,
-        post: self.post,
-        user: self.user,
-        isSelected: self.likeButtonIsSelected
-    ) }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -49,7 +41,7 @@ class PostTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        self.commentAction(self.post)
+        self.commentAction?(self.post ?? Post(userID: UUID(), image: ""))
     }
     
     private func setupViews() {

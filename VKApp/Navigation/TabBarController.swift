@@ -30,9 +30,17 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
     var coordinatorDelegate: RegistrationCoordinator?
     private let dataManager: DataManager
     
-    private var mainCoordinator: MainCoordinator { MainCoordinator(dataManager: self.dataManager) }
-    private var profileCoordinator: ProfileCoordnator { ProfileCoordnator(dataManager: self.dataManager) }
-    private var savedCoordinator: SavedCoordnator { SavedCoordnator(dataManager: self.dataManager) }
+    private let coreDataManager = CoreDataManager()
+    private var mainCoordinator: MainCoordinator {
+        return MainCoordinator(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+    }
+    
+    private var profileCoordinator: ProfileCoordnator {
+        return ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+    }
+    private var savedCoordinator: SavedCoordnator {
+        return SavedCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

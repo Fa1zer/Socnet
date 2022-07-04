@@ -10,51 +10,40 @@ import SnapKit
 
 class PostView: UIView {
     
-    init(likeAction: @escaping (Post) -> Void, commentAction: @escaping (Post) -> Void, avatarAction: @escaping (UUID) -> Void, post: Post, user: User, isSelected: Bool) {
-        self.likeAction = likeAction
-        self.commentAction = commentAction
-        self.avatarAction = avatarAction
-        self.post = post
-        self.user = user
-        self.likeButtonIsSelected = isSelected
-        
-        super.init(frame: .zero)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private let likeAction: (Post) -> Void
-    private let commentAction: (Post) -> Void
-    private let avatarAction: (UUID) -> Void
-    private var post: Post {
+    var likeAction: ((Post) -> Void)?
+        var commentAction: ((Post) -> Void)?
+            var avatarAction: ((UUID) -> Void)?
+    var post: Post? {
         didSet {
-            guard let imageData = Data(base64Encoded: self.post.image) else {
+            guard let imageData = Data(base64Encoded: self.post?.image ?? "") else {
                 return
             }
             
             self.postImageView.image = UIImage(data: imageData)
-            self.textLabel.text = self.post.text
-            self.likeCountLabel.text = String(self.post.likes)
+            self.textLabel.text = self.post?.text ?? ""
+            self.likeCountLabel.text = String(self.post?.likes ?? 0)
+            
+            if self.likeCountLabel.text == "-1" {
+                self.likeCountLabel.isHidden = true
+            }
         }
     }
     
-    private var user: User {
+    var user: User? {
         didSet {
-            guard let imageString = self.user.image,
+            guard let imageString = self.user?.image,
                   let dataImage = Data(base64Encoded: imageString) else {
                 return
             }
             
             self.userAvatarImageView.image = UIImage(data: dataImage)
-            self.userNameLabel.text = self.user.name
+            self.userNameLabel.text = self.user?.name ?? ""
         }
     }
     
-    private var likeButtonIsSelected: Bool {
+    var likeButtonIsSelected: Bool? {
         didSet {
-            if self.likeButtonIsSelected {
+            if self.likeButtonIsSelected ?? false {
                 self.likeButton.isSelected = true
             }
         }
@@ -197,17 +186,25 @@ class PostView: UIView {
     }
     
     @objc private func likeButtonDidTap() {
-        self.post.likes += 1
+        self.post?.likes += 1
         
-        self.likeAction(self.post)
+        guard let post = self.post else {
+            return
+        }
+        
+        self.likeAction?(post)
     }
     
     @objc private func commentButtonDidTap() {
-        self.commentAction(self.post)
+        guard let post = self.post else {
+            return
+        }
+        
+        self.commentAction?(post)
     }
     
     @objc private func avatarImageViewDidTap() {
-        self.avatarAction(self.user.id ?? UUID())
+        self.avatarAction?(self.user?.id ?? UUID())
     }
 
 }
