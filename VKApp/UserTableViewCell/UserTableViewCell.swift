@@ -1,5 +1,5 @@
 //
-//  CommentTableVIewCell.swift
+//  UserTableViewCell.swift
 //  VKApp
 //
 //  Created by Artemiy Zuzin on 03.07.2022.
@@ -8,12 +8,11 @@
 import UIKit
 import SnapKit
 
-class CommentTableVIewCell: UITableViewCell {
+class UserTableViewCell: UITableViewCell {
     
-    init(comment: Comment, user: User, avatarAction: @escaping (UUID) -> Void) {
-        self.avatarAction = avatarAction
-        self.comment = comment
+    init(user: User, didTapAction: @escaping (UUID) -> Void) {
         self.user = user
+        self.didTapAction = didTapAction
         
         super.init(style: .default, reuseIdentifier: nil)
     }
@@ -22,13 +21,7 @@ class CommentTableVIewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let avatarAction: (UUID) -> Void
-    private var comment: Comment {
-        didSet {
-            self.commentTextLabel.text = self.comment.text
-        }
-    }
-    
+    private let didTapAction: (UUID) -> Void
     private var user: User {
         didSet {
             guard let imageString = self.user.image,
@@ -38,6 +31,7 @@ class CommentTableVIewCell: UITableViewCell {
             
             self.userAvatarImageView.image = UIImage(data: dataImage)
             self.userNameLabel.text = self.user.name
+            self.userWorkNameLabel.text = self.user.work
         }
     }
     
@@ -60,46 +54,48 @@ class CommentTableVIewCell: UITableViewCell {
         return label
     }()
     
-    private let commentTextLabel: UILabel = {
-        let view = UILabel()
+    private let userWorkNameLabel: UILabel = {
+        let label = UILabel()
         
-        view.textColor = .textColor
-        view.numberOfLines = 0
-        view.lineBreakMode = .byWordWrapping
-        view.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .systemGray6
+        label.font = .boldSystemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
         
-        return view
+        return label
     }()
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.setupViews()
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        self.didTapAction(self.user.id ?? UUID())
+    }
     
-    private func setuViews() {
-        self.userAvatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarImageViewDidTap)))
-        self.userNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarImageViewDidTap)))
-        
-        self.userAvatarImageView.isUserInteractionEnabled = true
-        self.userNameLabel.isUserInteractionEnabled = true
-        
+    private func setupViews() {
         self.contentView.addSubview(self.userAvatarImageView)
         self.contentView.addSubview(self.userNameLabel)
-        self.contentView.addSubview(self.commentTextLabel)
+        self.contentView.addSubview(self.userWorkNameLabel)
         
         self.userAvatarImageView.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(15)
             make.width.height.equalTo(30)
+            make.bottom.equalToSuperview().inset(15)
         }
         
         self.userNameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(self.userAvatarImageView)
+            make.top.equalToSuperview().inset(15)
             make.leading.equalTo(self.userAvatarImageView.snp.trailing).inset(-10)
         }
         
-        self.commentTextLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.userAvatarImageView.snp.bottom).inset(-15)
-            make.leading.trailing.bottom.equalToSuperview().inset(15)
+        self.userWorkNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.userNameLabel.snp.bottom).inset(-10)
+            make.leading.equalTo(self.userAvatarImageView.snp.trailing).inset(-10)
         }
     }
-    
-    @objc private func avatarImageViewDidTap() {
-        self.avatarAction(self.user.id ?? UUID())
-    }
-    
+
 }

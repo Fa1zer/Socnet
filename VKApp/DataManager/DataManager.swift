@@ -121,6 +121,40 @@ final class DataManager {
         .resume()
     }
     
+//    MARK: Log Out User
+    func logOut(didComplete: @escaping () -> Void, didNotComplete: @escaping (SignInErrors) -> Void) {
+        var request = URLRequest(url: self.urlConstructor.logOut())
+        
+        request.httpMethod = HTTPMethods.DELETE.rawValue
+        
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
+                
+                return
+            }
+            
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                  httpURLResponse.statusCode == 200 else {
+                print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.requestError(.statusCodeError((response as? HTTPURLResponse)?.statusCode)))
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                didComplete()
+            }
+        }
+    }
+    
 //    MARK: Get User
     func getUser(didComplete: @escaping (User) -> Void, didNotComplete: @escaping (RequestErrors) -> Void) {
         var request = URLRequest(url: self.urlConstructor.meUser())
@@ -225,6 +259,74 @@ final class DataManager {
             print("❌ Error: encode failed")
             
             didNotComplete(.encodeFailed)
+        }
+    }
+    
+//    MARK: Subscribe User
+    func subscribe(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        var request = URLRequest(url: self.urlConstructor.subscribe(userID: userID))
+        
+        request.httpMethod = HTTPMethods.PUT.rawValue
+        
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
+                
+                return
+            }
+            
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                  httpURLResponse.statusCode == 200 else {
+                print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                didComplete()
+            }
+        }
+    }
+    
+//    MARK: Unsubscribe User
+    func unsubscribe(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        var request = URLRequest(url: self.urlConstructor.unsubscribe(userID: userID))
+        
+        request.httpMethod = HTTPMethods.PUT.rawValue
+        
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
+                
+                return
+            }
+            
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                  httpURLResponse.statusCode == 200 else {
+                print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                didComplete()
+            }
         }
     }
     
@@ -528,6 +630,74 @@ final class DataManager {
             print("❌ Error: encode failed")
             
             didNotComplete(.encodeFailed)
+        }
+    }
+    
+//    MARK: Like Post
+    func like(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        var request = URLRequest(url: self.urlConstructor.like(postID: postID))
+        
+        request.httpMethod = HTTPMethods.PUT.rawValue
+        
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
+                
+                return
+            }
+            
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                  httpURLResponse.statusCode == 200 else {
+                print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                didComplete()
+            }
+        }
+    }
+    
+// MARK: Dislike Post
+    func dislike(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        var request = URLRequest(url: self.urlConstructor.dislike(postID: postID))
+        
+        request.httpMethod = HTTPMethods.PUT.rawValue
+        
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
+                
+                return
+            }
+            
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                  httpURLResponse.statusCode == 200 else {
+                print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                didComplete()
+            }
         }
     }
     

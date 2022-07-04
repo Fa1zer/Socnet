@@ -31,6 +31,12 @@ final class URLConstructor {
             .appendingPathComponent(URLPaths.auth.rawValue)
     }
     
+    func logOut() -> URL {
+        self.baseURLString
+            .appendingPathComponent(URLPaths.users.rawValue)
+            .appendingPathComponent(URLPaths.logOut.rawValue)
+    }
+    
     func allUsers() -> URL {
         self.baseURLString
             .appendingPathComponent(URLPaths.users.rawValue)
@@ -69,6 +75,20 @@ final class URLConstructor {
             .appendingPathComponent(userID.uuidString)
     }
     
+    func subscribe(userID: UUID) -> URL {
+        self.baseURLString
+            .appendingPathComponent(URLPaths.users.rawValue)
+            .appendingPathComponent(URLPaths.subscribe.rawValue)
+            .appendingPathComponent(userID.uuidString)
+    }
+    
+    func unsubscribe(userID: UUID) -> URL {
+        self.baseURLString
+            .appendingPathComponent(URLPaths.users.rawValue)
+            .appendingPathComponent(URLPaths.unsubscribe.rawValue)
+            .appendingPathComponent(userID.uuidString)
+    }
+    
     func allPosts() -> URL {
         self.baseURLString
             .appendingPathComponent(URLPaths.posts.rawValue)
@@ -85,6 +105,20 @@ final class URLConstructor {
         self.baseURLString
             .appendingPathComponent(URLPaths.posts.rawValue)
             .appendingPathComponent(URLPaths.delete.rawValue)
+            .appendingPathComponent(postID.uuidString)
+    }
+    
+    func like(postID: UUID) -> URL {
+        self.baseURLString
+            .appendingPathComponent(URLPaths.posts.rawValue)
+            .appendingPathComponent(URLPaths.like.rawValue)
+            .appendingPathComponent(postID.uuidString)
+    }
+    
+    func dislike(postID: UUID) -> URL {
+        self.baseURLString
+            .appendingPathComponent(URLPaths.posts.rawValue)
+            .appendingPathComponent(URLPaths.dislike.rawValue)
             .appendingPathComponent(postID.uuidString)
     }
     

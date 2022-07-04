@@ -11,6 +11,7 @@
 		E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3137E782850FAFE005FC3F9 /* SceneDelegate.swift */; };
 		E3137E802850FB00005FC3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3137E7F2850FB00005FC3F9 /* Assets.xcassets */; };
 		E3137E832850FB00005FC3F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3137E812850FB00005FC3F9 /* LaunchScreen.storyboard */; };
+		E31EFE1B2871ED3B0026A36C /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31EFE1A2871ED3B0026A36C /* UserTableViewCell.swift */; };
 		E31FBE632863401900D41304 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE622863401900D41304 /* TabBarController.swift */; };
 		E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FBE652863420800D41304 /* MainCoordinator.swift */; };
 		E31FBE6A286346B200D41304 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E31FBE6C286346B200D41304 /* Localizable.strings */; };
@@ -63,6 +64,7 @@
 		E3137E7F2850FB00005FC3F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3137E822850FB00005FC3F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3137E842850FB00005FC3F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E31EFE1A2871ED3B0026A36C /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		E31FBE622863401900D41304 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E31FBE652863420800D41304 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		E31FBE6B286346B200D41304 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
 				E39D4EFA2870A4E600E00F8B /* PostViews */,
+				E31EFE182871ECE30026A36C /* UserTableViewCell */,
 				E321DA002871A59500F524B4 /* CommentTableVIewCell */,
 				E3B169FB286F0F7D00792BF9 /* EditModule */,
 				E3A90D48286A31A40053F1CD /* CustomUIElements */,
@@ -176,6 +179,14 @@
 				E3137E7F2850FB00005FC3F9 /* Assets.xcassets */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		E31EFE182871ECE30026A36C /* UserTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				E31EFE1A2871ED3B0026A36C /* UserTableViewCell.swift */,
+			);
+			path = UserTableViewCell;
 			sourceTree = "<group>";
 		};
 		E31FBE6128633FE100D41304 /* Navigation */ = {
@@ -423,6 +434,7 @@
 				E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */,
 				E31FBE632863401900D41304 /* TabBarController.swift in Sources */,
 				E3A90D47286A2D520053F1CD /* RegistrationMode.swift in Sources */,
+				E31EFE1B2871ED3B0026A36C /* UserTableViewCell.swift in Sources */,
 				E3A1B225286ADA5D00D666CE /* OnboardingInteractor.swift in Sources */,
 				E344EE262868727E007ABF86 /* SignInErrors.swift in Sources */,
 				E3A1B22E286ADF6400D666CE /* KeychainManager.swift in Sources */,
