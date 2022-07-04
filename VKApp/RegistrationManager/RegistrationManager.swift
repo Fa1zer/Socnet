@@ -47,6 +47,10 @@ final class RegistrationManager {
         self.dataManager.auth(email: email, password: password, didComplete: didComplete, didNotComplete: didNotComplete)
     }
         
+    func logOut(didComplete: @escaping () -> Void, didNotComplete: @escaping (SignInErrors) -> Void) {
+        self.dataManager.logOut(didComplete: didComplete, didNotComplete: didNotComplete)
+    }
+    
 }
 
 extension String {
