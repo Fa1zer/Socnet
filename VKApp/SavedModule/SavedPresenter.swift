@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class SavedPresenter {
     
@@ -21,6 +22,8 @@ final class SavedPresenter {
     
     func getPosts() {
         self.interactor.getPosts { [ weak self ] postEntities in
+            self?.posts = []
+            
             for postEntity in postEntities {
                 self?.posts.append((
                     post: Post(

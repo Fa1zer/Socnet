@@ -41,6 +41,7 @@ final class SavedCoordnator: TabBarCoordinatable {
         router.coordinatorDelegate = self
         
         self.coreDataManager.tableView = viewController.tableView
+        self.coreDataManager.callBack = presenter.getPosts
         
         self.navigationController.pushViewController(viewController, animated: true)
     }

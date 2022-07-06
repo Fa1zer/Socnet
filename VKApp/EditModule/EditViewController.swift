@@ -133,6 +133,27 @@ class EditViewController: UIViewController {
         return view
     }()
     
+    private let translucentView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .black
+        view.alpha = 0.5
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let activityIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        
+        view.startAnimating()
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -158,6 +179,10 @@ class EditViewController: UIViewController {
         self.saveButton.addTarget(self, action: #selector(self.editUser), for: .touchUpInside)
         
         self.view.addSubview(self.scrollView)
+        self.view.addSubview(self.translucentView)
+        self.view.insertSubview(self.translucentView, at: 10)
+        
+        self.translucentView.addSubview(self.activityIndicatorView)
         
         self.scrollView.addSubview(self.avatarImageView)
         self.scrollView.addSubview(self.nameLabel)
@@ -169,6 +194,14 @@ class EditViewController: UIViewController {
                 
         self.scrollView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
+        }
+        
+        self.translucentView.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
+        
+        self.activityIndicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
         
         self.avatarImageView.snp.makeConstraints { make in
@@ -227,6 +260,9 @@ class EditViewController: UIViewController {
     }
     
     @objc private func editUser() {
+        self.translucentView.isHidden = false
+        self.activityIndicatorView.isHidden = false
+        
         self.presenter.editUser(user: User(
             email: "",
             passwordHash: "",
@@ -234,8 +270,13 @@ class EditViewController: UIViewController {
             work: self.workNameTextField.text ?? "",
             image: self.avatarImageView.image?.pngData()?.base64EncodedString()
         )) {
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
             self.presenter.goToTabBar()
         } didNotComplete: { error in
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
+            
             switch error {
             case .statusCodeError(let statusCode):
                 self.callAlert(title: NSLocalizedString("Error", comment: "") + String(statusCode ?? 500), text: nil)
@@ -250,10 +291,17 @@ class EditViewController: UIViewController {
     }
     
     @objc private func logOut() {
+        self.translucentView.isHidden = false
+        self.activityIndicatorView.isHidden = false
+        
         self.presenter.logOut {
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
             self.presenter.deleteKeychainData()
             self.presenter.goToOnboarding()
         } didNotComplete: { _ in
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
             self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
         }
 

@@ -29,7 +29,18 @@ final class MainCoordinator: TabBarCoordinatable {
     let navigationController = UINavigationController()
     
     func start() {
+        self.goToFeed()
+    }
+    
+    func goToFeed() {
+        let router = FeedRouter()
+        let interactor = FeedInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        let presenter = FeedPresenter(router: router, interactor: interactor)
+        let viewController = FeedViewController(presenter: presenter)
         
+        router.coordinatorDelegate = self
+        
+        self.navigationController.pushViewController(viewController, animated: true)
     }
     
     private func setupViews() {

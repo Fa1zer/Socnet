@@ -34,24 +34,24 @@ class SavedViewController: UIViewController {
         let view = UILabel()
         
         view.text = NSLocalizedString("No saved posts", comment: "")
-        view.textColor = .systemGray6
+        view.textColor = .systemGray
         view.font = .systemFont(ofSize: 22)
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.setupViews()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.presenter.getPosts()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.setupViews()
     }
     
     private func setupViews() {
@@ -86,7 +86,7 @@ extension SavedViewController: UITableViewDataSource {
         cell.post = self.presenter.posts[indexPath.row].post
         cell.user = self.presenter.posts[indexPath.row].user
         cell.likeButtonIsSelected = true
-        cell.likeAction = { [ weak self ] post in
+        cell.likeAction = { [ weak self ] post, _ in
             let entity = PostEntity()
             
             entity.id = post.id
@@ -95,10 +95,10 @@ extension SavedViewController: UITableViewDataSource {
                 self?.presenter.getPosts()
             }
         }
-        cell.commentAction = { post in
+        cell.commentAction = { post, user in
             // push comment view controller
         }
-        cell.avatarAction = { id in
+        cell.avatarAction = { user in
             // push profile view controller
         }
         
@@ -107,6 +107,8 @@ extension SavedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = self.presenter.posts.count
+        
+        print(count)
         
         if count == 0 {
             self.emptyLabel.isHidden = false
