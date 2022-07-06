@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E31050062875E15600673CBD /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31050052875E15600673CBD /* ProfileRouter.swift */; };
+		E31050082875E16300673CBD /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31050072875E16300673CBD /* ProfileInteractor.swift */; };
+		E310500A2875E16E00673CBD /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31050092875E16E00673CBD /* ProfilePresenter.swift */; };
+		E310500C2875E18100673CBD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E310500B2875E18100673CBD /* ProfileViewController.swift */; };
+		E31050112875ED9000673CBD /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31050102875ED9000673CBD /* UserProfileView.swift */; };
 		E3137E772850FAFE005FC3F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3137E762850FAFE005FC3F9 /* AppDelegate.swift */; };
 		E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3137E782850FAFE005FC3F9 /* SceneDelegate.swift */; };
 		E3137E802850FB00005FC3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3137E7F2850FB00005FC3F9 /* Assets.xcassets */; };
@@ -69,6 +74,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E31050052875E15600673CBD /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		E31050072875E16300673CBD /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
+		E31050092875E16E00673CBD /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		E310500B2875E18100673CBD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E31050102875ED9000673CBD /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		E3137E732850FAFE005FC3F9 /* VKApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3137E762850FAFE005FC3F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E3137E782850FAFE005FC3F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +155,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E31050042875E13A00673CBD /* ProfileModule */ = {
+			isa = PBXGroup;
+			children = (
+				E31050052875E15600673CBD /* ProfileRouter.swift */,
+				E31050072875E16300673CBD /* ProfileInteractor.swift */,
+				E31050092875E16E00673CBD /* ProfilePresenter.swift */,
+				E310500B2875E18100673CBD /* ProfileViewController.swift */,
+			);
+			path = ProfileModule;
+			sourceTree = "<group>";
+		};
+		E310500F2875ED0000673CBD /* UserProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				E31050102875ED9000673CBD /* UserProfileView.swift */,
+			);
+			path = UserProfileView;
+			sourceTree = "<group>";
+		};
 		E3137E6A2850FAFE005FC3F9 = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E310500F2875ED0000673CBD /* UserProfileView */,
+				E31050042875E13A00673CBD /* ProfileModule */,
 				E3B2B2062874468E00F08800 /* FeedModule */,
 				E3B378C328730545007D09F5 /* CoreData */,
 				E39D4EFA2870A4E600E00F8B /* PostTableViewCell */,
@@ -508,7 +539,9 @@
 				E3F50BA128677556008A842D /* DataManager.swift in Sources */,
 				E3B2B20E2874472F00F08800 /* FeedViewController.swift in Sources */,
 				E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */,
+				E310500C2875E18100673CBD /* ProfileViewController.swift in Sources */,
 				E31FBE632863401900D41304 /* TabBarController.swift in Sources */,
+				E310500A2875E16E00673CBD /* ProfilePresenter.swift in Sources */,
 				E3B2B208287446B400F08800 /* FeedRouter.swift in Sources */,
 				E3A90D47286A2D520053F1CD /* RegistrationMode.swift in Sources */,
 				E3B378C7287305A1007D09F5 /* PostModel.xcdatamodeld in Sources */,
@@ -522,6 +555,7 @@
 				E3F50B8B286756A0008A842D /* User.swift in Sources */,
 				E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */,
 				E3DEE6A8286A19CC0003D543 /* RegistrationPresenter.swift in Sources */,
+				E31050112875ED9000673CBD /* UserProfileView.swift in Sources */,
 				E3B378D228730F7C007D09F5 /* PostEntitie+CoreDataProperties.swift in Sources */,
 				E31FBE7028634A8D00D41304 /* ProfileCoordnator.swift in Sources */,
 				E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */,
@@ -531,6 +565,7 @@
 				E3137E772850FAFE005FC3F9 /* AppDelegate.swift in Sources */,
 				E3DEE6AA286A19EF0003D543 /* RegistrationViewController.swift in Sources */,
 				E3B16A03286F103B00792BF9 /* EditPresenter.swift in Sources */,
+				E31050082875E16300673CBD /* ProfileInteractor.swift in Sources */,
 				E3556DFB2873339B00955765 /* SavedViewController.swift in Sources */,
 				E3F50B8D28675769008A842D /* Post.swift in Sources */,
 				E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */,
@@ -547,6 +582,7 @@
 				E3A1B223286ADA4500D666CE /* OnboardingRouter.swift in Sources */,
 				E3556DF72873336A00955765 /* SavedInteractor.swift in Sources */,
 				E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */,
+				E31050062875E15600673CBD /* ProfileRouter.swift in Sources */,
 				E3F50B97286759B0008A842D /* URLPaths.swift in Sources */,
 				E3F50B9228675845008A842D /* UserToken.swift in Sources */,
 				E321DA022871A5BF00F524B4 /* CommentTableVIewCell.swift in Sources */,

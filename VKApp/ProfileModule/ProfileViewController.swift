@@ -1,29 +1,50 @@
 //
-//  FeedViewController.swift
+//  ProfileViewController.swift
 //  VKApp
 //
-//  Created by Artemiy Zuzin on 05.07.2022.
+//  Created by Artemiy Zuzin on 06.07.2022.
 //
 
 import UIKit
 import SnapKit
 
-class FeedViewController: UIViewController {
+class ProfileViewController: UIViewController {
     
-    init(presenter: FeedPresenter) {
+    init(presenter: ProfilePresenter) {
         self.presenter = presenter
         
         super.init(nibName: nil, bundle: nil)
         
-        self.presenter.callBack = { [ weak self ] in self?.tableView.reloadData() }
-        self.getAllPosts()
+        self.presenter.callBack = self.tableView.reloadData
+        self.presenter.getUser { [ weak self ] error in
+            switch error {
+            case .statusCodeError(let number):
+                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+            case .decodeFailed:
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+            default:
+                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                
+                break
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let presenter: FeedPresenter
+    private let presenter: ProfilePresenter
+    
+    private let userIDLabel: UILabel = {
+        let view = UILabel()
+        
+        view.textColor = .textColor
+        view.font = .boldSystemFont(ofSize: 22)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
     
     private let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
@@ -33,11 +54,11 @@ class FeedViewController: UIViewController {
         return view
     }()
     
-    private let activityIndicator: UIActivityIndicatorView = {
+    private let activityIndicatorView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .medium)
         
-        view.isHidden = true
         view.startAnimating()
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -51,50 +72,43 @@ class FeedViewController: UIViewController {
     
     private func setupViews() {
         self.view.backgroundColor = .backgroundColor
-        self.title = NSLocalizedString("Feed", comment: "")
         
-        self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.delegate = self
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.cellID)
         
+        if let id = self.presenter.user?.id {
+            self.userIDLabel.text = "@\(id)"
+        }
+        
+        self.view.addSubview(self.userIDLabel)
         self.view.addSubview(self.tableView)
-        self.view.addSubview(self.activityIndicator)
+        self.view.addSubview(self.activityIndicatorView)
+        
+        self.userIDLabel.snp.makeConstraints { make in
+            make.top.leading.equalTo(self.view).inset(15)
+        }
         
         self.tableView.snp.makeConstraints { make in
             make.leading.trailing.top.bottom.equalToSuperview()
         }
         
-        self.activityIndicator.snp.makeConstraints { make in
+        self.activityIndicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-        }
-    }
-    
-    private func getAllPosts() {
-        self.presenter.getAllPosts { error in
-            switch error {
-            case .statusCodeError(let number):
-                self.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-            case .decodeFailed:
-                self.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-            default:
-                self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                
-                break
-            }
         }
     }
 
 }
 
-extension FeedViewController: UITableViewDataSource {
+extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.cellID) as? PostTableViewCell else {
             return UITableViewCell()
         }
         
-        cell.user = self.presenter.posts[indexPath.row].user
-        cell.post = self.presenter.posts[indexPath.row].post
+        cell.user = self.presenter.user
+        cell.post = self.presenter.posts[indexPath.row]
         cell.likeButtonIsSelected = false
         cell.commentAction = { post, user in
             // push comment view controller
@@ -119,10 +133,6 @@ extension FeedViewController: UITableViewDataSource {
                 self?.presenter.save(post: post, user: user)
             }
         }
-        cell.avatarAction = { user in
-            // push profile view controller
-        }
-        
         self.presenter.getAllCoreDataPosts { posts in
             if posts.contains(where: { $0.id == cell.post?.id }) {
                 cell.likeButtonIsSelected = true
@@ -133,12 +143,15 @@ extension FeedViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.presenter.posts.count == 0 {
+        if self.presenter.user == nil {
             self.tableView.isHidden = true
-            self.activityIndicator.isHidden = false
+            self.activityIndicatorView.isHidden = false
+            self.userIDLabel.isHidden = true
         } else {
             self.tableView.isHidden = false
-            self.activityIndicator.isHidden = true
+            self.activityIndicatorView.isHidden = true
+            self.userIDLabel.isHidden = false
+            self.userIDLabel.text = "@\(self.presenter.user?.id ?? UUID())"
         }
         
         return self.presenter.posts.count
@@ -146,13 +159,26 @@ extension FeedViewController: UITableViewDataSource {
     
 }
 
-extension FeedViewController: UITableViewDelegate {
+extension ProfileViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return NSLocalizedString("New Posts", comment: "") + ":"
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let user = self.presenter.user else {
+            return nil
+        }
+        
+        return UserProfileView(user: user, isAlienUser: self.presenter.isAlienUser) {
+            self.presenter.goToEdit()
+        } addPostButtonAction: {
+            // push add post controller
+        }
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
     }
     

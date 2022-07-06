@@ -57,7 +57,7 @@ class UserTableViewCell: UITableViewCell {
     private let userWorkNameLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .systemGray6
+        label.textColor = .systemGray
         label.font = .boldSystemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         

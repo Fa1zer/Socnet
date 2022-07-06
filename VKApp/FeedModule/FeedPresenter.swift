@@ -41,6 +41,10 @@ final class FeedPresenter {
         self.interactor.getAllCoreDataPosts(didComplete: didComplete)
     }
     
+    func like(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.interactor.like(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
     private func getUser(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping (User) -> Void) {
         self.interactor.getSomeUser(userID: userID, didNotComplete: didNotComplete, didComplete: didComplete)
     }

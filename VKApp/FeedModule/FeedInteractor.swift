@@ -33,4 +33,8 @@ final class FeedInteractor {
         self.coreDataManager.getPosts(didComplete: didComplete)
     }
     
+    func like(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.dataManager.like(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
 }
