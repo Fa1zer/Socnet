@@ -14,9 +14,11 @@ protocol ProfileCoordnatable {
 
 final class ProfileCoordnator: TabBarCoordinatable {
     
-    init(dataManager: DataManager, coreDataManager: CoreDataManager) {
+    init(dataManager: DataManager, coreDataManager: CoreDataManager, registrationManager: RegistrationManager, keychainManager: KeychainManager) {
         self.dataManager = dataManager
         self.coreDataManager = coreDataManager
+        self.registrationManager = registrationManager
+        self.keychainManager = keychainManager
         
         self.setupViews()
         self.start()
@@ -25,6 +27,8 @@ final class ProfileCoordnator: TabBarCoordinatable {
     var tabBarDelegate: TabBarController?
     private let dataManager: DataManager
     private let coreDataManager: CoreDataManager
+    private let registrationManager: RegistrationManager
+    private let keychainManager: KeychainManager
     
     let navigationController = UINavigationController()
     
@@ -42,6 +46,17 @@ final class ProfileCoordnator: TabBarCoordinatable {
             image: UIImage(systemName: "person"),
             selectedImage: UIImage(systemName: "person")
         )
+    }
+    
+    func goToEdit() {
+        let router = EditRouter()
+        let interactor = EditInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
+        let presenter = EditPresenter(interactor: interactor, router: router, isFirstEdit: false)
+        let viewController = EditViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = RegistrationCoordinator()
+        
+        self.navigationController.pushViewController(viewController, animated: true)
     }
     
 }

@@ -61,7 +61,7 @@ final class RegistrationCoordinator {
     }
     
     func goToTabBar() {
-        let tabBarController = TabBarController(dataManager: self.dataManager)
+        let tabBarController = TabBarController(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
         
         tabBarController.coordinatorDelegate = self
         

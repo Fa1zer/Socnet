@@ -12,6 +12,7 @@ import UIKit
 final class CoreDataManager: NSObject {
     
     var tableView: UITableView?
+    var callBack: (() -> Void)?
     
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "PostModel")
@@ -26,7 +27,7 @@ final class CoreDataManager: NSObject {
     }()
     
     private let fetchedResultController: NSFetchedResultsController<PostEntity> = {
-        let request = NSFetchRequest<PostEntity>(entityName: "PostEntitie")
+        let request = NSFetchRequest<PostEntity>(entityName: "PostEntity")
         let sort = NSSortDescriptor(key: "date", ascending: true)
         let container = NSPersistentContainer(name: "PostModel")
 
@@ -113,6 +114,9 @@ final class CoreDataManager: NSObject {
         
         do {
             try context.save()
+            
+            self.callBack?()
+            self.tableView?.reloadData()
         } catch {
             print(error.localizedDescription)
             

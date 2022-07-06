@@ -1,5 +1,5 @@
 //
-//  PostEntitie+CoreDataProperties.swift
+//  PostEntity+CoreDataProperties.swift
 //  VKApp
 //
 //  Created by Artemiy Zuzin on 04.07.2022.
@@ -13,7 +13,7 @@ import CoreData
 extension PostEntity {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<PostEntity> {
-        return NSFetchRequest<PostEntity>(entityName: "PostEntitie")
+        return NSFetchRequest<PostEntity>(entityName: "PostEntity")
     }
 
     @NSManaged public var id: UUID?

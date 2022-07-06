@@ -8,11 +8,21 @@
 import UIKit
 import SnapKit
 
-class PostView: UIView {
+class PostTableViewCell: UITableViewCell {
     
-    var likeAction: ((Post) -> Void)?
-        var commentAction: ((Post) -> Void)?
-            var avatarAction: ((UUID) -> Void)?
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var likeAction: ((Post, User) -> Void)?
+    var commentAction: ((Post, User) -> Void)?
+    var avatarAction: ((User) -> Void)?
     var post: Post? {
         didSet {
             guard let imageData = Data(base64Encoded: self.post?.image ?? "") else {
@@ -20,10 +30,14 @@ class PostView: UIView {
             }
             
             self.postImageView.image = UIImage(data: imageData)
-            self.textLabel.text = self.post?.text ?? ""
-            self.likeCountLabel.text = String(self.post?.likes ?? 0)
+            self.postTextLabel.text = self.post?.text ?? ""
             
-            if self.likeCountLabel.text == "-1" {
+            if self.post?.likes != -1 {
+                self.likeCountLabel.text = String.localizedStringWithFormat(
+                    NSLocalizedString("likes", comment: ""),
+                    UInt(self.post?.likes ?? 0)
+                )
+            } else {
                 self.likeCountLabel.isHidden = true
             }
         }
@@ -45,9 +59,13 @@ class PostView: UIView {
         didSet {
             if self.likeButtonIsSelected ?? false {
                 self.likeButton.isSelected = true
+                self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+                self.likeButton.tintColor = .systemRed
             }
         }
     }
+    
+    static let cellID = "post"
     
     private let userAvatarImageView: UIImageView = {
         let view = UIImageView()
@@ -71,13 +89,13 @@ class PostView: UIView {
     private let postImageView: UIImageView = {
         let view = UIImageView()
         
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    private let textLabel: UILabel = {
+    private let postTextLabel: UILabel = {
         let view = UILabel()
         
         view.textColor = .textColor
@@ -90,14 +108,9 @@ class PostView: UIView {
     
     private let likeButton: UIButton = {
         let view = UIButton()
-        let firstImage = UIImage(named: "heart")
-        let secondImage = UIImage(named: "heart.fill")
         
-        firstImage?.withTintColor(.textColor)
-        secondImage?.withTintColor(.systemRed)
-        
-        view.setImage(firstImage, for: .normal)
-        view.setImage(secondImage, for: .selected)
+        view.setImage(UIImage(systemName: "heart"), for: .normal)
+        view.tintColor = .textColor
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -116,16 +129,20 @@ class PostView: UIView {
     private let commentButton: UIButton = {
         let view = UIButton()
         
-        view.setImage(UIImage(named: "bubble.right"), for: .normal)
+        view.setImage(UIImage(systemName: "bubble.right"), for: .normal)
+        view.tintColor = .textColor
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
         
-        self.setupViews()
+        if selected {
+            self.commentButtonDidTap()
+            self.setSelected(false, animated: true)
+        }
     }
     
     private func setupViews() {
@@ -137,74 +154,91 @@ class PostView: UIView {
         self.userAvatarImageView.isUserInteractionEnabled = true
         self.userNameLabel.isUserInteractionEnabled = true
         
-        self.addSubview(self.userAvatarImageView)
-        self.addSubview(self.userNameLabel)
-        self.addSubview(self.postImageView)
-        self.addSubview(self.textLabel)
-        self.addSubview(self.likeCountLabel)
-        self.addSubview(self.likeButton)
-        self.addSubview(self.commentButton)
-        
+        self.contentView.addSubview(self.userAvatarImageView)
+        self.contentView.addSubview(self.userNameLabel)
+        self.contentView.addSubview(self.postImageView)
+        self.contentView.addSubview(self.postTextLabel)
+        self.contentView.addSubview(self.likeCountLabel)
+        self.contentView.addSubview(self.likeButton)
+        self.contentView.addSubview(self.commentButton)
+
         self.userAvatarImageView.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(15)
             make.width.height.equalTo(50)
         }
-        
+
         self.userNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(self.userAvatarImageView)
             make.leading.equalTo(self.userAvatarImageView.snp.trailing).inset(-15)
         }
-        
+
         self.postImageView.snp.makeConstraints { make in
             make.top.equalTo(self.userAvatarImageView.snp.bottom).inset(-15)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(self.postImageView.snp.width)
         }
-        
-        self.textLabel.snp.makeConstraints { make in
+
+        self.postTextLabel.snp.makeConstraints { make in
             make.top.equalTo(self.postImageView.snp.bottom).inset(-25)
             make.leading.trailing.equalToSuperview().inset(15)
         }
-        
+
         self.likeCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.textLabel.snp.bottom).inset(-25)
-            make.leading.equalToSuperview().inset(15)
+            make.centerY.equalTo(self.likeButton)
+            make.trailing.equalToSuperview().inset(15)
         }
-        
+
         self.likeButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.likeCountLabel.snp.trailing).inset(-10)
-            make.centerY.equalTo(self.likeCountLabel)
+            make.top.equalTo(self.postTextLabel.snp.bottom).inset(-25)
+            make.leading.equalToSuperview().inset(15)
+            make.bottom.equalToSuperview().inset(15)
+        }
+
+        self.commentButton.snp.makeConstraints { make in
+            make.top.equalTo(self.postTextLabel.snp.bottom).inset(-25)
+            make.leading.equalTo(self.likeButton.snp.trailing).inset(-15)
+            make.bottom.equalToSuperview().inset(15)
+        }
+
+        self.likeButton.imageView?.snp.makeConstraints { make in
             make.height.width.equalTo(30)
         }
-        
-        self.commentButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.likeButton.snp.trailing).inset(-25)
-            make.centerY.equalTo(self.likeCountLabel)
+
+        self.commentButton.imageView?.snp.makeConstraints { make in
             make.height.width.equalTo(30)
-            make.bottom.equalToSuperview().inset(15)
         }
     }
     
     @objc private func likeButtonDidTap() {
-        self.post?.likes += 1
+        guard !(self.likeButtonIsSelected ?? true) else { return }
         
-        guard let post = self.post else {
+        self.post?.likes += 1
+        self.likeButtonIsSelected = true
+        
+        guard let post = self.post,
+              let user = self.user else {
             return
         }
         
-        self.likeAction?(post)
+        self.likeAction?(post, user)
     }
     
     @objc private func commentButtonDidTap() {
-        guard let post = self.post else {
+        guard let post = self.post,
+              let user = self.user else {
             return
         }
         
-        self.commentAction?(post)
+        self.commentAction?(post, user)
     }
     
     @objc private func avatarImageViewDidTap() {
-        self.avatarAction?(self.user?.id ?? UUID())
+        guard let user = user else {
+            return
+        }
+
+        
+        self.avatarAction?(user)
     }
 
 }

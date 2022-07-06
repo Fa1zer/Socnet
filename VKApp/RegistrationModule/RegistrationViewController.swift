@@ -97,6 +97,27 @@ class RegistrationViewController: UIViewController {
         return view
     }()
     
+    private let translucentView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .black
+        view.alpha = 0.5
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let activityIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        
+        view.startAnimating()
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -132,7 +153,11 @@ class RegistrationViewController: UIViewController {
             self.registrationButton.addTarget(self, action: #selector(self.signIn), for: .touchUpInside)
         }
         
-        self.view.addSubview(scrollView)
+        self.view.addSubview(self.scrollView)
+        self.view.addSubview(self.translucentView)
+        self.view.insertSubview(self.translucentView, at: 10)
+        
+        self.translucentView.addSubview(self.activityIndicatorView)
         
         self.scrollView.addSubview(self.titleLabel)
         self.scrollView.addSubview(self.emailTextField)
@@ -141,6 +166,14 @@ class RegistrationViewController: UIViewController {
         
         self.scrollView.snp.makeConstraints { make in
             make.leading.trailing.top.bottom.equalToSuperview()
+        }
+        
+        self.translucentView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
+        }
+        
+        self.activityIndicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
         
         self.titleLabel.snp.makeConstraints { make in
@@ -169,7 +202,13 @@ class RegistrationViewController: UIViewController {
     }
     
     @objc private func logIn() {
+        self.translucentView.isHidden = false
+        self.activityIndicatorView.isHidden = false
+        
         self.presenter.logIn(email: self.emailTextField.text ?? "", password: self.passwordTextField.text ?? "") { error in
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
+            
             switch error {
             case .emailNotFound:
                 self.callAlert(title: NSLocalizedString("Email is not valid", comment: ""), text: nil)
@@ -179,12 +218,20 @@ class RegistrationViewController: UIViewController {
                 self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
             }
         } didComplete: {
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
             self.signIn()
         }
     }
     
     @objc private func signIn() {
+        self.translucentView.isHidden = false
+        self.activityIndicatorView.isHidden = false
+        
         self.presenter.signIn(email: self.emailTextField.text ?? "", password: self.passwordTextField.text ?? "") { error in
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
+            
             switch error {
             case .emailNotFound:
                 self.callAlert(title: NSLocalizedString("Email is not valid", comment: ""), text: nil)
@@ -194,6 +241,8 @@ class RegistrationViewController: UIViewController {
                 self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
             }
         } didComplete: {
+            self.translucentView.isHidden = true
+            self.activityIndicatorView.isHidden = true
             
             if self.presenter.registrationMode == .sigIn {
                 self.presenter.goToTabBar()

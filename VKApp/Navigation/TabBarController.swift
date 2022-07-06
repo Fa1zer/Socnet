@@ -17,8 +17,10 @@ protocol TabBarCoordinatable {
 
 final class TabBarController: UITabBarController, RegistrationCoordinatable {
     
-    init(dataManager: DataManager) {
+    init(dataManager: DataManager, registrationManager: RegistrationManager, keychainManager: KeychainManager) {
         self.dataManager = dataManager
+        self.registrationManager = registrationManager
+        self.keychainManager = keychainManager
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -29,6 +31,8 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
     
     var coordinatorDelegate: RegistrationCoordinator?
     private let dataManager: DataManager
+    private let registrationManager: RegistrationManager
+    private let keychainManager: KeychainManager
     
     private let coreDataManager = CoreDataManager()
     private var mainCoordinator: MainCoordinator {
@@ -36,7 +40,7 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
     }
     
     private var profileCoordinator: ProfileCoordnator {
-        return ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        return ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
     }
     private var savedCoordinator: SavedCoordnator {
         return SavedCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
