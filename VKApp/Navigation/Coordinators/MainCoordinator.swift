@@ -14,8 +14,9 @@ protocol MainCoordinatable {
 
 final class MainCoordinator: TabBarCoordinatable {
     
-    init(dataManager: DataManager) {
+    init(dataManager: DataManager, coreDataManager: CoreDataManager) {
         self.dataManager = dataManager
+        self.coreDataManager = coreDataManager
         
         self.setupViews()
         self.start()
@@ -23,6 +24,7 @@ final class MainCoordinator: TabBarCoordinatable {
     
     var tabBarDelegate: TabBarController?
     private let dataManager: DataManager
+    private let coreDataManager: CoreDataManager
     
     let navigationController = UINavigationController()
     

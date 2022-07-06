@@ -121,6 +121,18 @@ class EditViewController: UIViewController {
         return view
     }()
     
+    private let logOutButton: UIButton = {
+        let view = UIButton()
+        
+        view.backgroundColor = .systemRed
+        view.setTitle(NSLocalizedString("Log Out", comment: ""), for: .normal)
+        view.setTitleColor(.white, for: .normal)
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -153,6 +165,7 @@ class EditViewController: UIViewController {
         self.scrollView.addSubview(self.workNameLabel)
         self.scrollView.addSubview(self.workNameTextField)
         self.scrollView.addSubview(self.saveButton)
+        self.scrollView.addSubview(self.logOutButton)
                 
         self.scrollView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
@@ -191,6 +204,26 @@ class EditViewController: UIViewController {
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(15)
             make.height.equalTo(50)
         }
+        
+        self.logOutButton.snp.makeConstraints { make in
+            make.top.equalTo(self.saveButton.snp.bottom).inset(-25)
+            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(15)
+            make.height.equalTo(50)
+        }
+        
+        if self.presenter.isFirstEdit {
+            self.logOutButton.isHidden = true
+            
+            self.saveButton.snp.makeConstraints { make in
+                make.bottom.equalToSuperview().inset(15)
+            }
+        } else {
+            self.logOutButton.isHidden = false
+            
+            self.logOutButton.snp.makeConstraints { make in
+                make.bottom.equalToSuperview().inset(15)
+            }
+        }
     }
     
     @objc private func editUser() {
@@ -214,6 +247,16 @@ class EditViewController: UIViewController {
                 break
             }
         }
+    }
+    
+    @objc private func logOut() {
+        self.presenter.logOut {
+            self.presenter.deleteKeychainData()
+            self.presenter.goToOnboarding()
+        } didNotComplete: { _ in
+            self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+        }
+
     }
     
     @objc private func showImagePickerController() {

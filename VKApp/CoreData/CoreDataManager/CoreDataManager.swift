@@ -66,6 +66,33 @@ final class CoreDataManager: NSObject {
         }
     }
     
+    func deletePost(postEntity: PostEntity, didComplete: @escaping () -> Void) {
+        let context = self.persistentContainer.viewContext
+        let fetchRequest = PostEntity.fetchRequest()
+        
+        context.perform { [ weak self ] in
+            do {
+                try self?.fetchedResultController.performFetch()
+                
+                for post in try context.fetch(fetchRequest) {
+                    if postEntity.id == post.id {
+                        context.delete(postEntity as NSManagedObject)
+                        
+                        break
+                    }
+                }
+                                
+                try context.save()
+                
+                didComplete()
+            } catch {
+                print(error.localizedDescription)
+                
+                return
+            }
+        }
+    }
+    
     func save(post: Post, user: User) {
         let context = self.persistentContainer.newBackgroundContext()
         
