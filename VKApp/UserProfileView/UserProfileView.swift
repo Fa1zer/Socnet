@@ -29,6 +29,8 @@ class UserProfileView: UIView {
     private var user: User {
         didSet {
             self.avatarImageView.image = UIImage(data: Data(base64Encoded: self.user.image ?? (UIImage(named: "empty avatar")?.pngData()?.base64EncodedString() ?? "")) ?? Data())
+            self.subscribersCountLabel.text = String(self.user.subscribers.count)
+            self.subscribtionsCountLabel.text = String(self.user.subscribtions.count)
         }
     }
     
@@ -59,6 +61,48 @@ class UserProfileView: UIView {
         
         view.textColor = .systemGray
         view.font = .boldSystemFont(ofSize: 14)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let subscribersLabel: UILabel = {
+        let view = UILabel()
+        
+        view.text = NSLocalizedString("Subscribers", comment: "")
+        view.font = .boldSystemFont(ofSize: 22)
+        view.textColor = .textColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let subscribtionsLabel: UILabel = {
+        let view = UILabel()
+        
+        view.text = NSLocalizedString("Subscribers", comment: "")
+        view.font = .boldSystemFont(ofSize: 22)
+        view.textColor = .textColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let subscribersCountLabel: UILabel = {
+        let view = UILabel()
+        
+        view.font = .boldSystemFont(ofSize: 22)
+        view.textColor = .textColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let subscribtionsCountLabel: UILabel = {
+        let view = UILabel()
+        
+        view.font = .boldSystemFont(ofSize: 22)
+        view.textColor = .textColor
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -108,6 +152,10 @@ class UserProfileView: UIView {
         self.addSubview(self.avatarImageView)
         self.addSubview(self.userNameLabel)
         self.addSubview(self.userWorkNameLabel)
+        self.addSubview(self.subscribersLabel)
+        self.addSubview(self.subscribtionsLabel)
+        self.addSubview(self.subscribersCountLabel)
+        self.addSubview(self.subscribtionsLabel)
         self.addSubview(self.editButton)
         self.addSubview(self.addPostButton)
         
@@ -126,8 +174,28 @@ class UserProfileView: UIView {
             make.leading.equalTo(self.avatarImageView.snp.trailing).inset(-15)
         }
         
-        self.editButton.snp.makeConstraints { make in
+        self.subscribtionsLabel.snp.makeConstraints { make in
             make.top.equalTo(self.avatarImageView.snp.bottom).inset(-25)
+            make.centerX.equalToSuperview().multipliedBy(0.5)
+        }
+        
+        self.subscribtionsCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.subscribtionsLabel.snp.bottom).inset(-10)
+            make.centerX.equalTo(self.subscribtionsLabel)
+        }
+        
+        self.subscribersLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.avatarImageView.snp.bottom).inset(-25)
+            make.centerX.equalToSuperview().multipliedBy(1.5)
+        }
+        
+        self.subscribersCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.subscribersLabel.snp.bottom).inset(-10)
+            make.centerX.equalTo(self.subscribersLabel)
+        }
+        
+        self.editButton.snp.makeConstraints { make in
+            make.top.equalTo(self.subscribtionsCountLabel.snp.bottom).inset(-25)
             make.leading.trailing.equalToSuperview().inset(15)
             make.height.equalTo(50)
         }
