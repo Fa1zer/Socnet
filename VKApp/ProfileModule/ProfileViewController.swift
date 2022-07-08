@@ -36,19 +36,10 @@ class ProfileViewController: UIViewController {
     
     private let presenter: ProfilePresenter
     
-    private let userIDLabel: UILabel = {
-        let view = UILabel()
-        
-        view.textColor = .textColor
-        view.font = .boldSystemFont(ofSize: 22)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
     private let tableView: UITableView = {
-        let view = UITableView(frame: .zero, style: .plain)
+        let view = UITableView(frame: .zero, style: .grouped)
         
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -71,26 +62,19 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupViews() {
+        self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = .backgroundColor
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.cellID)
         
-        if let id = self.presenter.user?.id {
-            self.userIDLabel.text = "@\(id)"
-        }
-        
-        self.view.addSubview(self.userIDLabel)
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.activityIndicatorView)
         
-        self.userIDLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(self.view).inset(15)
-        }
-        
         self.tableView.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         self.activityIndicatorView.snp.makeConstraints { make in
@@ -146,12 +130,9 @@ extension ProfileViewController: UITableViewDataSource {
         if self.presenter.user == nil {
             self.tableView.isHidden = true
             self.activityIndicatorView.isHidden = false
-            self.userIDLabel.isHidden = true
         } else {
             self.tableView.isHidden = false
             self.activityIndicatorView.isHidden = true
-            self.userIDLabel.isHidden = false
-            self.userIDLabel.text = "@\(self.presenter.user?.id ?? UUID())"
         }
         
         return self.presenter.posts.count
@@ -170,6 +151,8 @@ extension ProfileViewController: UITableViewDelegate {
             self.presenter.goToEdit()
         } addPostButtonAction: {
             // push add post controller
+        } subscriberSubscriptionsAction: { usersId in
+            // push find view controller
         }
 
     }
@@ -179,7 +162,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+        return (self.view.frame.width / 4) + 260
     }
     
 }

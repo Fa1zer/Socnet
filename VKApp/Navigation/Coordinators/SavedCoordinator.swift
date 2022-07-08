@@ -52,6 +52,8 @@ final class SavedCoordnator: TabBarCoordinatable {
             image: UIImage(systemName: "archivebox"),
             selectedImage: UIImage(systemName: "archivebox")
         )
+        self.navigationController.navigationBar.backgroundColor = .backgroundColor
+        self.navigationController.navigationBar.alpha = 0.8
     }
     
 }

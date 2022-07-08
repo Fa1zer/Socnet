@@ -146,6 +146,8 @@ class PostTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
+        self.backgroundColor = .backgroundColor
+        
         self.likeButton.addTarget(self, action: #selector(self.likeButtonDidTap), for: .touchUpInside)
         self.commentButton.addTarget(self, action: #selector(self.commentButtonDidTap), for: .touchUpInside)
         self.userAvatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarImageViewDidTap)))

@@ -161,7 +161,6 @@ class EditViewController: UIViewController {
     }
     
     private func setupViews() {
-        self.navigationItem.setHidesBackButton(true, animated: false)
         self.title = NSLocalizedString("Edit", comment: "")
         self.view.backgroundColor = .backgroundColor
         
@@ -246,12 +245,15 @@ class EditViewController: UIViewController {
         
         if self.presenter.isFirstEdit {
             self.logOutButton.isHidden = true
+            self.navigationController?.navigationBar.isHidden = true
             
             self.saveButton.snp.makeConstraints { make in
                 make.bottom.equalToSuperview().inset(15)
             }
         } else {
             self.logOutButton.isHidden = false
+            self.navigationController?.navigationBar.isHidden = false
+            self.navigationController?.title = nil
             
             self.logOutButton.snp.makeConstraints { make in
                 make.bottom.equalToSuperview().inset(15)

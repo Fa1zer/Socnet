@@ -10,10 +10,11 @@ import SnapKit
 
 class UserProfileView: UIView {
     
-    init(user: User, isAlienUser: Bool, editButtonAction: @escaping () -> Void, addPostButtonAction: @escaping () -> Void) {
+    init(user: User, isAlienUser: Bool, editButtonAction: @escaping () -> Void, addPostButtonAction: @escaping () -> Void, subscriberSubscriptionsAction: @escaping ([UUID]) -> Void) {
         self.user = user
         self.editButtonAction = editButtonAction
         self.addPostButtonAction = addPostButtonAction
+        self.subscriberSubscriptionsAction = subscriberSubscriptionsAction
         self.isAlienUser = isAlienUser
         
         super.init(frame: .zero)
@@ -25,22 +26,16 @@ class UserProfileView: UIView {
     
     private let editButtonAction: () -> Void
     private let addPostButtonAction: () -> Void
+    private let subscriberSubscriptionsAction: ([UUID]) -> Void
     private let isAlienUser: Bool
-    private var user: User {
-        didSet {
-            self.avatarImageView.image = UIImage(data: Data(base64Encoded: self.user.image ?? (UIImage(named: "empty avatar")?.pngData()?.base64EncodedString() ?? "")) ?? Data())
-            self.subscribersCountLabel.text = String(self.user.subscribers.count)
-            self.subscribtionsCountLabel.text = String(self.user.subscribtions.count)
-        }
-    }
+    private var user: User
     
     private let avatarImageView: UIImageView = {
         let view = UIImageView()
         
         view.image = UIImage(named: "empty avatar")
-        view.layer.borderColor = UIColor.boundsColor.cgColor
-        view.layer.borderWidth = 3
         view.layer.cornerRadius = view.frame.width / 2
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -93,6 +88,7 @@ class UserProfileView: UIView {
         
         view.font = .boldSystemFont(ofSize: 22)
         view.textColor = .textColor
+        view.textAlignment = .center
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -103,6 +99,7 @@ class UserProfileView: UIView {
         
         view.font = .boldSystemFont(ofSize: 22)
         view.textColor = .textColor
+        view.textAlignment = .center
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -111,7 +108,7 @@ class UserProfileView: UIView {
     private let editButton: UIButton = {
         let view = UIButton()
         
-        view.setTitle("Let edit", for: .normal)
+        view.setTitle(NSLocalizedString("Let edit", comment: ""), for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.backgroundColor = .systemOrange
         view.layer.cornerRadius = 10
@@ -123,7 +120,7 @@ class UserProfileView: UIView {
     private let addPostButton: UIButton = {
         let view = UIButton()
         
-        view.setTitle("Add Post", for: .normal)
+        view.setTitle(NSLocalizedString("Add Post", comment: ""), for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.backgroundColor = .systemOrange
         view.layer.cornerRadius = 10
@@ -139,10 +136,26 @@ class UserProfileView: UIView {
     }
     
     private func setupViews() {
-        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.width / 2
+        self.backgroundColor = .backgroundColor
         
         self.editButton.addTarget(self, action: #selector(self.editButtonDidTap), for: .touchUpInside)
         self.addPostButton.addTarget(self, action: #selector(self.addPostButtonDidTap), for: .touchUpInside)
+        
+        self.subscribtionsCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.goToSubscriptions)))
+        self.subscribtionsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.goToSubscriptions)))
+        self.subscribersCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.goToSubscribers)))
+        self.subscribersLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.goToSubscribers)))
+        self.subscribtionsCountLabel.isUserInteractionEnabled = true
+        self.subscribtionsLabel.isUserInteractionEnabled = true
+        self.subscribersCountLabel.isUserInteractionEnabled = true
+        self.subscribersLabel.isUserInteractionEnabled = true
+        
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.width / 2
+        self.avatarImageView.image = UIImage(data: Data(base64Encoded: self.user.image ?? (UIImage(named: "empty avatar")?.pngData()?.base64EncodedString() ?? "")) ?? Data())
+        self.userNameLabel.text = self.user.name
+        self.userWorkNameLabel.text = self.user.work
+        self.subscribersCountLabel.text = String(self.user.subscribers.count)
+        self.subscribtionsCountLabel.text = String(self.user.subscribtions.count)
         
         if isAlienUser {
             self.editButton.isHidden = true
@@ -154,10 +167,10 @@ class UserProfileView: UIView {
         self.addSubview(self.userWorkNameLabel)
         self.addSubview(self.subscribersLabel)
         self.addSubview(self.subscribtionsLabel)
-        self.addSubview(self.subscribersCountLabel)
-        self.addSubview(self.subscribtionsLabel)
         self.addSubview(self.editButton)
         self.addSubview(self.addPostButton)
+        self.addSubview(self.subscribersCountLabel)
+        self.addSubview(self.subscribtionsCountLabel)
         
         self.avatarImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(15)
@@ -165,7 +178,7 @@ class UserProfileView: UIView {
         }
         
         self.userNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.avatarImageView)
+            make.top.equalTo(self.avatarImageView).inset(15)
             make.leading.equalTo(self.avatarImageView.snp.trailing).inset(-15)
         }
         
@@ -181,7 +194,7 @@ class UserProfileView: UIView {
         
         self.subscribtionsCountLabel.snp.makeConstraints { make in
             make.top.equalTo(self.subscribtionsLabel.snp.bottom).inset(-10)
-            make.centerX.equalTo(self.subscribtionsLabel)
+            make.leading.trailing.centerX.equalTo(self.subscribtionsLabel)
         }
         
         self.subscribersLabel.snp.makeConstraints { make in
@@ -191,7 +204,7 @@ class UserProfileView: UIView {
         
         self.subscribersCountLabel.snp.makeConstraints { make in
             make.top.equalTo(self.subscribersLabel.snp.bottom).inset(-10)
-            make.centerX.equalTo(self.subscribersLabel)
+            make.leading.trailing.centerX.equalTo(self.subscribersLabel)
         }
         
         self.editButton.snp.makeConstraints { make in
@@ -213,6 +226,14 @@ class UserProfileView: UIView {
     
     @objc private func addPostButtonDidTap() {
         self.addPostButtonAction()
+    }
+    
+    @objc private func goToSubscriptions() {
+        self.subscriberSubscriptionsAction(self.user.subscribtions)
+    }
+    
+    @objc private func goToSubscribers() {
+        self.subscriberSubscriptionsAction(self.user.subscribers)
     }
 
 }

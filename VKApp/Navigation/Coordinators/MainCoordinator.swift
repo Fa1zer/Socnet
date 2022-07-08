@@ -49,6 +49,8 @@ final class MainCoordinator: TabBarCoordinatable {
             image: UIImage(systemName: "house"),
             selectedImage: UIImage(systemName: "house")
         )
+        self.navigationController.navigationBar.backgroundColor = .backgroundColor
+        self.navigationController.navigationBar.alpha = 0.8
     }
     
 }
