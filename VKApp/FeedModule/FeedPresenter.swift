@@ -19,7 +19,11 @@ final class FeedPresenter {
     
     private let router: FeedRouter
     private let interactor: FeedInteractor
-    private(set) var posts = [(post: Post, user: User)]()
+    private(set) var posts = [(post: Post, user: User)]() {
+        didSet {
+            self.callBack?()
+        }
+    }
     
     func save(post: Post, user: User) {
         self.interactor.save(post: post, user: user)
@@ -27,13 +31,15 @@ final class FeedPresenter {
     
     func getAllPosts(didNotComplete: @escaping (RequestErrors) -> Void) {
         self.interactor.getAllPost(didNotComplete: didNotComplete) { posts in
-            for post in posts {
-                self.getUser(userID: post.userID, didNotComplete: { _ in }) { user in
-                    self.posts.append((post: post, user: user))
+            DispatchQueue.main.async { [ weak self ] in
+                for post in posts {
+                    self?.getUser(userID: post.userID, didNotComplete: { _ in }) { user in
+                        self?.posts.append((post: post, user: user))
+                    }
                 }
+                
+                self?.callBack?()
             }
-            
-            self.callBack?()
         }
     }
     
@@ -41,8 +47,28 @@ final class FeedPresenter {
         self.interactor.getAllCoreDataPosts(didComplete: didComplete)
     }
     
+    func getAllCoreDataUsers(didComplete: @escaping ([UserEntity]) -> Void) {
+        self.interactor.getAllCoreDataUsers(didComplete: didComplete)
+    }
+    
+    func like(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.interactor.like(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
     private func getUser(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping (User) -> Void) {
         self.interactor.getSomeUser(userID: userID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func dislike(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.interactor.dislike(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func deletePost(post: Post) {
+        self.interactor.deletePost(post: post)
+    }
+    
+    func goToProfile(userID: UUID?, isSubscribedUser: Bool) {
+        self.router.goToProfile(userID: userID, isSubscribedUser: isSubscribedUser)
     }
     
 }

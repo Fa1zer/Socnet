@@ -12,10 +12,12 @@ import UIKit
 final class CoreDataManager: NSObject {
     
     var tableView: UITableView?
+    var collectionView: UICollectionView?
     var callBack: (() -> Void)?
+    var secondCallBack: (() -> Void)?
     
-    private let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "PostModel")
+    private let postPersistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "CoreDataPostModel")
         
         container.loadPersistentStores { storeDescription, error in
             if let error = error {
@@ -26,10 +28,44 @@ final class CoreDataManager: NSObject {
         return container
     }()
     
-    private let fetchedResultController: NSFetchedResultsController<PostEntity> = {
+    private let userPersistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "UserModel")
+        
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error {
+                fatalError("Unresolved error \(error)")
+            }
+        }
+        
+        return container
+    }()
+    
+    private let postFetchedResultController: NSFetchedResultsController<PostEntity> = {
         let request = NSFetchRequest<PostEntity>(entityName: "PostEntity")
         let sort = NSSortDescriptor(key: "date", ascending: true)
-        let container = NSPersistentContainer(name: "PostModel")
+        let container = NSPersistentContainer(name: "CoreDataPostModel")
+
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error {
+                fatalError("Unresolved error \(error)")
+            }
+        }
+
+        request.sortDescriptors = [sort]
+        request.fetchBatchSize = 20
+        
+        return NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: container.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+    }()
+    
+    private let userFetchedResultController: NSFetchedResultsController<UserEntity> = {
+        let request = NSFetchRequest<UserEntity>(entityName: "UserEntity")
+        let sort = NSSortDescriptor(key: "date", ascending: true)
+        let container = NSPersistentContainer(name: "UserModel")
 
         container.loadPersistentStores { storeDescription, error in
             if let error = error {
@@ -49,12 +85,12 @@ final class CoreDataManager: NSObject {
     }()
     
     func getPosts(didComplete: @escaping ([PostEntity]) -> Void) {
-        let context = self.persistentContainer.viewContext
+        let context = self.postPersistentContainer.viewContext
         let fetchRequest = PostEntity.fetchRequest()
         
         context.perform { [ weak self ] in
             do {
-                try self?.fetchedResultController.performFetch()
+                try self?.postFetchedResultController.performFetch()
                 
                 didComplete(try context.fetch(fetchRequest))
                 
@@ -67,17 +103,17 @@ final class CoreDataManager: NSObject {
         }
     }
     
-    func deletePost(postEntity: PostEntity, didComplete: @escaping () -> Void) {
-        let context = self.persistentContainer.viewContext
+    func deletePost(post: Post, didComplete: @escaping () -> Void) {
+        let context = self.postPersistentContainer.viewContext
         let fetchRequest = PostEntity.fetchRequest()
         
         context.perform { [ weak self ] in
             do {
-                try self?.fetchedResultController.performFetch()
+                try self?.postFetchedResultController.performFetch()
                 
                 for post in try context.fetch(fetchRequest) {
-                    if postEntity.id == post.id {
-                        context.delete(postEntity as NSManagedObject)
+                    if post.id == post.id {
+                        context.delete(post as NSManagedObject)
                         
                         break
                     }
@@ -86,6 +122,9 @@ final class CoreDataManager: NSObject {
                 try context.save()
                 
                 didComplete()
+                
+                self?.callBack?()
+                self?.tableView?.reloadData()
             } catch {
                 print(error.localizedDescription)
                 
@@ -94,8 +133,8 @@ final class CoreDataManager: NSObject {
         }
     }
     
-    func save(post: Post, user: User) {
-        let context = self.persistentContainer.newBackgroundContext()
+    func savePost(post: Post, user: User) {
+        let context = self.postPersistentContainer.newBackgroundContext()
         
         guard let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context) else {
             return
@@ -124,12 +163,86 @@ final class CoreDataManager: NSObject {
         }
     }
     
+    func getUsers(didComplete: @escaping ([UserEntity]) -> Void) {
+        let context = self.userPersistentContainer.viewContext
+        let fetchRequest = UserEntity.fetchRequest()
+        
+        context.perform { [ weak self ] in
+            do {
+                try self?.userFetchedResultController.performFetch()
+                
+                didComplete(try context.fetch(fetchRequest))
+                
+                self?.collectionView?.reloadData()
+            } catch {
+                print(error.localizedDescription)
+                
+                didComplete([])
+            }
+        }
+    }
+    
+    func deleteUser(user: User, didComplete: @escaping () -> Void) {
+        let context = self.userPersistentContainer.viewContext
+        let fetchRequest = UserEntity.fetchRequest()
+        
+        context.perform { [ weak self ] in
+            do {
+                try self?.userFetchedResultController.performFetch()
+                
+                for user in try context.fetch(fetchRequest) {
+                    if user.id == user.id {
+                        context.delete(user as NSManagedObject)
+                        
+                        break
+                    }
+                }
+                                
+                try context.save()
+                
+                didComplete()
+                
+                self?.secondCallBack?()
+                self?.collectionView?.reloadSections(IndexSet(integer: 0))
+            } catch {
+                print(error.localizedDescription)
+                
+                return
+            }
+        }
+    }
+    
+    func saveUser(user: User) {
+        let context = self.userPersistentContainer.newBackgroundContext()
+        
+        guard let entity = NSEntityDescription.entity(forEntityName: "UserEntity", in: context) else {
+            return
+        }
+        
+        let userEntity = UserEntity(entity: entity, insertInto: context)
+        
+        userEntity.id = user.id
+        userEntity.date = Date()
+        userEntity.image = Data(base64Encoded: user.image ?? "")
+        
+        do {
+            try context.save()
+            
+            self.secondCallBack?()
+            self.collectionView?.reloadSections(IndexSet(integer: 0))
+        } catch {
+            print(error.localizedDescription)
+            
+            return
+        }
+    }
+    
 }
 
 extension CoreDataManager: NSFetchedResultsControllerDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.fetchedResultController.sections?.count ?? 0
+        return self.postFetchedResultController.sections?.count ?? 0
     }
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

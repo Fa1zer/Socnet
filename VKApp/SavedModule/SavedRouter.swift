@@ -11,4 +11,8 @@ final class SavedRouter: SavedCoordnatable {
     
     var coordinatorDelegate: SavedCoordnator?
     
+    func goToProfile(userID: UUID?, isSubscribedUser: Bool) {
+        self.coordinatorDelegate?.goToProfile(userID: userID, isSubscribedUser: isSubscribedUser)
+    }
+    
 }

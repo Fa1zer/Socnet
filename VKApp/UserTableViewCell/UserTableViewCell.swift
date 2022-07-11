@@ -57,7 +57,7 @@ class UserTableViewCell: UITableViewCell {
     private let userWorkNameLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .systemGray6
+        label.textColor = .systemGray
         label.font = .boldSystemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -77,6 +77,8 @@ class UserTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
+        self.backgroundColor = .backgroundColor
+        
         self.contentView.addSubview(self.userAvatarImageView)
         self.contentView.addSubview(self.userNameLabel)
         self.contentView.addSubview(self.userWorkNameLabel)

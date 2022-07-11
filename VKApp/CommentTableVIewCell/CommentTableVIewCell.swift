@@ -72,6 +72,8 @@ class CommentTableVIewCell: UITableViewCell {
     }()
     
     private func setuViews() {
+        self.backgroundColor = .backgroundColor
+        
         self.userAvatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarImageViewDidTap)))
         self.userNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarImageViewDidTap)))
         
