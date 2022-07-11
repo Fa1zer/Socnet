@@ -14,15 +14,16 @@ protocol SavedCoordnatable {
 
 final class SavedCoordnator: TabBarCoordinatable {
     
-    init(dataManager: DataManager, coreDataManager: CoreDataManager) {
+    init(dataManager: DataManager, coreDataManager: CoreDataManager, tabBarDelegate: TabBarController) {
         self.dataManager = dataManager
         self.coreDataManager = coreDataManager
+        self.tabBarDelegate = tabBarDelegate
         
         self.setupViews()
         self.start()
     }
     
-    var tabBarDelegate: TabBarController?
+    var tabBarDelegate: TabBarController
     private let dataManager: DataManager
     private let coreDataManager: CoreDataManager
         
@@ -34,7 +35,7 @@ final class SavedCoordnator: TabBarCoordinatable {
     
     func goToSaved() {
         let router = SavedRouter()
-        let interacotr = SavedInteractor(coreDataManager: self.coreDataManager)
+        let interacotr = SavedInteractor(coreDataManager: self.coreDataManager, dataManager: self.dataManager)
         let presenter = SavedPresenter(router: router, interactor: interacotr)
         let viewController = SavedViewController(presenter: presenter)
         
@@ -42,6 +43,16 @@ final class SavedCoordnator: TabBarCoordinatable {
         
         self.coreDataManager.tableView = viewController.tableView
         self.coreDataManager.callBack = presenter.getPosts
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func goToProfile(userID: UUID?, isSubscribedUser: Bool) {
+        let router = ProfileRouter()
+        let interactor = ProfileInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        let presenter = ProfilePresenter(router: router, interactor: interactor, isAlienUser: true, isSubscribedUser: isSubscribedUser, userID: userID)
+        let viewController = ProfileViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: RegistrationManager(dataManager: self.dataManager), keychainManager: KeychainManager(), tabBarDelegate: self.tabBarDelegate)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }

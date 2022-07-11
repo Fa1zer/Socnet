@@ -21,6 +21,10 @@ final class ProfileInteractor {
         self.dataManager.getUser(didComplete: didComplete, didNotComplete: didNotComplete)
     }
     
+    func getSomeUser(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping (User) -> Void) {
+        self.dataManager.getSomeUser(userID: userID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
     func getAllUserPosts(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping ([Post]) -> Void) {
         self.dataManager.getAllUserPosts(userID: userID, didNotComplete: didNotComplete, didComplete: didComplete)
     }
@@ -34,7 +38,31 @@ final class ProfileInteractor {
     }
     
     func save(post: Post, user: User) {
-        self.coreDataManager.save(post: post, user: user)
+        self.coreDataManager.savePost(post: post, user: user)
+    }
+    
+    func dislike(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.dataManager.dislike(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func deletePost(post: Post) {
+        self.coreDataManager.deletePost(post: post, didComplete: { })
+    }
+    
+    func subscribe(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.dataManager.subscribe(userID: userID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func unsubscribe(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.dataManager.unsubscribe(userID: userID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func saveUser(user: User) {
+        self.coreDataManager.saveUser(user: user)
+    }
+    
+    func deleteUser(user: User) {
+        self.coreDataManager.deleteUser(user: user) { }
     }
     
 }

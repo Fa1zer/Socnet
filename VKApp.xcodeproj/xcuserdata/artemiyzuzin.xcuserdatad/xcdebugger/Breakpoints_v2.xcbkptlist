@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1F876254-EC90-4C8F-9A1F-366DBBACCB80"
+            uuid = "766AD07E-3104-4720-93BB-C05B3DA65D46"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VKApp/DataManager/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "auth(email:password:didComplete:didNotComplete:)"
+            startingLineNumber = "759"
+            endingLineNumber = "759"
+            landmarkName = "like(postID:didNotComplete:didComplete:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B7061781-B0DC-415B-98DB-3C8E89AD1375"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/CoreData/CoreDataManager/CoreDataManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "savePost(post:user:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -21,6 +21,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     var likeAction: ((Post, User) -> Void)?
+    var dislikeAction: ((Post, User) -> Void)?
     var commentAction: ((Post, User) -> Void)?
     var avatarAction: ((User) -> Void)?
     var post: Post? {
@@ -61,6 +62,10 @@ class PostTableViewCell: UITableViewCell {
                 self.likeButton.isSelected = true
                 self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .selected)
                 self.likeButton.tintColor = .systemRed
+            } else {
+                self.likeButton.isSelected = true
+                self.likeButton.setImage(UIImage(systemName: "heart"), for: .selected)
+                self.likeButton.tintColor = .textColor
             }
         }
     }
@@ -212,17 +217,30 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @objc private func likeButtonDidTap() {
-        guard !(self.likeButtonIsSelected ?? true) else { return }
-        
-        self.post?.likes += 1
-        self.likeButtonIsSelected = true
-        
-        guard let post = self.post,
-              let user = self.user else {
-            return
+        if !(self.likeButtonIsSelected ?? true) {
+            self.post?.likes += 1
+            self.likeButtonIsSelected = true
+            
+            guard let post = self.post,
+                  let user = self.user else {
+                return
+            }
+            
+            self.likeAction?(post, user)
+        } else {
+            if self.likeAction != nil {
+                self.post?.likes -= 1
+            }
+            
+            self.likeButtonIsSelected = false
+            
+            guard let post = self.post,
+                  let user = self.user else {
+                return
+            }
+            
+            self.dislikeAction?(post, user)
         }
-        
-        self.likeAction?(post, user)
     }
     
     @objc private func commentButtonDidTap() {

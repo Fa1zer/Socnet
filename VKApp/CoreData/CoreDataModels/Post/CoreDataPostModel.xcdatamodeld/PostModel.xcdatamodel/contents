@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="CoreDataPostModel">
     <entity name="PostEntity" representedClassName="PostEntity" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -7,10 +7,10 @@
         <attribute name="likes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="userID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="userImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="userImage" optional="YES" attributeType="Binary"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="PostEntity" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="PostEntity" positionX="-27" positionY="18" width="76.3443603515625" height="163"/>
     </elements>
 </model>

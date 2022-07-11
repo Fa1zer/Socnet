@@ -16,16 +16,32 @@ class ProfileViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter.callBack = self.tableView.reloadData
-        self.presenter.getUser { [ weak self ] error in
-            switch error {
-            case .statusCodeError(let number):
-                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-            case .decodeFailed:
-                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-            default:
-                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                
-                break
+        
+        if self.presenter.isAlienUser {
+            self.presenter.getSomeUser { [ weak self ] error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            }
+        } else {
+            self.presenter.getUser { [ weak self ] error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
             }
         }
     }
@@ -117,6 +133,26 @@ extension ProfileViewController: UITableViewDataSource {
                 self?.presenter.save(post: post, user: user)
             }
         }
+        cell.dislikeAction = { [ weak self ] post, _ in
+            guard let id = post.id else {
+                return
+            }
+            
+            self?.presenter.dislike(postID: id) { error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            } didComplete: {
+                self?.presenter.deletePost(post: post)
+            }
+        }
         self.presenter.getAllCoreDataPosts { posts in
             if posts.contains(where: { $0.id == cell.post?.id }) {
                 cell.likeButtonIsSelected = true
@@ -147,14 +183,44 @@ extension ProfileViewController: UITableViewDelegate {
             return nil
         }
         
-        return UserProfileView(user: user, isAlienUser: self.presenter.isAlienUser) {
+        return UserProfileView(user: user, isAlienUser: self.presenter.isAlienUser, isSubscribedUser: self.presenter.isSubscribedUser) {
             self.presenter.goToEdit()
         } addPostButtonAction: {
             // push add post controller
         } subscriberSubscriptionsAction: { usersId in
             // push find view controller
-        }
+        } subscribeAction: { user in
+            self.presenter.subscribe(userID: user.id ?? UUID()) { [ weak self ] error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            } didComplete: {
+                self.presenter.saveUser(user: user)
+            }
+        } unsubscribeAction: { user in
+            self.presenter.unsubscribe(userID: user.id ?? UUID()) { [ weak self ] error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            } didComplete: {
+                self.presenter.deleteUser(user: user)
+            }
 
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -162,7 +228,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return (self.view.frame.width / 4) + 260
+        return (self.view.frame.width / 4) + 340
     }
     
 }

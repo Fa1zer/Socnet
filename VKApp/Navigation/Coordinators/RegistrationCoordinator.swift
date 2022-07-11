@@ -60,6 +60,17 @@ final class RegistrationCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func goToLogOut() {
+        let router = EditRouter()
+        let interactor = EditInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
+        let presenter = EditPresenter(interactor: interactor, router: router, isFirstEdit: false)
+        let viewController = EditViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = self
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
     func goToTabBar() {
         let tabBarController = TabBarController(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
         

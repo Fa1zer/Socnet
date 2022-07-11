@@ -68,6 +68,20 @@ final class URLConstructor {
             .appendingPathComponent(userID.uuidString)
     }
     
+    func userSubscribtions(userID: UUID) -> URL {
+        self.baseURLString
+            .appendingPathComponent(URLPaths.user.rawValue)
+            .appendingPathComponent(URLPaths.subscribtions.rawValue)
+            .appendingPathComponent(userID.uuidString)
+    }
+    
+    func userSubscribers(userID: UUID) -> URL {
+        self.baseURLString
+            .appendingPathComponent(URLPaths.user.rawValue)
+            .appendingPathComponent(URLPaths.subscribers.rawValue)
+            .appendingPathComponent(userID.uuidString)
+    }
+    
     func userPosts(userID: UUID) -> URL {
         self.baseURLString
             .appendingPathComponent(URLPaths.users.rawValue)

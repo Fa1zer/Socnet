@@ -10,14 +10,24 @@ import SnapKit
 
 class UserProfileView: UIView {
     
-    init(user: User, isAlienUser: Bool, editButtonAction: @escaping () -> Void, addPostButtonAction: @escaping () -> Void, subscriberSubscriptionsAction: @escaping ([UUID]) -> Void) {
+    init(user: User, isAlienUser: Bool, isSubscribedUser: Bool, editButtonAction: @escaping () -> Void, addPostButtonAction: @escaping () -> Void, subscriberSubscriptionsAction: @escaping ([UUID]) -> Void, subscribeAction: @escaping (User) -> Void, unsubscribeAction: @escaping (User) -> Void) {
         self.user = user
         self.editButtonAction = editButtonAction
         self.addPostButtonAction = addPostButtonAction
         self.subscriberSubscriptionsAction = subscriberSubscriptionsAction
         self.isAlienUser = isAlienUser
+        self.subscribeAction = subscribeAction
+        self.unsubscribeAction = unsubscribeAction
+        self.isSubscribedUser = isSubscribedUser
         
         super.init(frame: .zero)
+        
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.width / 2
+        self.avatarImageView.image = UIImage(data: Data(base64Encoded: self.user.image ?? (UIImage(named: "empty avatar")?.pngData()?.base64EncodedString() ?? "")) ?? Data())
+        self.userNameLabel.text = self.user.name
+        self.userWorkNameLabel.text = self.user.work
+        self.subscribersCountLabel.text = String(self.user.subscribers.count)
+        self.subscribtionsCountLabel.text = String(self.user.subscribtions.count)
     }
     
     required init?(coder: NSCoder) {
@@ -27,7 +37,10 @@ class UserProfileView: UIView {
     private let editButtonAction: () -> Void
     private let addPostButtonAction: () -> Void
     private let subscriberSubscriptionsAction: ([UUID]) -> Void
+    private let subscribeAction: (User) -> Void
+    private let unsubscribeAction: (User) -> Void
     private let isAlienUser: Bool
+    private var isSubscribedUser: Bool
     private var user: User
     
     private let avatarImageView: UIImageView = {
@@ -75,7 +88,7 @@ class UserProfileView: UIView {
     private let subscribtionsLabel: UILabel = {
         let view = UILabel()
         
-        view.text = NSLocalizedString("Subscribers", comment: "")
+        view.text = NSLocalizedString("Subscribtions", comment: "")
         view.font = .boldSystemFont(ofSize: 22)
         view.textColor = .textColor
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -129,6 +142,16 @@ class UserProfileView: UIView {
         return view
     }()
     
+    private let subscribeButton: UIButton = {
+        let view = UIButton()
+        
+        view.isHidden = true
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -140,6 +163,7 @@ class UserProfileView: UIView {
         
         self.editButton.addTarget(self, action: #selector(self.editButtonDidTap), for: .touchUpInside)
         self.addPostButton.addTarget(self, action: #selector(self.addPostButtonDidTap), for: .touchUpInside)
+        self.subscribeButton.addTarget(self, action: #selector(self.subscribeButtonDidTap), for: .touchUpInside)
         
         self.subscribtionsCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.goToSubscriptions)))
         self.subscribtionsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.goToSubscriptions)))
@@ -150,16 +174,20 @@ class UserProfileView: UIView {
         self.subscribersCountLabel.isUserInteractionEnabled = true
         self.subscribersLabel.isUserInteractionEnabled = true
         
-        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.width / 2
-        self.avatarImageView.image = UIImage(data: Data(base64Encoded: self.user.image ?? (UIImage(named: "empty avatar")?.pngData()?.base64EncodedString() ?? "")) ?? Data())
-        self.userNameLabel.text = self.user.name
-        self.userWorkNameLabel.text = self.user.work
-        self.subscribersCountLabel.text = String(self.user.subscribers.count)
-        self.subscribtionsCountLabel.text = String(self.user.subscribtions.count)
-        
-        if isAlienUser {
+        if self.isAlienUser {
             self.editButton.isHidden = true
             self.addPostButton.isHidden = true
+            self.subscribeButton.isHidden = false
+        }
+        
+        if self.isSubscribedUser {
+            self.subscribeButton.setTitle(NSLocalizedString("Unsubscribe", comment: ""), for: .normal)
+            self.subscribeButton.setTitleColor(.black, for: .normal)
+            self.subscribeButton.backgroundColor = .systemGray
+        } else {
+            self.subscribeButton.setTitle(NSLocalizedString("Subscribe", comment: ""), for: .normal)
+            self.subscribeButton.setTitleColor(.white, for: .normal)
+            self.subscribeButton.backgroundColor = .systemOrange
         }
         
         self.addSubview(self.avatarImageView)
@@ -171,6 +199,7 @@ class UserProfileView: UIView {
         self.addSubview(self.addPostButton)
         self.addSubview(self.subscribersCountLabel)
         self.addSubview(self.subscribtionsCountLabel)
+        self.addSubview(self.subscribeButton)
         
         self.avatarImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(15)
@@ -198,12 +227,12 @@ class UserProfileView: UIView {
         }
         
         self.subscribersLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.avatarImageView.snp.bottom).inset(-25)
+            make.centerY.equalTo(self.subscribtionsLabel)
             make.centerX.equalToSuperview().multipliedBy(1.5)
         }
         
         self.subscribersCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.subscribersLabel.snp.bottom).inset(-10)
+            make.centerY.equalTo(self.subscribtionsCountLabel)
             make.leading.trailing.centerX.equalTo(self.subscribersLabel)
         }
         
@@ -216,6 +245,12 @@ class UserProfileView: UIView {
         self.addPostButton.snp.makeConstraints { make in
             make.top.equalTo(self.editButton.snp.bottom).inset(-15)
             make.leading.trailing.equalToSuperview().inset(15)
+            make.height.equalTo(50)
+        }
+        
+        self.subscribeButton.snp.makeConstraints { make in
+            make.top.equalTo(self.addPostButton.snp.bottom).inset(-15)
+            make.leading.trailing.bottom.equalToSuperview().inset(15)
             make.height.equalTo(50)
         }
     }
@@ -234,6 +269,31 @@ class UserProfileView: UIView {
     
     @objc private func goToSubscribers() {
         self.subscriberSubscriptionsAction(self.user.subscribers)
+    }
+    
+    @objc private func subscribeButtonDidTap() {
+        if self.isSubscribedUser {
+            self.isSubscribedUser = false
+            self.subscribeButton.setTitle(NSLocalizedString("Subscribe", comment: ""), for: .normal)
+            self.subscribeButton.setTitleColor(.white, for: .normal)
+            self.subscribeButton.backgroundColor = .systemOrange
+            self.subscribersCountLabel.text = "\((Int(self.subscribersCountLabel.text ?? "1") ?? 1) - 1)"
+            self.layoutSubviews()
+            
+            self.unsubscribeAction(user)
+        } else {
+            self.isSubscribedUser = true
+            self.subscribeButton.setTitle(NSLocalizedString("Unsubscribe", comment: ""), for: .normal)
+            self.subscribeButton.setTitleColor(.black, for: .normal)
+            self.subscribeButton.backgroundColor = .systemGray
+            self.subscribersCountLabel.text = "\((Int(self.subscribersCountLabel.text ?? "1") ?? 1) + 1)"
+            
+            self.subscribeAction(user)
+        }
+    }
+    
+    @objc private func unsubscribeButtonDidTap() {
+        self.unsubscribeAction(user)
     }
 
 }

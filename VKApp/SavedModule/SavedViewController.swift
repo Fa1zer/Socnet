@@ -25,6 +25,7 @@ class SavedViewController: UIViewController {
     let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -66,11 +67,11 @@ class SavedViewController: UIViewController {
         self.view.addSubview(self.emptyLabel)
         
         self.tableView.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalToSuperview()
+            make.top.leading.trailing.bottom.equalToSuperview()
         }
         
         self.emptyLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.center.equalTo(self.tableView)
         }
     }
 
@@ -86,20 +87,33 @@ extension SavedViewController: UITableViewDataSource {
         cell.post = self.presenter.posts[indexPath.row].post
         cell.user = self.presenter.posts[indexPath.row].user
         cell.likeButtonIsSelected = true
-        cell.likeAction = { [ weak self ] post, _ in
-            let entity = PostEntity()
+        cell.dislikeAction = {  [ weak self ] post, user in
+            guard let id = post.id else {
+                return
+            }
             
-            entity.id = post.id
-            
-            self?.presenter.deletePost(postEntity: entity) {
-                self?.presenter.getPosts()
+            self?.presenter.dislike(postID: id) { error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            } didComplete: {
+                self?.presenter.deletePost(post: post) {
+                    self?.presenter.getPosts()
+                }
             }
         }
         cell.commentAction = { post, user in
             // push comment view controller
         }
-        cell.avatarAction = { user in
-            // push profile view controller
+        cell.avatarAction = { [ weak self ] user in
+            self?.presenter.goToProfile(userID: user.id)
         }
         
         return cell
@@ -107,9 +121,7 @@ extension SavedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = self.presenter.posts.count
-        
-        print(count)
-        
+                
         if count == 0 {
             self.emptyLabel.isHidden = false
             self.tableView.isHidden = true

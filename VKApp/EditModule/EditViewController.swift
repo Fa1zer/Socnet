@@ -176,6 +176,7 @@ class EditViewController: UIViewController {
         self.avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.showImagePickerController)))
         
         self.saveButton.addTarget(self, action: #selector(self.editUser), for: .touchUpInside)
+        self.logOutButton.addTarget(self, action: #selector(self.logOut), for: .touchUpInside)
         
         self.view.addSubview(self.scrollView)
         self.view.addSubview(self.translucentView)
@@ -204,7 +205,7 @@ class EditViewController: UIViewController {
         }
         
         self.avatarImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).inset(25)
+            make.top.equalToSuperview().inset(25)
             make.centerX.equalToSuperview()
             make.height.width.equalTo(200)
         }
@@ -235,12 +236,24 @@ class EditViewController: UIViewController {
             make.top.equalTo(self.workNameTextField.snp.bottom).inset(-25)
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(15)
             make.height.equalTo(50)
+            
+            if self.presenter.isFirstEdit {
+                self.logOutButton.snp.makeConstraints { make in
+                    make.bottom.equalToSuperview().inset(15)
+                }
+            }
         }
         
         self.logOutButton.snp.makeConstraints { make in
             make.top.equalTo(self.saveButton.snp.bottom).inset(-25)
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(15)
             make.height.equalTo(50)
+            
+            if !self.presenter.isFirstEdit {
+                self.logOutButton.snp.makeConstraints { make in
+                    make.bottom.equalToSuperview().inset(15)
+                }
+            }
         }
         
         if self.presenter.isFirstEdit {

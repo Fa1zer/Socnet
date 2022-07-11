@@ -2,7 +2,7 @@
 //  PostEntity+CoreDataClass.swift
 //  VKApp
 //
-//  Created by Artemiy Zuzin on 04.07.2022.
+//  Created by Artemiy Zuzin on 10.07.2022.
 //
 //
 

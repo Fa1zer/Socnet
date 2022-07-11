@@ -14,15 +14,16 @@ protocol MainCoordinatable {
 
 final class MainCoordinator: TabBarCoordinatable {
     
-    init(dataManager: DataManager, coreDataManager: CoreDataManager) {
+    init(dataManager: DataManager, coreDataManager: CoreDataManager, tabBarDelegate: TabBarController) {
         self.dataManager = dataManager
         self.coreDataManager = coreDataManager
+        self.tabBarDelegate = tabBarDelegate
         
         self.setupViews()
         self.start()
     }
     
-    var tabBarDelegate: TabBarController?
+    var tabBarDelegate: TabBarController
     private let dataManager: DataManager
     private let coreDataManager: CoreDataManager
     
@@ -39,6 +40,17 @@ final class MainCoordinator: TabBarCoordinatable {
         let viewController = FeedViewController(presenter: presenter)
         
         router.coordinatorDelegate = self
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func goToProfile(userID: UUID?, isSubscribedUser: Bool) {
+        let router = ProfileRouter()
+        let interactor = ProfileInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        let presenter = ProfilePresenter(router: router, interactor: interactor, isAlienUser: true, isSubscribedUser: isSubscribedUser, userID: userID)
+        let viewController = ProfileViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: RegistrationManager(dataManager: self.dataManager), keychainManager: KeychainManager(), tabBarDelegate: self.tabBarDelegate)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }

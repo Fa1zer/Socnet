@@ -45,8 +45,16 @@ final class SavedPresenter {
         }
     }
     
-    func deletePost(postEntity: PostEntity, didComplete: @escaping () -> Void) {
-        self.interactor.deletePost(postEntity: postEntity, didComplete: didComplete)
+    func deletePost(post: Post, didComplete: @escaping () -> Void) {
+        self.interactor.deletePost(post: post, didComplete: didComplete)
+    }
+    
+    func dislike(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.interactor.dislike(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func goToProfile(userID: UUID?) {
+        self.router.goToProfile(userID: userID, isSubscribedUser: true)
     }
     
 }

@@ -53,11 +53,15 @@
 		E3B2B20C2874472100F08800 /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B2B20B2874472100F08800 /* FeedPresenter.swift */; };
 		E3B2B20E2874472F00F08800 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B2B20D2874472F00F08800 /* FeedViewController.swift */; };
 		E3B2B21128757AC200F08800 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E3B2B21328757AC200F08800 /* Localizable.stringsdict */; };
-		E3B378C7287305A1007D09F5 /* PostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3B378C5287305A1007D09F5 /* PostModel.xcdatamodeld */; };
 		E3B378CA28730788007D09F5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B378C928730788007D09F5 /* CoreDataManager.swift */; };
-		E3B378D128730F7C007D09F5 /* PostEntitie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B378CF28730F7C007D09F5 /* PostEntitie+CoreDataClass.swift */; };
-		E3B378D228730F7C007D09F5 /* PostEntitie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B378D028730F7C007D09F5 /* PostEntitie+CoreDataProperties.swift */; };
 		E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C404712869E5C60004C5AE /* RegistrationManager.swift */; };
+		E3D122A6287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3D122A4287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld */; };
+		E3D122A9287B34A400F51DD9 /* UserModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3D122A7287B34A400F51DD9 /* UserModel.xcdatamodeld */; };
+		E3D122AE287B350400F51DD9 /* PostEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122AC287B350400F51DD9 /* PostEntity+CoreDataClass.swift */; };
+		E3D122AF287B350400F51DD9 /* PostEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122AD287B350400F51DD9 /* PostEntity+CoreDataProperties.swift */; };
+		E3D122B2287B351700F51DD9 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122B0287B351700F51DD9 /* UserEntity+CoreDataClass.swift */; };
+		E3D122B3287B351700F51DD9 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122B1287B351700F51DD9 /* UserEntity+CoreDataProperties.swift */; };
+		E3D122B6287B542500F51DD9 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122B5287B542500F51DD9 /* UserCollectionViewCell.swift */; };
 		E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */; };
 		E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */; };
 		E3DEE6A8286A19CC0003D543 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A7286A19CC0003D543 /* RegistrationPresenter.swift */; };
@@ -122,11 +126,15 @@
 		E3B2B20D2874472F00F08800 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		E3B2B21228757AC200F08800 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E3B2B21428757AC400F08800 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
-		E3B378C6287305A1007D09F5 /* PostModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostModel.xcdatamodel; sourceTree = "<group>"; };
 		E3B378C928730788007D09F5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		E3B378CF28730F7C007D09F5 /* PostEntitie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEntitie+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E3B378D028730F7C007D09F5 /* PostEntitie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEntitie+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E3C404712869E5C60004C5AE /* RegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
+		E3D122A5287B33E300F51DD9 /* PostModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostModel.xcdatamodel; sourceTree = "<group>"; };
+		E3D122A8287B34A400F51DD9 /* UserModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserModel.xcdatamodel; sourceTree = "<group>"; };
+		E3D122AC287B350400F51DD9 /* PostEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E3D122AD287B350400F51DD9 /* PostEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E3D122B0287B351700F51DD9 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E3D122B1287B351700F51DD9 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E3D122B5287B542500F51DD9 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewCell.swift; sourceTree = "<group>"; };
 		E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
 		E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationInteractor.swift; sourceTree = "<group>"; };
 		E3DEE6A7286A19CC0003D543 /* RegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPresenter.swift; sourceTree = "<group>"; };
@@ -195,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E3D122B4287B524700F51DD9 /* UserCollectionViewCell */,
 				E310500F2875ED0000673CBD /* UserProfileView */,
 				E31050042875E13A00673CBD /* ProfileModule */,
 				E3B2B2062874468E00F08800 /* FeedModule */,
@@ -355,20 +364,10 @@
 		E3B378C328730545007D09F5 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				E3D122A3287B33C800F51DD9 /* CoreDataModels */,
 				E3B378C828730770007D09F5 /* CoreDataManager */,
-				E3B378C428730567007D09F5 /* CoreDataModels */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		E3B378C428730567007D09F5 /* CoreDataModels */ = {
-			isa = PBXGroup;
-			children = (
-				E3B378CF28730F7C007D09F5 /* PostEntitie+CoreDataClass.swift */,
-				E3B378D028730F7C007D09F5 /* PostEntitie+CoreDataProperties.swift */,
-				E3B378C5287305A1007D09F5 /* PostModel.xcdatamodeld */,
-			);
-			path = CoreDataModels;
 			sourceTree = "<group>";
 		};
 		E3B378C828730770007D09F5 /* CoreDataManager */ = {
@@ -394,6 +393,43 @@
 				E3F50B9A28675C98008A842D /* RequestErrors.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		E3D122A3287B33C800F51DD9 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				E3D122AB287B34EB00F51DD9 /* Post */,
+				E3D122AA287B34E100F51DD9 /* User */,
+			);
+			path = CoreDataModels;
+			sourceTree = "<group>";
+		};
+		E3D122AA287B34E100F51DD9 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				E3D122B0287B351700F51DD9 /* UserEntity+CoreDataClass.swift */,
+				E3D122B1287B351700F51DD9 /* UserEntity+CoreDataProperties.swift */,
+				E3D122A7287B34A400F51DD9 /* UserModel.xcdatamodeld */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		E3D122AB287B34EB00F51DD9 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				E3D122AC287B350400F51DD9 /* PostEntity+CoreDataClass.swift */,
+				E3D122AD287B350400F51DD9 /* PostEntity+CoreDataProperties.swift */,
+				E3D122A4287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		E3D122B4287B524700F51DD9 /* UserCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				E3D122B5287B542500F51DD9 /* UserCollectionViewCell.swift */,
+			);
+			path = UserCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		E3DEE6A2286A192C0003D543 /* RegistrationModule */ = {
@@ -531,11 +567,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3B16A01286F102700792BF9 /* EditInteractor.swift in Sources */,
+				E3D122B2287B351700F51DD9 /* UserEntity+CoreDataClass.swift in Sources */,
 				E344EE2428686659007ABF86 /* HTTPHeaders.swift in Sources */,
 				E3B169FF286F101700792BF9 /* EditRouter.swift in Sources */,
 				E3F50B9928675A9D008A842D /* URLConstructor.swift in Sources */,
 				E3B2B20C2874472100F08800 /* FeedPresenter.swift in Sources */,
 				E3B16A05286F104A00792BF9 /* EditViewController.swift in Sources */,
+				E3D122AE287B350400F51DD9 /* PostEntity+CoreDataClass.swift in Sources */,
 				E3F50BA128677556008A842D /* DataManager.swift in Sources */,
 				E3B2B20E2874472F00F08800 /* FeedViewController.swift in Sources */,
 				E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */,
@@ -544,9 +582,8 @@
 				E310500A2875E16E00673CBD /* ProfilePresenter.swift in Sources */,
 				E3B2B208287446B400F08800 /* FeedRouter.swift in Sources */,
 				E3A90D47286A2D520053F1CD /* RegistrationMode.swift in Sources */,
-				E3B378C7287305A1007D09F5 /* PostModel.xcdatamodeld in Sources */,
-				E3B378D128730F7C007D09F5 /* PostEntitie+CoreDataClass.swift in Sources */,
 				E31EFE1B2871ED3B0026A36C /* UserTableViewCell.swift in Sources */,
+				E3D122AF287B350400F51DD9 /* PostEntity+CoreDataProperties.swift in Sources */,
 				E3556DF92873337300955765 /* SavedPresenter.swift in Sources */,
 				E3A1B225286ADA5D00D666CE /* OnboardingInteractor.swift in Sources */,
 				E344EE262868727E007ABF86 /* SignInErrors.swift in Sources */,
@@ -556,12 +593,12 @@
 				E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */,
 				E3DEE6A8286A19CC0003D543 /* RegistrationPresenter.swift in Sources */,
 				E31050112875ED9000673CBD /* UserProfileView.swift in Sources */,
-				E3B378D228730F7C007D09F5 /* PostEntitie+CoreDataProperties.swift in Sources */,
 				E31FBE7028634A8D00D41304 /* ProfileCoordnator.swift in Sources */,
 				E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */,
 				E3A90D4E286A4B0B0053F1CD /* CustomScrollView.swift in Sources */,
 				E3A1B227286ADA6D00D666CE /* OnboardingPresenter.swift in Sources */,
 				E3F50B90286757A8008A842D /* Comment.swift in Sources */,
+				E3D122A6287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld in Sources */,
 				E3137E772850FAFE005FC3F9 /* AppDelegate.swift in Sources */,
 				E3DEE6AA286A19EF0003D543 /* RegistrationViewController.swift in Sources */,
 				E3B16A03286F103B00792BF9 /* EditPresenter.swift in Sources */,
@@ -576,6 +613,7 @@
 				E3F50B9B28675C99008A842D /* RequestErrors.swift in Sources */,
 				E3B378CA28730788007D09F5 /* CoreDataManager.swift in Sources */,
 				E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */,
+				E3D122B6287B542500F51DD9 /* UserCollectionViewCell.swift in Sources */,
 				E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */,
 				E344EE22286865C0007ABF86 /* HTTPMethods.swift in Sources */,
 				E39D4F022870A54D00E00F8B /* PostTableViewCell.swift in Sources */,
@@ -584,10 +622,12 @@
 				E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */,
 				E31050062875E15600673CBD /* ProfileRouter.swift in Sources */,
 				E3F50B97286759B0008A842D /* URLPaths.swift in Sources */,
+				E3D122B3287B351700F51DD9 /* UserEntity+CoreDataProperties.swift in Sources */,
 				E3F50B9228675845008A842D /* UserToken.swift in Sources */,
 				E321DA022871A5BF00F524B4 /* CommentTableVIewCell.swift in Sources */,
 				E3A1B229286ADA7900D666CE /* OnboardingViewController.swift in Sources */,
 				E3A90D4A286A31CF0053F1CD /* CustomUIViewController.swift in Sources */,
+				E3D122A9287B34A400F51DD9 /* UserModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,13 +887,23 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		E3B378C5287305A1007D09F5 /* PostModel.xcdatamodeld */ = {
+		E3D122A4287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				E3B378C6287305A1007D09F5 /* PostModel.xcdatamodel */,
+				E3D122A5287B33E300F51DD9 /* PostModel.xcdatamodel */,
 			);
-			currentVersion = E3B378C6287305A1007D09F5 /* PostModel.xcdatamodel */;
-			path = PostModel.xcdatamodeld;
+			currentVersion = E3D122A5287B33E300F51DD9 /* PostModel.xcdatamodel */;
+			path = CoreDataPostModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		E3D122A7287B34A400F51DD9 /* UserModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E3D122A8287B34A400F51DD9 /* UserModel.xcdatamodel */,
+			);
+			currentVersion = E3D122A8287B34A400F51DD9 /* UserModel.xcdatamodel */;
+			path = UserModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

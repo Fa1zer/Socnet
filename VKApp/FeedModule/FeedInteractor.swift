@@ -18,7 +18,7 @@ final class FeedInteractor {
     private let coreDataManager: CoreDataManager
     
     func save(post: Post, user: User) {
-        self.coreDataManager.save(post: post, user: user)
+        self.coreDataManager.savePost(post: post, user: user)
     }
     
     func getAllPost(didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping ([Post]) -> Void) {
@@ -33,8 +33,20 @@ final class FeedInteractor {
         self.coreDataManager.getPosts(didComplete: didComplete)
     }
     
+    func getAllCoreDataUsers(didComplete: @escaping ([UserEntity]) -> Void) {
+        self.coreDataManager.getUsers(didComplete: didComplete)
+    }
+    
     func like(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
         self.dataManager.like(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func dislike(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        self.dataManager.dislike(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
+    }
+    
+    func deletePost(post: Post) {
+        self.coreDataManager.deletePost(post: post, didComplete: { })
     }
     
 }

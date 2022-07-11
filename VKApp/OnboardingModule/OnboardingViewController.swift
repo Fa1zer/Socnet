@@ -68,6 +68,7 @@ class OnboardingViewController: UIViewController {
     
     private func setupViews() {
         self.view.backgroundColor = .backgroundColor
+        self.navigationItem.setHidesBackButton(true, animated: false)
         
         self.logInButton.addTarget(self, action: #selector(self.goToLogIn), for: .touchUpInside)
         self.signInButton.addTarget(self, action: #selector(self.goToSignIn), for: .touchUpInside)

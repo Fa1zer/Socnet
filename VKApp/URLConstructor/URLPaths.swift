@@ -8,5 +8,5 @@
 import Foundation
 
 enum URLPaths: String {
-    case users, posts, comments, all, new, auth, delete, change, me, user, logOut, subscribe, unsubscribe, like, dislike
+    case users, posts, comments, all, new, auth, delete, change, me, user, logOut, subscribe, unsubscribe, like, dislike, subscribers, subscribtions
 }

@@ -12,19 +12,20 @@ protocol ProfileCoordnatable {
     var coordinatorDelegate: ProfileCoordnator? { get set }
 }
 
-final class ProfileCoordnator: TabBarCoordinatable {
+final class ProfileCoordnator: TabBarCoordinatable {    
     
-    init(dataManager: DataManager, coreDataManager: CoreDataManager, registrationManager: RegistrationManager, keychainManager: KeychainManager) {
+    init(dataManager: DataManager, coreDataManager: CoreDataManager, registrationManager: RegistrationManager, keychainManager: KeychainManager, tabBarDelegate: TabBarController) {
         self.dataManager = dataManager
         self.coreDataManager = coreDataManager
         self.registrationManager = registrationManager
         self.keychainManager = keychainManager
+        self.tabBarDelegate = tabBarDelegate
         
         self.setupViews()
         self.start()
     }
     
-    var tabBarDelegate: TabBarController?
+    var tabBarDelegate: TabBarController
     private let dataManager: DataManager
     private let coreDataManager: CoreDataManager
     private let registrationManager: RegistrationManager
@@ -37,18 +38,13 @@ final class ProfileCoordnator: TabBarCoordinatable {
     }
     
     func goToOnboarding() {
-        self.tabBarDelegate?.goToOnboarding()
+        self.tabBarDelegate.goToOnboarding()
     }
     
-    func goToEdit() {
-        let router = EditRouter()
-        let interactor = EditInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
-        let presenter = EditPresenter(interactor: interactor, router: router, isFirstEdit: false)
-        let viewController = EditViewController(presenter: presenter)
+    func goToLogOut() {
+        print(self.tabBarDelegate)
         
-        router.coordinatorDelegate = RegistrationCoordinator()
-        
-        self.navigationController.pushViewController(viewController, animated: true)
+        self.tabBarDelegate.goToLogOut()
     }
     
     func goToProfile() {

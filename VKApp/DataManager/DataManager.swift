@@ -11,7 +11,7 @@ final class DataManager {
         
     private let urlConstructor = URLConstructor.default
     private var userToken: String?
-   
+    
 //    MARK: Post User
     func postUser(user: User, didNotComplete: @escaping (LogInErrors) -> Void, didComplete: @escaping () -> Void) {
         do {
@@ -123,8 +123,13 @@ final class DataManager {
     
 //    MARK: Log Out User
     func logOut(didComplete: @escaping () -> Void, didNotComplete: @escaping (SignInErrors) -> Void) {
+        guard let userToken = self.userToken else {
+            return
+        }
+        
         var request = URLRequest(url: self.urlConstructor.logOut())
         
+        request.setValue(HTTPHeaders.bearerAuthString(token: userToken), forHTTPHeaderField: HTTPHeaders.authorization.rawValue)
         request.httpMethod = HTTPMethods.DELETE.rawValue
         
         URLSession.shared.dataTask(with: request) { _, response, error in
@@ -153,6 +158,7 @@ final class DataManager {
                 didComplete()
             }
         }
+        .resume()
     }
     
 //    MARK: Get User
@@ -213,7 +219,109 @@ final class DataManager {
         }
         .resume()
     }
+    
+//    MARK: User Subscribtions
+    func getUserSubscribtions(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping ([User]) -> Void) {
+        URLSession.shared.dataTask(with: self.urlConstructor.userSubscribtions(userID: userID)) { data, response, error in
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
+                
+                return
+            }
+            
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                  httpURLResponse.statusCode == 200 else {
+                print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
+                
+                    return
+            }
+            
+            guard let data = data else {
+                print("❌ Error: data is equal to nil")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
+                
+                return
+            }
+            
+            guard let users = try? JSONDecoder().decode([User].self, from: data) else {
+                print("❌ Error: data is equal to nil")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                didComplete(users)
+            }
+        }
+        .resume()
+    }
    
+//    MARK: User Subscribers
+    func getUserSubscribers(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping ([User]) -> Void) {
+        URLSession.shared.dataTask(with: self.urlConstructor.userSubscribers(userID: userID)) { data, response, error in
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.someError(error))
+                }
+                
+                return
+            }
+            
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                  httpURLResponse.statusCode == 200 else {
+                print("❌ Error: status code is equal to \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.statusCodeError((response as? HTTPURLResponse)?.statusCode))
+                }
+                
+                    return
+            }
+            
+            guard let data = data else {
+                print("❌ Error: data is equal to nil")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
+                
+                return
+            }
+            
+            guard let users = try? JSONDecoder().decode([User].self, from: data) else {
+                print("❌ Error: data is equal to nil")
+                
+                DispatchQueue.main.async {
+                    didNotComplete(.dataError)
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                didComplete(users)
+            }
+        }
+        .resume()
+    }
+
 //    MARK: Put User
     func putUser(user: User, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
         do {
@@ -264,8 +372,13 @@ final class DataManager {
     
 //    MARK: Subscribe User
     func subscribe(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        guard let userToken = self.userToken else {
+            return
+        }
+        
         var request = URLRequest(url: self.urlConstructor.subscribe(userID: userID))
         
+        request.setValue(HTTPHeaders.bearerAuthString(token: userToken), forHTTPHeaderField: HTTPHeaders.authorization.rawValue)
         request.httpMethod = HTTPMethods.PUT.rawValue
         
         URLSession.shared.dataTask(with: request) { _, response, error in
@@ -294,12 +407,18 @@ final class DataManager {
                 didComplete()
             }
         }
+        .resume()
     }
     
 //    MARK: Unsubscribe User
     func unsubscribe(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        guard let userToken = self.userToken else {
+            return
+        }
+        
         var request = URLRequest(url: self.urlConstructor.unsubscribe(userID: userID))
         
+        request.setValue(HTTPHeaders.bearerAuthString(token: userToken), forHTTPHeaderField: HTTPHeaders.authorization.rawValue)
         request.httpMethod = HTTPMethods.PUT.rawValue
         
         URLSession.shared.dataTask(with: request) { _, response, error in
@@ -328,6 +447,7 @@ final class DataManager {
                 didComplete()
             }
         }
+        .resume()
     }
     
 //    MARK: Get All Users
@@ -634,11 +754,17 @@ final class DataManager {
     }
     
 //    MARK: Like Post
-    func like(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+    func like(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void){
+        guard let userToken = self.userToken else {
+            return
+        }
+        
         var request = URLRequest(url: self.urlConstructor.like(postID: postID))
         
+        request.setValue(HTTPHeaders.bearerAuthString(token: userToken), forHTTPHeaderField: HTTPHeaders.authorization.rawValue)
+        request.setValue(HTTPHeaders.applicationJson.rawValue, forHTTPHeaderField: HTTPHeaders.contentType.rawValue)
         request.httpMethod = HTTPMethods.PUT.rawValue
-        
+                
         URLSession.shared.dataTask(with: request) { _, response, error in
             if let error = error {
                 print("❌ Error: \(error.localizedDescription)")
@@ -665,12 +791,18 @@ final class DataManager {
                 didComplete()
             }
         }
+        .resume()
     }
     
 // MARK: Dislike Post
     func dislike(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
+        guard let userToken = self.userToken else {
+            return
+        }
+        
         var request = URLRequest(url: self.urlConstructor.dislike(postID: postID))
         
+        request.setValue(HTTPHeaders.bearerAuthString(token: userToken), forHTTPHeaderField: HTTPHeaders.authorization.rawValue)
         request.httpMethod = HTTPMethods.PUT.rawValue
         
         URLSession.shared.dataTask(with: request) { _, response, error in
@@ -699,6 +831,7 @@ final class DataManager {
                 didComplete()
             }
         }
+        .resume()
     }
     
 //    MARK: Delete Post

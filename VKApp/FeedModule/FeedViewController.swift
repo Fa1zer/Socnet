@@ -119,8 +119,30 @@ extension FeedViewController: UITableViewDataSource {
                 self?.presenter.save(post: post, user: user)
             }
         }
-        cell.avatarAction = { user in
-            // push profile view controller
+        cell.dislikeAction = { [ weak self ] post, user in
+            guard let id = post.id else {
+                return
+            }
+            
+            self?.presenter.dislike(postID: id) { error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            } didComplete: {
+                self?.presenter.deletePost(post: post)
+            }
+        }
+        cell.avatarAction = { [ weak self ] user in
+            self?.presenter.getAllCoreDataUsers { users in
+                self?.presenter.goToProfile(userID: user.id, isSubscribedUser: users.contains { $0.id == user.id })
+            }
         }
         
         self.presenter.getAllCoreDataPosts { posts in

@@ -12,7 +12,7 @@ final class ProfileRouter: ProfileCoordnatable {
     var coordinatorDelegate: ProfileCoordnator?
     
     func goToEdit() {
-        self.coordinatorDelegate?.goToEdit()
+        self.coordinatorDelegate?.goToLogOut()
     }
     
 }

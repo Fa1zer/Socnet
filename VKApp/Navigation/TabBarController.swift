@@ -9,7 +9,7 @@ import UIKit
 
 protocol TabBarCoordinatable {
     
-    var tabBarDelegate: TabBarController? { get set }
+    var tabBarDelegate: TabBarController { get set }
     
     func start()
     
@@ -36,18 +36,18 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
     
     private let coreDataManager = CoreDataManager()
     private var mainCoordinator: MainCoordinator {
-        return MainCoordinator(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        return MainCoordinator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, tabBarDelegate: self)
     }
     
     private var profileCoordinator: ProfileCoordnator {
-        return ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
+        return ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager, tabBarDelegate: self)
     }
     private var savedCoordinator: SavedCoordnator {
-        return SavedCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        return SavedCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, tabBarDelegate: self)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         self.setupNavigationControllers()
         self.setupViews()
@@ -57,11 +57,11 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
         self.coordinatorDelegate?.goToOnboarding()
     }
     
+    func goToLogOut() {
+        self.coordinatorDelegate?.goToLogOut()
+    }
+    
     private func setupNavigationControllers() {
-        self.mainCoordinator.tabBarDelegate = self
-        self.profileCoordinator.tabBarDelegate = self
-        self.savedCoordinator.tabBarDelegate = self
-        
         let navigationControllers = [
             self.mainCoordinator.navigationController,
             self.profileCoordinator.navigationController,
