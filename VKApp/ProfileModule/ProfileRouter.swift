@@ -15,4 +15,8 @@ final class ProfileRouter: ProfileCoordnatable {
         self.coordinatorDelegate?.goToLogOut()
     }
     
+    func goToCreatePost(userID: UUID) {
+        self.coordinatorDelegate?.goToCreatePost(userID: userID)
+    }
+    
 }

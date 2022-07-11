@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class FeedViewController: UIViewController {
+final class FeedViewController: UIViewController {
     
     init(presenter: FeedPresenter) {
         self.presenter = presenter

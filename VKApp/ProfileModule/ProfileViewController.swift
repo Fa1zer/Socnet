@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     init(presenter: ProfilePresenter) {
         self.presenter = presenter
@@ -185,12 +185,12 @@ extension ProfileViewController: UITableViewDelegate {
         
         return UserProfileView(user: user, isAlienUser: self.presenter.isAlienUser, isSubscribedUser: self.presenter.isSubscribedUser) {
             self.presenter.goToEdit()
-        } addPostButtonAction: {
-            // push add post controller
-        } subscriberSubscriptionsAction: { usersId in
+        } addPostButtonAction: { [ weak self ] in
+            self?.presenter.goToCreatePost()
+        } subscriberSubscriptionsAction: { [ weak self ] usersId in
             // push find view controller
-        } subscribeAction: { user in
-            self.presenter.subscribe(userID: user.id ?? UUID()) { [ weak self ] error in
+        } subscribeAction: { [ weak self ] user in
+            self?.presenter.subscribe(userID: user.id ?? UUID()) { error in
                 switch error {
                 case .statusCodeError(let number):
                     self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
@@ -202,10 +202,10 @@ extension ProfileViewController: UITableViewDelegate {
                     break
                 }
             } didComplete: {
-                self.presenter.saveUser(user: user)
+                self?.presenter.saveUser(user: user)
             }
-        } unsubscribeAction: { user in
-            self.presenter.unsubscribe(userID: user.id ?? UUID()) { [ weak self ] error in
+        } unsubscribeAction: { [ weak self ] user in
+            self?.presenter.unsubscribe(userID: user.id ?? UUID()) { error in
                 switch error {
                 case .statusCodeError(let number):
                     self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
@@ -217,7 +217,7 @@ extension ProfileViewController: UITableViewDelegate {
                     break
                 }
             } didComplete: {
-                self.presenter.deleteUser(user: user)
+                self?.presenter.deleteUser(user: user)
             }
 
         }

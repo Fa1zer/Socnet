@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class RegistrationViewController: UIViewController {
+final class RegistrationViewController: UIViewController {
     
     init(presenter: RegistrationPresenter) {
         self.presenter = presenter
@@ -123,13 +123,13 @@ class RegistrationViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(keyboadWillShow),
+            selector: #selector(self.keyboadWillShow),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(keyboardWillHide),
+            selector: #selector(self.keyboardWillHide),
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )

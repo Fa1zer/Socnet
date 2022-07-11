@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CommentTableVIewCell: UITableViewCell {
+final class CommentTableVIewCell: UITableViewCell {
     
     init(comment: Comment, user: User, avatarAction: @escaping (UUID) -> Void) {
         self.avatarAction = avatarAction

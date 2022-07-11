@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SavedViewController: UIViewController {
+final class SavedViewController: UIViewController {
     
     init(presenter: SavedPresenter) {
         self.presenter = presenter

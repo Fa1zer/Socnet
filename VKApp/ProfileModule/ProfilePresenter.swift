@@ -79,6 +79,14 @@ final class ProfilePresenter {
         self.router.goToEdit()
     }
     
+    func goToCreatePost() {
+        guard let id = self.user?.id else {
+            return
+        }
+        
+        self.router.goToCreatePost(userID: id)
+    }
+    
     func dislike(postID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
         self.interactor.dislike(postID: postID, didNotComplete: didNotComplete, didComplete: didComplete)
     }

@@ -74,6 +74,7 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
     private func setupViews() {
         self.tabBar.tintColor = .systemOrange
         self.navigationItem.setHidesBackButton(true, animated: false)
+        self.navigationController?.navigationBar.isHidden = true
         self.tabBar.backgroundColor = .backgroundColor
         self.tabBar.alpha = 0.8
     }

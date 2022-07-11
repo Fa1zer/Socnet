@@ -34,6 +34,10 @@
 		E3556DF72873336A00955765 /* SavedInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3556DF62873336A00955765 /* SavedInteractor.swift */; };
 		E3556DF92873337300955765 /* SavedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3556DF82873337300955765 /* SavedPresenter.swift */; };
 		E3556DFB2873339B00955765 /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3556DFA2873339B00955765 /* SavedViewController.swift */; };
+		E35A767B287CAA9F002B4D77 /* CreatePostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35A767A287CAA9F002B4D77 /* CreatePostRouter.swift */; };
+		E35A767D287CAAAF002B4D77 /* CreatePostInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35A767C287CAAAF002B4D77 /* CreatePostInteractor.swift */; };
+		E35A767F287CAAC0002B4D77 /* CreatePostPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35A767E287CAAC0002B4D77 /* CreatePostPresenter.swift */; };
+		E35A7681287CAAD9002B4D77 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35A7680287CAAD9002B4D77 /* CreatePostViewController.swift */; };
 		E39D4F022870A54D00E00F8B /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39D4F012870A54D00E00F8B /* PostTableViewCell.swift */; };
 		E3A1B223286ADA4500D666CE /* OnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B222286ADA4500D666CE /* OnboardingRouter.swift */; };
 		E3A1B225286ADA5D00D666CE /* OnboardingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B224286ADA5D00D666CE /* OnboardingInteractor.swift */; };
@@ -106,6 +110,10 @@
 		E3556DF62873336A00955765 /* SavedInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedInteractor.swift; sourceTree = "<group>"; };
 		E3556DF82873337300955765 /* SavedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPresenter.swift; sourceTree = "<group>"; };
 		E3556DFA2873339B00955765 /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
+		E35A767A287CAA9F002B4D77 /* CreatePostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostRouter.swift; sourceTree = "<group>"; };
+		E35A767C287CAAAF002B4D77 /* CreatePostInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostInteractor.swift; sourceTree = "<group>"; };
+		E35A767E287CAAC0002B4D77 /* CreatePostPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostPresenter.swift; sourceTree = "<group>"; };
+		E35A7680287CAAD9002B4D77 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		E39D4F012870A54D00E00F8B /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		E3A1B222286ADA4500D666CE /* OnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRouter.swift; sourceTree = "<group>"; };
 		E3A1B224286ADA5D00D666CE /* OnboardingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInteractor.swift; sourceTree = "<group>"; };
@@ -203,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E35A7679287CAA7A002B4D77 /* CreatePostModule */,
 				E3D122B4287B524700F51DD9 /* UserCollectionViewCell */,
 				E310500F2875ED0000673CBD /* UserProfileView */,
 				E31050042875E13A00673CBD /* ProfileModule */,
@@ -300,6 +309,17 @@
 				E3556DFA2873339B00955765 /* SavedViewController.swift */,
 			);
 			path = SavedModule;
+			sourceTree = "<group>";
+		};
+		E35A7679287CAA7A002B4D77 /* CreatePostModule */ = {
+			isa = PBXGroup;
+			children = (
+				E35A767A287CAA9F002B4D77 /* CreatePostRouter.swift */,
+				E35A767C287CAAAF002B4D77 /* CreatePostInteractor.swift */,
+				E35A767E287CAAC0002B4D77 /* CreatePostPresenter.swift */,
+				E35A7680287CAAD9002B4D77 /* CreatePostViewController.swift */,
+			);
+			path = CreatePostModule;
 			sourceTree = "<group>";
 		};
 		E39D4EFA2870A4E600E00F8B /* PostTableViewCell */ = {
@@ -576,6 +596,7 @@
 				E3D122AE287B350400F51DD9 /* PostEntity+CoreDataClass.swift in Sources */,
 				E3F50BA128677556008A842D /* DataManager.swift in Sources */,
 				E3B2B20E2874472F00F08800 /* FeedViewController.swift in Sources */,
+				E35A767D287CAAAF002B4D77 /* CreatePostInteractor.swift in Sources */,
 				E31FBE7A2863649100D41304 /* RegistrationCoordinator.swift in Sources */,
 				E310500C2875E18100673CBD /* ProfileViewController.swift in Sources */,
 				E31FBE632863401900D41304 /* TabBarController.swift in Sources */,
@@ -605,10 +626,12 @@
 				E31050082875E16300673CBD /* ProfileInteractor.swift in Sources */,
 				E3556DFB2873339B00955765 /* SavedViewController.swift in Sources */,
 				E3F50B8D28675769008A842D /* Post.swift in Sources */,
+				E35A7681287CAAD9002B4D77 /* CreatePostViewController.swift in Sources */,
 				E3137E792850FAFE005FC3F9 /* SceneDelegate.swift in Sources */,
 				E344EE2828687634007ABF86 /* LogInErrors.swift in Sources */,
 				E3B2B20A287446CC00F08800 /* FeedInteractor.swift in Sources */,
 				E3556DF52873335C00955765 /* SavedRouter.swift in Sources */,
+				E35A767F287CAAC0002B4D77 /* CreatePostPresenter.swift in Sources */,
 				E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */,
 				E3F50B9B28675C99008A842D /* RequestErrors.swift in Sources */,
 				E3B378CA28730788007D09F5 /* CoreDataManager.swift in Sources */,
@@ -621,6 +644,7 @@
 				E3556DF72873336A00955765 /* SavedInteractor.swift in Sources */,
 				E31FBE7228634C8C00D41304 /* SavedCoordinator.swift in Sources */,
 				E31050062875E15600673CBD /* ProfileRouter.swift in Sources */,
+				E35A767B287CAA9F002B4D77 /* CreatePostRouter.swift in Sources */,
 				E3F50B97286759B0008A842D /* URLPaths.swift in Sources */,
 				E3D122B3287B351700F51DD9 /* UserEntity+CoreDataProperties.swift in Sources */,
 				E3F50B9228675845008A842D /* UserToken.swift in Sources */,
