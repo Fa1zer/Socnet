@@ -26,10 +26,23 @@ final class ProfilePresenter {
     let isAlienUser: Bool
     let isSubscribedUser: Bool
     
+    var photos: [UIImage] {
+        var photos = [UIImage]()
+        
+        for imageString in self.user?.images ?? [] {
+            guard let photo = UIImage(data: Data(base64Encoded: imageString) ?? Data()) else {
+                break
+            }
+            
+            photos.append(photo)
+        }
+        
+        return photos
+    }
     private(set) var posts = [Post]()
     private(set) var user: User?
     
-    func getUser(didNotComplete: @escaping (RequestErrors) -> Void) {
+    func getUser(didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void = { }) {
         self.interactor.getUser(didNotComplete: didNotComplete) { [ weak self ] user in
             self?.user = user
             self?.callBack?()
@@ -40,11 +53,13 @@ final class ProfilePresenter {
             
             self?.getAllUserPosts(userID: id) { error in
                 print("❌ Error: \(error.localizedDescription)")
+            } didComplete: {
+                didComplete()
             }
         }
     }
     
-    func getSomeUser(didNotComplete: @escaping (RequestErrors) -> Void) {
+    func getSomeUser(didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void = { }) {
         guard let userID = self.userID else {
             return
         }
@@ -59,6 +74,8 @@ final class ProfilePresenter {
             
             self?.getAllUserPosts(userID: id) { error in
                 print("❌ Error: \(error.localizedDescription)")
+            } didComplete: {
+                didComplete()
             }
         }
     }
@@ -111,10 +128,12 @@ final class ProfilePresenter {
         self.interactor.deleteUser(user: user)
     }
     
-    private func getAllUserPosts(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void) {
+    private func getAllUserPosts(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
         self.interactor.getAllUserPosts(userID: userID, didNotComplete: didNotComplete) { [ weak self ] posts in
             self?.posts = posts
             self?.callBack?()
+            
+            didComplete()
         }
     }
     

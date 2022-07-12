@@ -52,6 +52,8 @@ final class ProfileViewController: UIViewController {
     
     private let presenter: ProfilePresenter
     
+    private let refreshControll = UIRefreshControl()
+    
     private let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         
@@ -81,12 +83,17 @@ final class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = .backgroundColor
         
+        self.tableView.refreshControl = self.refreshControll
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.cellID)
         
+        self.refreshControll.addTarget(self, action: #selector(self.pulledToRefresh), for: .valueChanged)
+        
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.activityIndicatorView)
+        
+        self.tableView.addSubview(self.refreshControll)
         
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -95,6 +102,42 @@ final class ProfileViewController: UIViewController {
         
         self.activityIndicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+    }
+    
+    @objc private func pulledToRefresh() {
+        if self.refreshControll.isRefreshing {
+            if self.presenter.isAlienUser {
+                self.presenter.getSomeUser { [ weak self ] error in
+                    switch error {
+                    case .statusCodeError(let number):
+                        self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                    case .decodeFailed:
+                        self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
+                    default:
+                        self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                        
+                        break
+                    }
+                } didComplete: { [ weak self ] in
+                    self?.refreshControll.endRefreshing()
+                }
+            } else {
+                self.presenter.getUser { [ weak self ] error in
+                    switch error {
+                    case .statusCodeError(let number):
+                        self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                    case .decodeFailed:
+                        self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
+                    default:
+                        self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                        
+                        break
+                    }
+                } didComplete: { [ weak self ] in
+                    self?.refreshControll.endRefreshing()
+                }
+            }
         }
     }
 

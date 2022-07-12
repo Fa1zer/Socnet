@@ -29,16 +29,22 @@ final class FeedPresenter {
         self.interactor.save(post: post, user: user)
     }
     
-    func getAllPosts(didNotComplete: @escaping (RequestErrors) -> Void) {
+    func getAllPosts(didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void = { }) {
         self.interactor.getAllPost(didNotComplete: didNotComplete) { posts in
             DispatchQueue.main.async { [ weak self ] in
                 for post in posts {
                     self?.getUser(userID: post.userID, didNotComplete: { _ in }) { user in
-                        self?.posts.append((post: post, user: user))
+                        let newPost = (post: post, user: user)
+                        
+                        if !(self?.posts.contains { $0.post.id == newPost.post.id } ?? true) {
+                            self?.posts.append(newPost)
+                        }
                     }
                 }
                 
                 self?.callBack?()
+                
+                didComplete()
             }
         }
     }

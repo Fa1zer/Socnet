@@ -65,7 +65,7 @@
 		E3D122AF287B350400F51DD9 /* PostEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122AD287B350400F51DD9 /* PostEntity+CoreDataProperties.swift */; };
 		E3D122B2287B351700F51DD9 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122B0287B351700F51DD9 /* UserEntity+CoreDataClass.swift */; };
 		E3D122B3287B351700F51DD9 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122B1287B351700F51DD9 /* UserEntity+CoreDataProperties.swift */; };
-		E3D122B6287B542500F51DD9 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122B5287B542500F51DD9 /* UserCollectionViewCell.swift */; };
+		E3D122B6287B542500F51DD9 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D122B5287B542500F51DD9 /* PhotoCollectionViewCell.swift */; };
 		E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */; };
 		E3DEE6A6286A19B90003D543 /* RegistrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */; };
 		E3DEE6A8286A19CC0003D543 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEE6A7286A19CC0003D543 /* RegistrationPresenter.swift */; };
@@ -142,7 +142,7 @@
 		E3D122AD287B350400F51DD9 /* PostEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E3D122B0287B351700F51DD9 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E3D122B1287B351700F51DD9 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E3D122B5287B542500F51DD9 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewCell.swift; sourceTree = "<group>"; };
+		E3D122B5287B542500F51DD9 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		E3DEE6A3286A19610003D543 /* RegistrationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
 		E3DEE6A5286A19B90003D543 /* RegistrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationInteractor.swift; sourceTree = "<group>"; };
 		E3DEE6A7286A19CC0003D543 /* RegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPresenter.swift; sourceTree = "<group>"; };
@@ -447,7 +447,7 @@
 		E3D122B4287B524700F51DD9 /* UserCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				E3D122B5287B542500F51DD9 /* UserCollectionViewCell.swift */,
+				E3D122B5287B542500F51DD9 /* PhotoCollectionViewCell.swift */,
 			);
 			path = UserCollectionViewCell;
 			sourceTree = "<group>";
@@ -636,7 +636,7 @@
 				E3F50B9B28675C99008A842D /* RequestErrors.swift in Sources */,
 				E3B378CA28730788007D09F5 /* CoreDataManager.swift in Sources */,
 				E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */,
-				E3D122B6287B542500F51DD9 /* UserCollectionViewCell.swift in Sources */,
+				E3D122B6287B542500F51DD9 /* PhotoCollectionViewCell.swift in Sources */,
 				E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */,
 				E344EE22286865C0007ABF86 /* HTTPMethods.swift in Sources */,
 				E39D4F022870A54D00E00F8B /* PostTableViewCell.swift in Sources */,
