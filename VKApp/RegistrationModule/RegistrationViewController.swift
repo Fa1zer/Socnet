@@ -100,7 +100,7 @@ final class RegistrationViewController: UIViewController {
     private let translucentView: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .black
+        view.backgroundColor = .systemGray
         view.alpha = 0.5
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false

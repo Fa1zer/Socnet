@@ -109,11 +109,25 @@ extension SavedViewController: UITableViewDataSource {
                 }
             }
         }
-        cell.commentAction = { post, user in
-            // push comment view controller
-        }
         cell.avatarAction = { [ weak self ] user in
             self?.presenter.goToProfile(userID: user.id)
+        }
+        cell.commentAction = { [ weak self ] cell in
+            guard let post = cell.post,
+                  let user = cell.user else {
+                return
+            }
+            
+            self?.presenter.goToComments(
+                likeAction: cell.likeAction ?? { _, _ in },
+                dislikeAction: cell.dislikeAction ?? { _, _ in },
+                commentAction: { _  in },
+                avatarAction: cell.avatarAction ?? { _ in },
+                post: post,
+                user: user,
+                likeButtonIsSelected: cell.likeButtonIsSelected ?? false,
+                frame: cell.frame
+            )
         }
         
         return cell

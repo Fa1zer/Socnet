@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import UIKit
 
-final class ProfileRouter: ProfileCoordnatable {
+final class ProfileRouter: ProfileCoordnatable {    
     
     var coordinatorDelegate: ProfileCoordnator?
     
@@ -17,6 +18,10 @@ final class ProfileRouter: ProfileCoordnatable {
     
     func goToCreatePost(userID: UUID) {
         self.coordinatorDelegate?.goToCreatePost(userID: userID)
+    }
+    
+    func goToComments(likeAction: @escaping (Post, User) -> Void, dislikeAction: @escaping (Post, User) -> Void, commentAction: @escaping (PostTableViewCell) -> Void, avatarAction: @escaping (User) -> Void, post: Post, user: User, likeButtonIsSelected: Bool, frame: CGRect) {
+        self.coordinatorDelegate?.goToComments(likeAction: likeAction, dislikeAction: dislikeAction, commentAction: commentAction, avatarAction: avatarAction, post: post, user: user, likeButtonIsSelected: likeButtonIsSelected, frame: frame)
     }
     
 }

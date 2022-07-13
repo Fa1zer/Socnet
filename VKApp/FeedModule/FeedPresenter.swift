@@ -32,13 +32,13 @@ final class FeedPresenter {
     func getAllPosts(didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void = { }) {
         self.interactor.getAllPost(didNotComplete: didNotComplete) { posts in
             DispatchQueue.main.async { [ weak self ] in
+                self?.posts = []
+                
                 for post in posts {
                     self?.getUser(userID: post.userID, didNotComplete: { _ in }) { user in
                         let newPost = (post: post, user: user)
                         
-                        if !(self?.posts.contains { $0.post.id == newPost.post.id } ?? true) {
-                            self?.posts.append(newPost)
-                        }
+                        self?.posts.append(newPost)
                     }
                 }
                 
@@ -75,6 +75,10 @@ final class FeedPresenter {
     
     func goToProfile(userID: UUID?, isSubscribedUser: Bool) {
         self.router.goToProfile(userID: userID, isSubscribedUser: isSubscribedUser)
+    }
+    
+    func goToComments(likeAction: @escaping (Post, User) -> Void, dislikeAction: @escaping (Post, User) -> Void, commentAction: @escaping (PostTableViewCell) -> Void, avatarAction: @escaping (User) -> Void, post: Post, user: User, likeButtonIsSelected: Bool, frame: CGRect) {
+        self.router.goToComments(likeAction: likeAction, dislikeAction: dislikeAction, commentAction: commentAction, avatarAction: avatarAction, post: post, user: user, likeButtonIsSelected: likeButtonIsSelected, frame: frame)
     }
     
 }

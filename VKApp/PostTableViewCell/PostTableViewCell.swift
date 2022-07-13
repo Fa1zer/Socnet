@@ -22,7 +22,7 @@ final class PostTableViewCell: UITableViewCell {
     
     var likeAction: ((Post, User) -> Void)?
     var dislikeAction: ((Post, User) -> Void)?
-    var commentAction: ((Post, User) -> Void)?
+    var commentAction: ((PostTableViewCell) -> Void)?
     var avatarAction: ((User) -> Void)?
     var post: Post? {
         didSet {
@@ -75,6 +75,7 @@ final class PostTableViewCell: UITableViewCell {
     private let userAvatarImageView: UIImageView = {
         let view = UIImageView()
         
+        view.clipsToBounds = true
         view.layer.cornerRadius = 25
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -244,12 +245,7 @@ final class PostTableViewCell: UITableViewCell {
     }
     
     @objc private func commentButtonDidTap() {
-        guard let post = self.post,
-              let user = self.user else {
-            return
-        }
-        
-        self.commentAction?(post, user)
+        self.commentAction?(self)
     }
     
     @objc private func avatarImageViewDidTap() {
