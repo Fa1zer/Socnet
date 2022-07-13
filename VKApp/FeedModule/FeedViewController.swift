@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class FeedViewController: UIViewController {
+final class FeedViewController: UIViewController {
     
     init(presenter: FeedPresenter) {
         self.presenter = presenter
@@ -16,7 +16,18 @@ class FeedViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter.callBack = { [ weak self ] in self?.tableView.reloadData() }
-        self.getAllPosts()
+        self.presenter.getAllPosts { [ weak self ] error in
+            switch error {
+            case .statusCodeError(let number):
+                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+            case .decodeFailed:
+                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
+            default:
+                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                
+                break
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -32,6 +43,8 @@ class FeedViewController: UIViewController {
         
         return view
     }()
+    
+    private let refreshControll = UIRefreshControl()
     
     private let activityIndicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .medium)
@@ -53,12 +66,17 @@ class FeedViewController: UIViewController {
         self.view.backgroundColor = .backgroundColor
         self.title = NSLocalizedString("Feed", comment: "")
         
+        self.tableView.refreshControl = self.refreshControll
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.cellID)
         
+        self.refreshControll.addTarget(self, action: #selector(self.pulledToRefresh), for: .valueChanged)
+        
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.activityIndicator)
+        
+        self.tableView.addSubview(self.refreshControll)
         
         self.tableView.snp.makeConstraints { make in
             make.leading.trailing.top.bottom.equalToSuperview()
@@ -69,17 +87,23 @@ class FeedViewController: UIViewController {
         }
     }
     
-    private func getAllPosts() {
-        self.presenter.getAllPosts { error in
-            switch error {
-            case .statusCodeError(let number):
-                self.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-            case .decodeFailed:
-                self.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-            default:
-                self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+    @objc private func pulledToRefresh() {
+        if self.refreshControll.isRefreshing {
+            self.presenter.getAllPosts { [ weak self ] error in
+                self?.refreshControll.endRefreshing()
                 
-                break
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            } didComplete: { [ weak self ] in
+                self?.refreshControll.endRefreshing()
             }
         }
     }

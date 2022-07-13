@@ -58,6 +58,17 @@ final class ProfileCoordnator: TabBarCoordinatable {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func goToCreatePost(userID: UUID) {
+        let router = CreatePostRouter()
+        let interactor = CreatePostInteractor(dataManager: self.dataManager)
+        let presenter = CreatePostPresenter(interactor: interactor, router: router, userID: userID)
+        let viewController = CreatePostViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = self
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
     private func setupViews() {
         self.navigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Profile", comment: ""),

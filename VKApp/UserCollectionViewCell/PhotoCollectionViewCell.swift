@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class UserCollectionViewCell: UICollectionViewCell {
+final class PhotoCollectionViewCell: UICollectionViewCell {
     
     init() {
         super.init(frame: .zero)

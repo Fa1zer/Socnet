@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class UserProfileView: UIView {
+final class UserProfileView: UIView {
     
     init(user: User, isAlienUser: Bool, isSubscribedUser: Bool, editButtonAction: @escaping () -> Void, addPostButtonAction: @escaping () -> Void, subscriberSubscriptionsAction: @escaping ([UUID]) -> Void, subscribeAction: @escaping (User) -> Void, unsubscribeAction: @escaping (User) -> Void) {
         self.user = user

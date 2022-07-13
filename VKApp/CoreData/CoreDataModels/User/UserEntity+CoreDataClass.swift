@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 @objc(UserEntity)
-public class UserEntity: NSManagedObject {
+final public class UserEntity: NSManagedObject {
 
 }

@@ -37,10 +37,12 @@
 "Saved Posts" = "Saved Posts";
 "No saved posts" = "No saved posts";
 "Log Out" = "Log Out";
-"New Posts" = "New Posts";
+"New Posts" = "Create Post";
 "Let edit" = "Edit";
 "Add Post" = "Add Post";
 "Subscribers" = "Subscribers";
 "Subscribtions" = "Subscribtions";
 "Subscribe" = "Subscribe";
 "Unsubscribe" = "Unsubscribe";
+"New Post" = "New Post";
+"Publish Post" = "Publish a post";

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class EditViewController: UIViewController {
+final class EditViewController: UIViewController {
     
     init(presenter: EditPresenter) {
         self.presenter = presenter
@@ -156,6 +156,19 @@ class EditViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.keyboadWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
         
         self.setupViews()
     }
@@ -324,6 +337,24 @@ class EditViewController: UIViewController {
     
     @objc private func showImagePickerController() {
         self.present(self.imagePickerController, animated: true)
+    }
+    
+    @objc private func keyboadWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            scrollView.contentInset.bottom = keyboardSize.height
+            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(
+                top: 0,
+                left: 0,
+                bottom: keyboardSize.height,
+                right: 0
+            )
+            scrollView.setContentOffset(CGPoint(x: 0, y: max(scrollView.contentSize.height - scrollView.bounds.size.height, 0) ), animated: true)
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset.bottom = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
     }
     
 }

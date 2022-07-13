@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     init(presenter: ProfilePresenter) {
         self.presenter = presenter
@@ -52,6 +52,8 @@ class ProfileViewController: UIViewController {
     
     private let presenter: ProfilePresenter
     
+    private let refreshControll = UIRefreshControl()
+    
     private let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         
@@ -81,12 +83,17 @@ class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = .backgroundColor
         
+        self.tableView.refreshControl = self.refreshControll
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.cellID)
         
+        self.refreshControll.addTarget(self, action: #selector(self.pulledToRefresh), for: .valueChanged)
+        
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.activityIndicatorView)
+        
+        self.tableView.addSubview(self.refreshControll)
         
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -95,6 +102,42 @@ class ProfileViewController: UIViewController {
         
         self.activityIndicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+    }
+    
+    @objc private func pulledToRefresh() {
+        if self.refreshControll.isRefreshing {
+            if self.presenter.isAlienUser {
+                self.presenter.getSomeUser { [ weak self ] error in
+                    switch error {
+                    case .statusCodeError(let number):
+                        self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                    case .decodeFailed:
+                        self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
+                    default:
+                        self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                        
+                        break
+                    }
+                } didComplete: { [ weak self ] in
+                    self?.refreshControll.endRefreshing()
+                }
+            } else {
+                self.presenter.getUser { [ weak self ] error in
+                    switch error {
+                    case .statusCodeError(let number):
+                        self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                    case .decodeFailed:
+                        self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
+                    default:
+                        self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                        
+                        break
+                    }
+                } didComplete: { [ weak self ] in
+                    self?.refreshControll.endRefreshing()
+                }
+            }
         }
     }
 
@@ -185,12 +228,12 @@ extension ProfileViewController: UITableViewDelegate {
         
         return UserProfileView(user: user, isAlienUser: self.presenter.isAlienUser, isSubscribedUser: self.presenter.isSubscribedUser) {
             self.presenter.goToEdit()
-        } addPostButtonAction: {
-            // push add post controller
-        } subscriberSubscriptionsAction: { usersId in
+        } addPostButtonAction: { [ weak self ] in
+            self?.presenter.goToCreatePost()
+        } subscriberSubscriptionsAction: { [ weak self ] usersId in
             // push find view controller
-        } subscribeAction: { user in
-            self.presenter.subscribe(userID: user.id ?? UUID()) { [ weak self ] error in
+        } subscribeAction: { [ weak self ] user in
+            self?.presenter.subscribe(userID: user.id ?? UUID()) { error in
                 switch error {
                 case .statusCodeError(let number):
                     self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
@@ -202,10 +245,10 @@ extension ProfileViewController: UITableViewDelegate {
                     break
                 }
             } didComplete: {
-                self.presenter.saveUser(user: user)
+                self?.presenter.saveUser(user: user)
             }
-        } unsubscribeAction: { user in
-            self.presenter.unsubscribe(userID: user.id ?? UUID()) { [ weak self ] error in
+        } unsubscribeAction: { [ weak self ] user in
+            self?.presenter.unsubscribe(userID: user.id ?? UUID()) { error in
                 switch error {
                 case .statusCodeError(let number):
                     self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
@@ -217,7 +260,7 @@ extension ProfileViewController: UITableViewDelegate {
                     break
                 }
             } didComplete: {
-                self.presenter.deleteUser(user: user)
+                self?.presenter.deleteUser(user: user)
             }
 
         }

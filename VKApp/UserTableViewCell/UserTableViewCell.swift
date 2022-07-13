@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class UserTableViewCell: UITableViewCell {
+final class UserTableViewCell: UITableViewCell {
     
     init(user: User, didTapAction: @escaping (UUID) -> Void) {
         self.user = user
