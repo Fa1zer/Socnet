@@ -16,34 +16,6 @@ final class ProfileViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter.callBack = self.tableView.reloadData
-        
-        if self.presenter.isAlienUser {
-            self.presenter.getSomeUser { [ weak self ] error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
-            }
-        } else {
-            self.presenter.getUser { [ weak self ] error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
-            }
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -79,8 +51,41 @@ final class ProfileViewController: UIViewController {
         self.setupViews()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if self.presenter.isAlienUser {
+            self.presenter.getSomeUser { [ weak self ] error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            }
+        } else {
+            self.presenter.getUser { [ weak self ] error in
+                switch error {
+                case .statusCodeError(let number):
+                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+                case .decodeFailed:
+                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
+                default:
+                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                    
+                    break
+                }
+            }
+        }
+    }
+    
     private func setupViews() {
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationItem.setHidesBackButton(false, animated: false)
+        self.title = nil
         self.view.backgroundColor = .backgroundColor
         
         self.tableView.refreshControl = self.refreshControll
@@ -153,9 +158,6 @@ extension ProfileViewController: UITableViewDataSource {
         cell.user = self.presenter.user
         cell.post = self.presenter.posts[indexPath.row]
         cell.likeButtonIsSelected = false
-        cell.commentAction = { post, user in
-            // push comment view controller
-        }
         cell.likeAction = { [ weak self ] post, user in
             guard let id = post.id else {
                 return
@@ -200,6 +202,23 @@ extension ProfileViewController: UITableViewDataSource {
             if posts.contains(where: { $0.id == cell.post?.id }) {
                 cell.likeButtonIsSelected = true
             }
+        }
+        cell.commentAction = { [ weak self ] cell in
+            guard let post = cell.post,
+                  let user = cell.user else {
+                return
+            }
+            
+            self?.presenter.goToComments(
+                likeAction: cell.likeAction ?? { _, _ in },
+                dislikeAction: cell.dislikeAction ?? { _, _ in },
+                commentAction: { _ in },
+                avatarAction: cell.avatarAction ?? { _ in },
+                post: post,
+                user: user,
+                likeButtonIsSelected: cell.likeButtonIsSelected ?? false,
+                frame: cell.frame
+            )
         }
         
         return cell

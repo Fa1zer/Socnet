@@ -16,18 +16,6 @@ final class FeedViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter.callBack = { [ weak self ] in self?.tableView.reloadData() }
-        self.presenter.getAllPosts { [ weak self ] error in
-            switch error {
-            case .statusCodeError(let number):
-                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-            case .decodeFailed:
-                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-            default:
-                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                
-                break
-            }
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -46,11 +34,13 @@ final class FeedViewController: UIViewController {
     
     private let refreshControll = UIRefreshControl()
     
-    private let activityIndicator: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(style: .medium)
+    private let emptyLabel: UILabel = {
+        let view = UILabel()
         
+        view.text = NSLocalizedString("No new posts", comment: "")
+        view.textColor = .systemGray
+        view.font = .systemFont(ofSize: 22)
         view.isHidden = true
-        view.startAnimating()
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -60,6 +50,22 @@ final class FeedViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.setupViews()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.presenter.getAllPosts { [ weak self ] error in
+            switch error {
+            case .statusCodeError(let number):
+                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
+            case .decodeFailed:
+                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
+            default:
+                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                
+                break
+            }
+        }
     }
     
     private func setupViews() {
@@ -74,7 +80,7 @@ final class FeedViewController: UIViewController {
         self.refreshControll.addTarget(self, action: #selector(self.pulledToRefresh), for: .valueChanged)
         
         self.view.addSubview(self.tableView)
-        self.view.addSubview(self.activityIndicator)
+        self.view.addSubview(self.emptyLabel)
         
         self.tableView.addSubview(self.refreshControll)
         
@@ -82,7 +88,7 @@ final class FeedViewController: UIViewController {
             make.leading.trailing.top.bottom.equalToSuperview()
         }
         
-        self.activityIndicator.snp.makeConstraints { make in
+        self.emptyLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
     }
@@ -120,9 +126,6 @@ extension FeedViewController: UITableViewDataSource {
         cell.user = self.presenter.posts[indexPath.row].user
         cell.post = self.presenter.posts[indexPath.row].post
         cell.likeButtonIsSelected = false
-        cell.commentAction = { post, user in
-            // push comment view controller
-        }
         cell.likeAction = { [ weak self ] post, user in
             guard let id = post.id else {
                 return
@@ -168,11 +171,27 @@ extension FeedViewController: UITableViewDataSource {
                 self?.presenter.goToProfile(userID: user.id, isSubscribedUser: users.contains { $0.id == user.id })
             }
         }
-        
         self.presenter.getAllCoreDataPosts { posts in
             if posts.contains(where: { $0.id == cell.post?.id }) {
                 cell.likeButtonIsSelected = true
             }
+        }
+        cell.commentAction = { [ weak self ] cell in
+            guard let post = cell.post,
+                  let user = cell.user else {
+                return
+            }
+            
+            self?.presenter.goToComments(
+                likeAction: cell.likeAction ?? { _, _ in },
+                dislikeAction: cell.dislikeAction ?? { _, _ in },
+                commentAction: { _ in },
+                avatarAction: cell.avatarAction ?? { _ in },
+                post: post,
+                user: user,
+                likeButtonIsSelected: cell.likeButtonIsSelected ?? false,
+                frame: cell.frame
+            )
         }
         
         return cell
@@ -181,10 +200,10 @@ extension FeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.presenter.posts.count == 0 {
             self.tableView.isHidden = true
-            self.activityIndicator.isHidden = false
+            self.emptyLabel.isHidden = false
         } else {
             self.tableView.isHidden = false
-            self.activityIndicator.isHidden = true
+            self.emptyLabel.isHidden = true
         }
         
         return self.presenter.posts.count

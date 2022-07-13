@@ -35,15 +35,16 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
     private let keychainManager: KeychainManager
     
     private let coreDataManager = CoreDataManager()
+    private let userDefaultsManager = UserDefaultsManager()
     private var mainCoordinator: MainCoordinator {
-        return MainCoordinator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, tabBarDelegate: self)
+        return MainCoordinator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, tabBarDelegate: self, userDefaultsManager: self.userDefaultsManager)
     }
     
     private var profileCoordinator: ProfileCoordnator {
-        return ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager, tabBarDelegate: self)
+        return ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager, tabBarDelegate: self, userDefaultsManager: self.userDefaultsManager)
     }
     private var savedCoordinator: SavedCoordnator {
-        return SavedCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, tabBarDelegate: self)
+        return SavedCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, tabBarDelegate: self, userDefaultsManager: self.userDefaultsManager)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -14,8 +14,8 @@
             filePath = "VKApp/DataManager/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "759"
-            endingLineNumber = "759"
+            startingLineNumber = "762"
+            endingLineNumber = "762"
             landmarkName = "like(postID:didNotComplete:didComplete:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -23,16 +23,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B7061781-B0DC-415B-98DB-3C8E89AD1375"
+            uuid = "04E96A3F-A7D6-45FF-B410-7524E85B4002"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VKApp/CoreData/CoreDataManager/CoreDataManager.swift"
+            filePath = "VKApp/PostTableViewCell/PostTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "savePost(post:user:)"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
+            landmarkName = "likeButtonDidTap()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

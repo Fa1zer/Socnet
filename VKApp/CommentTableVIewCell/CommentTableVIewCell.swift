@@ -8,43 +8,44 @@
 import UIKit
 import SnapKit
 
-final class CommentTableVIewCell: UITableViewCell {
+final class CommentTableViewCell: UITableViewCell {
     
-    init(comment: Comment, user: User, avatarAction: @escaping (UUID) -> Void) {
-        self.avatarAction = avatarAction
-        self.comment = comment
-        self.user = user
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        super.init(style: .default, reuseIdentifier: nil)
+        self.setuViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let avatarAction: (UUID) -> Void
-    private var comment: Comment {
+    var avatarAction: ((UUID) -> Void)?
+    var comment: Comment? {
         didSet {
-            self.commentTextLabel.text = self.comment.text
+            self.commentTextLabel.text = self.comment?.text
         }
     }
     
-    private var user: User {
+    var user: User? {
         didSet {
-            guard let imageString = self.user.image,
+            guard let imageString = self.user?.image,
                   let dataImage = Data(base64Encoded: imageString) else {
                 return
             }
             
             self.userAvatarImageView.image = UIImage(data: dataImage)
-            self.userNameLabel.text = self.user.name
+            self.userNameLabel.text = self.user?.name
         }
     }
+    
+    static let cellID = "comment cell"
     
     private let userAvatarImageView: UIImageView = {
         let view = UIImageView()
         
-        view.layer.cornerRadius = 25
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 15
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -101,7 +102,7 @@ final class CommentTableVIewCell: UITableViewCell {
     }
     
     @objc private func avatarImageViewDidTap() {
-        self.avatarAction(self.user.id ?? UUID())
+        self.avatarAction?(self.user?.id ?? UUID())
     }
     
 }

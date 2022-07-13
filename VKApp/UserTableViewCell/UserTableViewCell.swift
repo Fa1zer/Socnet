@@ -38,6 +38,7 @@ final class UserTableViewCell: UITableViewCell {
     private let userAvatarImageView: UIImageView = {
         let view = UIImageView()
         
+        view.clipsToBounds = true
         view.layer.cornerRadius = 25
         view.translatesAutoresizingMaskIntoConstraints = false
         

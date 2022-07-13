@@ -14,16 +14,18 @@ protocol MainCoordinatable {
 
 final class MainCoordinator: TabBarCoordinatable {
     
-    init(dataManager: DataManager, coreDataManager: CoreDataManager, tabBarDelegate: TabBarController) {
+    init(dataManager: DataManager, coreDataManager: CoreDataManager, tabBarDelegate: TabBarController, userDefaultsManager: UserDefaultsManager) {
         self.dataManager = dataManager
         self.coreDataManager = coreDataManager
         self.tabBarDelegate = tabBarDelegate
+        self.userDefaultsManager = userDefaultsManager
         
         self.setupViews()
         self.start()
     }
     
     var tabBarDelegate: TabBarController
+    private let userDefaultsManager: UserDefaultsManager
     private let dataManager: DataManager
     private let coreDataManager: CoreDataManager
     
@@ -50,7 +52,18 @@ final class MainCoordinator: TabBarCoordinatable {
         let presenter = ProfilePresenter(router: router, interactor: interactor, isAlienUser: true, isSubscribedUser: isSubscribedUser, userID: userID)
         let viewController = ProfileViewController(presenter: presenter)
         
-        router.coordinatorDelegate = ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: RegistrationManager(dataManager: self.dataManager), keychainManager: KeychainManager(), tabBarDelegate: self.tabBarDelegate)
+        router.coordinatorDelegate = ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: RegistrationManager(dataManager: self.dataManager), keychainManager: KeychainManager(), tabBarDelegate: self.tabBarDelegate, userDefaultsManager: self.userDefaultsManager)
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func goToComments(likeAction: @escaping (Post, User) -> Void, dislikeAction: @escaping (Post, User) -> Void, commentAction: @escaping (PostTableViewCell) -> Void, avatarAction: @escaping (User) -> Void, post: Post, user: User, likeButtonIsSelected: Bool, frame: CGRect) {
+        let router = CommentsRouter()
+        let interactor = CommentsInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager, userDefaultsManager: self.userDefaultsManager)
+        let presenter = CommentsPresenter(interactor: interactor, router: router, likeAction: likeAction, dislikeAction: dislikeAction, commentAction: commentAction, avatarAction: avatarAction, post: post, user: user, likeButtonIsSelected: likeButtonIsSelected, frame: frame)
+        let viewController = CommentsViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = ProfileCoordnator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, registrationManager: RegistrationManager(dataManager: self.dataManager), keychainManager: KeychainManager(), tabBarDelegate: self.tabBarDelegate, userDefaultsManager: self.userDefaultsManager)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }

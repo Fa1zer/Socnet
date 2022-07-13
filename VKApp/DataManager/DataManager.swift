@@ -9,6 +9,7 @@ import Foundation
 
 final class DataManager {
         
+    private let userDefaultsManager = UserDefaultsManager()
     private let urlConstructor = URLConstructor.default
     private var userToken: String?
     
@@ -165,7 +166,7 @@ final class DataManager {
     func getUser(didComplete: @escaping (User) -> Void, didNotComplete: @escaping (RequestErrors) -> Void) {
         var request = URLRequest(url: self.urlConstructor.meUser())
         
-        guard let userToken = userToken else {
+        guard let userToken = self.userToken else {
             return
         }
         
@@ -213,7 +214,9 @@ final class DataManager {
                 return
             }
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [ weak self ] in
+                self?.userDefaultsManager.saveUserData(avatarImageDataString: user.image, userName: user.name, id: user.id)
+                
                 didComplete(user)
             }
         }
