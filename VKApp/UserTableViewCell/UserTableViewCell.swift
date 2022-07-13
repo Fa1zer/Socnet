@@ -10,28 +10,30 @@ import SnapKit
 
 final class UserTableViewCell: UITableViewCell {
     
-    init(user: User, didTapAction: @escaping (UUID) -> Void) {
-        self.user = user
-        self.didTapAction = didTapAction
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        super.init(style: .default, reuseIdentifier: nil)
+        self.setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let didTapAction: (UUID) -> Void
-    private var user: User {
-        didSet {
-            guard let imageString = self.user.image,
+    static let cellID = "user cell"
+    
+    var didTapAction: ((UUID) -> Void)?
+    var user: User? {
+        didSet {            
+            guard let user = self.user,
+                  let imageString = user.image,
                   let dataImage = Data(base64Encoded: imageString) else {
                 return
             }
             
             self.userAvatarImageView.image = UIImage(data: dataImage)
-            self.userNameLabel.text = self.user.name
-            self.userWorkNameLabel.text = self.user.work
+            self.userNameLabel.text = user.name
+            self.userWorkNameLabel.text = user.work
         }
     }
     
@@ -65,16 +67,12 @@ final class UserTableViewCell: UITableViewCell {
         return label
     }()
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.setupViews()
-    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        self.didTapAction(self.user.id ?? UUID())
+        if selected {
+            self.didTapAction?(self.user?.id ?? UUID())
+        }
     }
     
     private func setupViews() {
@@ -86,12 +84,12 @@ final class UserTableViewCell: UITableViewCell {
         
         self.userAvatarImageView.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(15)
-            make.width.height.equalTo(30)
+            make.width.height.equalTo(50)
             make.bottom.equalToSuperview().inset(15)
         }
         
         self.userNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(15)
+            make.top.equalTo(self.userAvatarImageView)
             make.leading.equalTo(self.userAvatarImageView.snp.trailing).inset(-10)
         }
         

@@ -77,7 +77,7 @@ final class URLConstructor {
     
     func userSubscribers(userID: UUID) -> URL {
         self.baseURLString
-            .appendingPathComponent(URLPaths.user.rawValue)
+            .appendingPathComponent(URLPaths.users.rawValue)
             .appendingPathComponent(URLPaths.subscribers.rawValue)
             .appendingPathComponent(userID.uuidString)
     }

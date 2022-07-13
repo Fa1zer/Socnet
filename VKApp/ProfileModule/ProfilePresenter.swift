@@ -132,6 +132,10 @@ final class ProfilePresenter {
         self.interactor.deleteUser(user: user)
     }
     
+    func goToFindUser(userID: UUID, mode: FindUserMode) {
+        self.router.goToFindUser(userID: userID, mode: mode)
+    }
+    
     private func getAllUserPosts(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
         self.interactor.getAllUserPosts(userID: userID, didNotComplete: didNotComplete) { [ weak self ] posts in
             self?.posts = posts

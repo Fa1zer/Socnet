@@ -93,6 +93,17 @@ final class ProfileCoordnator: TabBarCoordinatable {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func goToFindUser(userID: UUID, mode: FindUserMode) {
+        let router = FindUserRouter()
+        let interactor = FindUserInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        let presenter = FindUserPresenter(interactor: interactor, router: router, mode: mode, userID: userID)
+        let viewController = FindUserViewController(presenter: presenter)
+        
+        router.coordinatorDelegate = self
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
     private func setupViews() {
         self.navigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Profile", comment: ""),

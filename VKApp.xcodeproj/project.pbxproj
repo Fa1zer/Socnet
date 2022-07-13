@@ -65,6 +65,11 @@
 		E3B2B20E2874472F00F08800 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B2B20D2874472F00F08800 /* FeedViewController.swift */; };
 		E3B2B21128757AC200F08800 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E3B2B21328757AC200F08800 /* Localizable.stringsdict */; };
 		E3B378CA28730788007D09F5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B378C928730788007D09F5 /* CoreDataManager.swift */; };
+		E3B4340D287F0B650033584F /* FindUserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B4340C287F0B650033584F /* FindUserRouter.swift */; };
+		E3B4340F287F0B760033584F /* FindUserInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B4340E287F0B760033584F /* FindUserInteractor.swift */; };
+		E3B43411287F0B830033584F /* FindUserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B43410287F0B830033584F /* FindUserPresenter.swift */; };
+		E3B43413287F0B970033584F /* FindUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B43412287F0B970033584F /* FindUserViewController.swift */; };
+		E3B43415287F0BA30033584F /* FindUserMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B43414287F0BA30033584F /* FindUserMode.swift */; };
 		E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C404712869E5C60004C5AE /* RegistrationManager.swift */; };
 		E3D122A6287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3D122A4287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld */; };
 		E3D122A9287B34A400F51DD9 /* UserModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3D122A7287B34A400F51DD9 /* UserModel.xcdatamodeld */; };
@@ -148,6 +153,11 @@
 		E3B2B21228757AC200F08800 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E3B2B21428757AC400F08800 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E3B378C928730788007D09F5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		E3B4340C287F0B650033584F /* FindUserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserRouter.swift; sourceTree = "<group>"; };
+		E3B4340E287F0B760033584F /* FindUserInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserInteractor.swift; sourceTree = "<group>"; };
+		E3B43410287F0B830033584F /* FindUserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserPresenter.swift; sourceTree = "<group>"; };
+		E3B43412287F0B970033584F /* FindUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserViewController.swift; sourceTree = "<group>"; };
+		E3B43414287F0BA30033584F /* FindUserMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserMode.swift; sourceTree = "<group>"; };
 		E3C404712869E5C60004C5AE /* RegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
 		E3D122A5287B33E300F51DD9 /* PostModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostModel.xcdatamodel; sourceTree = "<group>"; };
 		E3D122A8287B34A400F51DD9 /* UserModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserModel.xcdatamodel; sourceTree = "<group>"; };
@@ -223,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E3B4340B287F0AFF0033584F /* FindUserModule */,
 				E350BBA9287DC79A00AB9117 /* CreateCommentView */,
 				E350BB99287D6C1300AB9117 /* CommentsModule */,
 				E35A7679287CAA7A002B4D77 /* CreatePostModule */,
@@ -440,6 +451,18 @@
 			path = CoreDataManager;
 			sourceTree = "<group>";
 		};
+		E3B4340B287F0AFF0033584F /* FindUserModule */ = {
+			isa = PBXGroup;
+			children = (
+				E3B43414287F0BA30033584F /* FindUserMode.swift */,
+				E3B4340C287F0B650033584F /* FindUserRouter.swift */,
+				E3B4340E287F0B760033584F /* FindUserInteractor.swift */,
+				E3B43410287F0B830033584F /* FindUserPresenter.swift */,
+				E3B43412287F0B970033584F /* FindUserViewController.swift */,
+			);
+			path = FindUserModule;
+			sourceTree = "<group>";
+		};
 		E3C4046F2869E5590004C5AE /* RegistrationManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,9 +660,13 @@
 				E31FBE632863401900D41304 /* TabBarController.swift in Sources */,
 				E310500A2875E16E00673CBD /* ProfilePresenter.swift in Sources */,
 				E3B2B208287446B400F08800 /* FeedRouter.swift in Sources */,
+				E3B43411287F0B830033584F /* FindUserPresenter.swift in Sources */,
+				E3B43415287F0BA30033584F /* FindUserMode.swift in Sources */,
 				E3A90D47286A2D520053F1CD /* RegistrationMode.swift in Sources */,
+				E3B4340F287F0B760033584F /* FindUserInteractor.swift in Sources */,
 				E31EFE1B2871ED3B0026A36C /* UserTableViewCell.swift in Sources */,
 				E350BB9B287D6C4B00AB9117 /* CommentsRouter.swift in Sources */,
+				E3B4340D287F0B650033584F /* FindUserRouter.swift in Sources */,
 				E3D122AF287B350400F51DD9 /* PostEntity+CoreDataProperties.swift in Sources */,
 				E3556DF92873337300955765 /* SavedPresenter.swift in Sources */,
 				E3A1B225286ADA5D00D666CE /* OnboardingInteractor.swift in Sources */,
@@ -675,6 +702,7 @@
 				E3B378CA28730788007D09F5 /* CoreDataManager.swift in Sources */,
 				E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */,
 				E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */,
+				E3B43413287F0B970033584F /* FindUserViewController.swift in Sources */,
 				E344EE22286865C0007ABF86 /* HTTPMethods.swift in Sources */,
 				E39D4F022870A54D00E00F8B /* PostTableViewCell.swift in Sources */,
 				E3A1B223286ADA4500D666CE /* OnboardingRouter.swift in Sources */,
