@@ -249,8 +249,8 @@ extension ProfileViewController: UITableViewDelegate {
             self.presenter.goToEdit()
         } addPostButtonAction: { [ weak self ] in
             self?.presenter.goToCreatePost()
-        } subscriberSubscriptionsAction: { [ weak self ] usersId in
-            // push find view controller
+        } subscribersAction: { [ weak self ] userID in
+            self?.presenter.goToFindUser(userID: userID, mode: .subscribers)
         } subscribeAction: { [ weak self ] user in
             self?.presenter.subscribe(userID: user.id ?? UUID()) { error in
                 switch error {
@@ -282,6 +282,16 @@ extension ProfileViewController: UITableViewDelegate {
                 self?.presenter.deleteUser(user: user)
             }
 
+        } subscribtionsAction: { [ weak self ] userID in
+            guard let isAlienUser = self?.presenter.isAlienUser else {
+                return
+            }
+            
+            if isAlienUser {
+                self?.presenter.goToFindUser(userID: userID, mode: .subscribers)
+            } else {
+                self?.presenter.goToFindUser(userID: userID, mode: .coreDataSubscriptions)
+            }
         }
     }
     

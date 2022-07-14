@@ -10,11 +10,12 @@ import SnapKit
 
 final class UserProfileView: UIView {
     
-    init(user: User, isAlienUser: Bool, isSubscribedUser: Bool, editButtonAction: @escaping () -> Void, addPostButtonAction: @escaping () -> Void, subscriberSubscriptionsAction: @escaping ([UUID]) -> Void, subscribeAction: @escaping (User) -> Void, unsubscribeAction: @escaping (User) -> Void) {
+    init(user: User, isAlienUser: Bool, isSubscribedUser: Bool, editButtonAction: @escaping () -> Void, addPostButtonAction: @escaping () -> Void, subscribersAction: @escaping (UUID) -> Void, subscribeAction: @escaping (User) -> Void, unsubscribeAction: @escaping (User) -> Void, subscribtionsAction: @escaping (UUID) -> Void) {
         self.user = user
         self.editButtonAction = editButtonAction
         self.addPostButtonAction = addPostButtonAction
-        self.subscriberSubscriptionsAction = subscriberSubscriptionsAction
+        self.subscribersAction = subscribersAction
+        self.subscribtionsAction = subscribtionsAction
         self.isAlienUser = isAlienUser
         self.subscribeAction = subscribeAction
         self.unsubscribeAction = unsubscribeAction
@@ -36,7 +37,8 @@ final class UserProfileView: UIView {
     
     private let editButtonAction: () -> Void
     private let addPostButtonAction: () -> Void
-    private let subscriberSubscriptionsAction: ([UUID]) -> Void
+    private let subscribersAction: (UUID) -> Void
+    private let subscribtionsAction: (UUID) -> Void
     private let subscribeAction: (User) -> Void
     private let unsubscribeAction: (User) -> Void
     private let isAlienUser: Bool
@@ -264,11 +266,19 @@ final class UserProfileView: UIView {
     }
     
     @objc private func goToSubscriptions() {
-        self.subscriberSubscriptionsAction(self.user.subscribtions)
+        guard let id = self.user.id else {
+            return
+        }
+        
+        self.subscribtionsAction(id)
     }
     
     @objc private func goToSubscribers() {
-        self.subscriberSubscriptionsAction(self.user.subscribers)
+        guard let id = self.user.id else {
+            return
+        }
+        
+        self.subscribersAction(id)
     }
     
     @objc private func subscribeButtonDidTap() {

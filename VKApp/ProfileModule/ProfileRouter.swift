@@ -24,4 +24,8 @@ final class ProfileRouter: ProfileCoordnatable {
         self.coordinatorDelegate?.goToComments(likeAction: likeAction, dislikeAction: dislikeAction, commentAction: commentAction, avatarAction: avatarAction, post: post, user: user, likeButtonIsSelected: likeButtonIsSelected, frame: frame)
     }
     
+    func goToFindUser(userID: UUID, mode: FindUserMode) {
+        self.coordinatorDelegate?.goToFindUser(userID: userID, mode: mode)
+    }
+    
 }

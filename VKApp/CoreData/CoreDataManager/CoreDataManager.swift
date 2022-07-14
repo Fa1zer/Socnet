@@ -223,6 +223,8 @@ final class CoreDataManager: NSObject {
         
         userEntity.id = user.id
         userEntity.date = Date()
+        userEntity.name = user.name
+        userEntity.work = user.work
         userEntity.image = Data(base64Encoded: user.image ?? "")
         
         do {
