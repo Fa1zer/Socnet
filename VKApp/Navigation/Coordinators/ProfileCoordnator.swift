@@ -51,7 +51,7 @@ final class ProfileCoordnator: TabBarCoordinatable {
     
     func goToProfile() {
         let router = ProfileRouter()
-        let interactor = ProfileInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        let interactor = ProfileInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager, userDefautsManager: self.userDefaultsManager)
         let presenter = ProfilePresenter(router: router, interactor: interactor, isAlienUser: false)
         let viewController = ProfileViewController(presenter: presenter)
         
@@ -62,7 +62,7 @@ final class ProfileCoordnator: TabBarCoordinatable {
     
     func goToProfile(userID: UUID?, isSubscribedUser: Bool) {
         let router = ProfileRouter()
-        let interactor = ProfileInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager)
+        let interactor = ProfileInteractor(dataManager: self.dataManager, coreDataManager: self.coreDataManager, userDefautsManager: self.userDefaultsManager)
         let presenter = ProfilePresenter(router: router, interactor: interactor, isAlienUser: true, isSubscribedUser: isSubscribedUser, userID: userID)
         let viewController = ProfileViewController(presenter: presenter)
         

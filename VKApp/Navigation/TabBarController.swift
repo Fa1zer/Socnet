@@ -17,10 +17,11 @@ protocol TabBarCoordinatable {
 
 final class TabBarController: UITabBarController, RegistrationCoordinatable {
     
-    init(dataManager: DataManager, registrationManager: RegistrationManager, keychainManager: KeychainManager) {
+    init(dataManager: DataManager, registrationManager: RegistrationManager, keychainManager: KeychainManager, userDefaultsManager: UserDefaultsManager) {
         self.dataManager = dataManager
         self.registrationManager = registrationManager
         self.keychainManager = keychainManager
+        self.userDefaultsManager = userDefaultsManager
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,9 +34,9 @@ final class TabBarController: UITabBarController, RegistrationCoordinatable {
     private let dataManager: DataManager
     private let registrationManager: RegistrationManager
     private let keychainManager: KeychainManager
+    private let userDefaultsManager: UserDefaultsManager
     
     private let coreDataManager = CoreDataManager()
-    private let userDefaultsManager = UserDefaultsManager()
     private var mainCoordinator: MainCoordinator {
         return MainCoordinator(dataManager: self.dataManager, coreDataManager: self.coreDataManager, tabBarDelegate: self, userDefaultsManager: self.userDefaultsManager)
     }

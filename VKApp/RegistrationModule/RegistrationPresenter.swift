@@ -27,6 +27,10 @@ final class RegistrationPresenter {
         self.interactor.signIn(email: email, password: password, didNotComplete: didNotComplete, didComplete: didComplete)
     }
     
+    func getUserData() -> (image: String, name: String, id: String)? {
+        return self.interactor.getUserData()
+    }
+    
     func goToTabBar() {
         self.router.goToTabBar()
     }

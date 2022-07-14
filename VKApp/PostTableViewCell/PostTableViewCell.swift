@@ -24,6 +24,42 @@ final class PostTableViewCell: UITableViewCell {
     var dislikeAction: ((Post, User) -> Void)?
     var commentAction: ((PostTableViewCell) -> Void)?
     var avatarAction: ((User) -> Void)?
+    var isProfilePost: Bool? {
+        didSet {
+            guard let isProfilePost = self.isProfilePost,
+                  let id = self.post?.id else {
+                return
+            }
+            
+            if isProfilePost {
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(self.like),
+                    name: Notification.Name(NotificationCenterNameConstructor.likeProfile(postID: id)),
+                    object: nil
+                )
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(self.dislike),
+                    name: Notification.Name(NotificationCenterNameConstructor.dislikeProfile(postID: id)),
+                    object: nil
+                )
+            } else {
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(self.like),
+                    name: Notification.Name(NotificationCenterNameConstructor.likeFeed(postID: id)),
+                    object: nil
+                )
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(self.dislike),
+                    name: Notification.Name(NotificationCenterNameConstructor.dislikeFeed(postID: id)),
+                    object: nil
+                )
+            }
+        }
+    }
     var post: Post? {
         didSet {
             guard let imageData = Data(base64Encoded: self.post?.image ?? "") else {
@@ -33,7 +69,7 @@ final class PostTableViewCell: UITableViewCell {
             self.postImageView.image = UIImage(data: imageData)
             self.postTextLabel.text = self.post?.text ?? ""
             
-            if self.post?.likes != -1 {
+            if self.post?.likes ?? -1 > -1 {
                 self.likeCountLabel.text = String.localizedStringWithFormat(
                     NSLocalizedString("likes", comment: ""),
                     UInt(self.post?.likes ?? 0)
@@ -218,7 +254,7 @@ final class PostTableViewCell: UITableViewCell {
     }
     
     @objc private func likeButtonDidTap() {
-        if !(self.likeButtonIsSelected ?? true) {
+        if !(self.likeButtonIsSelected ?? false) {
             self.post?.likes += 1
             self.likeButtonIsSelected = true
             
@@ -228,6 +264,23 @@ final class PostTableViewCell: UITableViewCell {
             }
             
             self.likeAction?(post, user)
+            
+            guard let isProfilePost = self.isProfilePost,
+                  let id = self.post?.id else {
+                return
+            }
+            
+            if !isProfilePost {
+                NotificationCenter.default.post(
+                    name: NSNotification.Name(NotificationCenterNameConstructor.likeProfile(postID: id)),
+                    object: nil
+                )
+            } else {
+                NotificationCenter.default.post(
+                    name: NSNotification.Name(NotificationCenterNameConstructor.likeFeed(postID: id)),
+                    object: nil
+                )
+            }
         } else {
             if self.likeAction != nil {
                 self.post?.likes -= 1
@@ -241,6 +294,35 @@ final class PostTableViewCell: UITableViewCell {
             }
             
             self.dislikeAction?(post, user)
+            
+            guard let id = self.post?.id else {
+                return
+            }
+            
+            guard let isProfilePost = self.isProfilePost else {
+//                NotificationCenter.default.post(
+//                    name: NSNotification.Name(NotificationCenterNameConstructor.dislikeProfile(postID: id)),
+//                    object: nil
+//                )
+//                NotificationCenter.default.post(
+//                    name: NSNotification.Name(NotificationCenterNameConstructor.dislikeFeed(postID: id)),
+//                    object: nil
+//                )
+                
+                return
+            }
+            
+            if !isProfilePost {
+                NotificationCenter.default.post(
+                    name: NSNotification.Name(NotificationCenterNameConstructor.dislikeProfile(postID: id)),
+                    object: nil
+                )
+            } else {
+                NotificationCenter.default.post(
+                    name: NSNotification.Name(NotificationCenterNameConstructor.dislikeFeed(postID: id)),
+                    object: nil
+                )
+            }
         }
     }
     
@@ -255,6 +337,16 @@ final class PostTableViewCell: UITableViewCell {
 
         
         self.avatarAction?(user)
+    }
+    
+    @objc private func like() {
+        self.post?.likes += 1
+        self.likeButtonIsSelected = true
+    }
+    
+    @objc private func dislike() {
+        self.post?.likes -= 1
+        self.likeButtonIsSelected = false
     }
 
 }

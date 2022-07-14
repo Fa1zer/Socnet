@@ -101,7 +101,7 @@ final class RegistrationViewController: UIViewController {
         let view = UIView()
         
         view.backgroundColor = .systemGray
-        view.alpha = 0.5
+        view.alpha = 0.2
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -156,9 +156,9 @@ final class RegistrationViewController: UIViewController {
         self.view.addSubview(self.scrollView)
         self.view.addSubview(self.translucentView)
         self.view.insertSubview(self.translucentView, at: 10)
-        
-        self.translucentView.addSubview(self.activityIndicatorView)
-        
+        self.view.addSubview(self.activityIndicatorView)
+        self.view.insertSubview(self.activityIndicatorView, at: 11)
+                
         self.scrollView.addSubview(self.titleLabel)
         self.scrollView.addSubview(self.emailTextField)
         self.scrollView.addSubview(self.passwordTextField)
@@ -244,7 +244,7 @@ final class RegistrationViewController: UIViewController {
             self.translucentView.isHidden = true
             self.activityIndicatorView.isHidden = true
             
-            if self.presenter.registrationMode == .sigIn {
+            if self.presenter.registrationMode == .sigIn && self.presenter.getUserData() != nil {
                 self.presenter.goToTabBar()
             } else {
                 self.presenter.goToEdit()

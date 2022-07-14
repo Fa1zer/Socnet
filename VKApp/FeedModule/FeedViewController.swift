@@ -126,6 +126,7 @@ extension FeedViewController: UITableViewDataSource {
         cell.user = self.presenter.posts[indexPath.row].user
         cell.post = self.presenter.posts[indexPath.row].post
         cell.likeButtonIsSelected = false
+        cell.isProfilePost = false
         cell.likeAction = { [ weak self ] post, user in
             guard let id = post.id else {
                 return

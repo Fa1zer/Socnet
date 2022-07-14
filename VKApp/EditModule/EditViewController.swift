@@ -137,7 +137,7 @@ final class EditViewController: UIViewController {
         let view = UIView()
         
         view.backgroundColor = .systemGray
-        view.alpha = 0.5
+        view.alpha = 0.2
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -194,8 +194,8 @@ final class EditViewController: UIViewController {
         self.view.addSubview(self.scrollView)
         self.view.addSubview(self.translucentView)
         self.view.insertSubview(self.translucentView, at: 10)
-        
-        self.translucentView.addSubview(self.activityIndicatorView)
+        self.view.addSubview(self.activityIndicatorView)
+        self.view.insertSubview(self.activityIndicatorView, at: 11)
         
         self.scrollView.addSubview(self.avatarImageView)
         self.scrollView.addSubview(self.nameLabel)
@@ -288,6 +288,16 @@ final class EditViewController: UIViewController {
     }
     
     @objc private func editUser() {
+        guard self.nameTextField.text != "",
+              self.workNameLabel.text != "" else {
+            self.callAlert(
+                title: NSLocalizedString("Fields are empty", comment: ""),
+                text: NSLocalizedString("Complete the fields", comment: "")
+            )
+            
+            return
+        }
+        
         self.translucentView.isHidden = false
         self.activityIndicatorView.isHidden = false
         

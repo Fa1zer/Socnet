@@ -19,12 +19,11 @@ final class ProfilePresenter {
     }
     
     var callBack: (() -> Void)?
-    
+    let userID: UUID?
+    var isAlienUser: Bool
+    let isSubscribedUser: Bool
     private let router: ProfileRouter
     private let interactor: ProfileInteractor
-    private let userID: UUID?
-    let isAlienUser: Bool
-    let isSubscribedUser: Bool
     
     var photos: [UIImage] {
         var photos = [UIImage]()
@@ -134,6 +133,10 @@ final class ProfilePresenter {
     
     func goToFindUser(userID: UUID, mode: FindUserMode) {
         self.router.goToFindUser(userID: userID, mode: mode)
+    }
+    
+    func getUserData() -> (image: String, name: String, id: String)? {
+        return self.interactor.getUserData()
     }
     
     private func getAllUserPosts(userID: UUID, didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping () -> Void) {
