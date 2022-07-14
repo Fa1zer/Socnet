@@ -51,6 +51,8 @@
 		E3A1B227286ADA6D00D666CE /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B226286ADA6D00D666CE /* OnboardingPresenter.swift */; };
 		E3A1B229286ADA7900D666CE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B228286ADA7900D666CE /* OnboardingViewController.swift */; };
 		E3A1B22E286ADF6400D666CE /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A1B22D286ADF6400D666CE /* KeychainManager.swift */; };
+		E3A7E5F828800955004B02F2 /* NotificationCenterNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A7E5F728800955004B02F2 /* NotificationCenterNames.swift */; };
+		E3A7E5FA288009F4004B02F2 /* NotificationCenterNameConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A7E5F9288009F4004B02F2 /* NotificationCenterNameConstructor.swift */; };
 		E3A90D47286A2D520053F1CD /* RegistrationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D46286A2D520053F1CD /* RegistrationMode.swift */; };
 		E3A90D4A286A31CF0053F1CD /* CustomUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D49286A31CF0053F1CD /* CustomUIViewController.swift */; };
 		E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A90D4B286A3A7F0053F1CD /* CustomColor.swift */; };
@@ -138,6 +140,8 @@
 		E3A1B226286ADA6D00D666CE /* OnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
 		E3A1B228286ADA7900D666CE /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		E3A1B22D286ADF6400D666CE /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		E3A7E5F728800955004B02F2 /* NotificationCenterNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterNames.swift; sourceTree = "<group>"; };
+		E3A7E5F9288009F4004B02F2 /* NotificationCenterNameConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterNameConstructor.swift; sourceTree = "<group>"; };
 		E3A90D46286A2D520053F1CD /* RegistrationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationMode.swift; sourceTree = "<group>"; };
 		E3A90D49286A31CF0053F1CD /* CustomUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIViewController.swift; sourceTree = "<group>"; };
 		E3A90D4B286A3A7F0053F1CD /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				E31FBE672863465900D41304 /* Localization */,
+				E3A7E5F62880091C004B02F2 /* NotificationCenterNameConstructor */,
 				E3B4340B287F0AFF0033584F /* FindUserModule */,
 				E350BBA9287DC79A00AB9117 /* CreateCommentView */,
 				E350BB99287D6C1300AB9117 /* CommentsModule */,
@@ -400,6 +405,15 @@
 				E3A1B22D286ADF6400D666CE /* KeychainManager.swift */,
 			);
 			path = KeychainManager;
+			sourceTree = "<group>";
+		};
+		E3A7E5F62880091C004B02F2 /* NotificationCenterNameConstructor */ = {
+			isa = PBXGroup;
+			children = (
+				E3A7E5F728800955004B02F2 /* NotificationCenterNames.swift */,
+				E3A7E5F9288009F4004B02F2 /* NotificationCenterNameConstructor.swift */,
+			);
+			path = NotificationCenterNameConstructor;
 			sourceTree = "<group>";
 		};
 		E3A90D48286A31A40053F1CD /* CustomUIElements */ = {
@@ -681,6 +695,7 @@
 				E31FBE662863420800D41304 /* MainCoordinator.swift in Sources */,
 				E3A90D4E286A4B0B0053F1CD /* CustomScrollView.swift in Sources */,
 				E3A1B227286ADA6D00D666CE /* OnboardingPresenter.swift in Sources */,
+				E3A7E5F828800955004B02F2 /* NotificationCenterNames.swift in Sources */,
 				E3F50B90286757A8008A842D /* Comment.swift in Sources */,
 				E3D122A6287B33E300F51DD9 /* CoreDataPostModel.xcdatamodeld in Sources */,
 				E3137E772850FAFE005FC3F9 /* AppDelegate.swift in Sources */,
@@ -700,6 +715,7 @@
 				E3C404722869E5C60004C5AE /* RegistrationManager.swift in Sources */,
 				E3F50B9B28675C99008A842D /* RequestErrors.swift in Sources */,
 				E3B378CA28730788007D09F5 /* CoreDataManager.swift in Sources */,
+				E3A7E5FA288009F4004B02F2 /* NotificationCenterNameConstructor.swift in Sources */,
 				E3DEE6A4286A19610003D543 /* RegistrationRouter.swift in Sources */,
 				E3A90D4C286A3A7F0053F1CD /* CustomColor.swift in Sources */,
 				E3B43413287F0B970033584F /* FindUserViewController.swift in Sources */,

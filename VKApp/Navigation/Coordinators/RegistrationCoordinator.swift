@@ -22,12 +22,19 @@ final class RegistrationCoordinator {
     let navigationController = UINavigationController()
     private let dataManager = DataManager()
     private let keychainManager = KeychainManager()
+    private let userDefaultsManager = UserDefaultsManager()
     private var registrationManager: RegistrationManager { RegistrationManager(dataManager: self.dataManager) }
     
     func start() {
         guard let (email, password) = self.keychainManager.getKeychainData() else {
             self.goToOnboarding()
 
+            return
+        }
+        
+        guard self.userDefaultsManager.getUserData() != nil else {
+            goToOnboarding()
+            
             return
         }
 
@@ -40,7 +47,7 @@ final class RegistrationCoordinator {
     
     func goToRegistration(registrationMode: RegistrationMode) {
         let router = RegistrationRouter()
-        let interactor = RegistrationInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
+        let interactor = RegistrationInteractor(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager, userDefaultsManager: self.userDefaultsManager)
         let presenter = RegistrationPresenter(interactor: interactor, router: router, registrationMode: registrationMode)
         let viewController = RegistrationViewController(presenter: presenter)
         
@@ -72,7 +79,7 @@ final class RegistrationCoordinator {
     }
     
     func goToTabBar() {
-        let tabBarController = TabBarController(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager)
+        let tabBarController = TabBarController(dataManager: self.dataManager, registrationManager: self.registrationManager, keychainManager: self.keychainManager, userDefaultsManager: self.userDefaultsManager)
         
         tabBarController.coordinatorDelegate = self
         

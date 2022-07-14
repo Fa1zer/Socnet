@@ -214,9 +214,7 @@ final class DataManager {
                 return
             }
             
-            DispatchQueue.main.async { [ weak self ] in
-                self?.userDefaultsManager.saveUserData(avatarImageDataString: user.image, userName: user.name, id: user.id)
-                
+            DispatchQueue.main.async {
                 didComplete(user)
             }
         }
@@ -361,7 +359,9 @@ final class DataManager {
                         return
                 }
                 
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [ weak self ] in
+                    self?.userDefaultsManager.saveUserData(avatarImageDataString: user.image, userName: user.name, id: user.id)
+                    
                     didComplete()
                 }
             }

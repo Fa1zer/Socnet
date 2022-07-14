@@ -54,7 +54,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if self.presenter.isAlienUser {
+        if self.presenter.isAlienUser && self.presenter.getUserData()?.id != self.presenter.userID?.uuidString {
             self.presenter.getSomeUser { [ weak self ] error in
                 switch error {
                 case .statusCodeError(let number):
@@ -68,6 +68,7 @@ final class ProfileViewController: UIViewController {
                 }
             }
         } else {
+            self.presenter.isAlienUser = false
             self.presenter.getUser { [ weak self ] error in
                 switch error {
                 case .statusCodeError(let number):
@@ -158,6 +159,7 @@ extension ProfileViewController: UITableViewDataSource {
         cell.user = self.presenter.user
         cell.post = self.presenter.posts[indexPath.row]
         cell.likeButtonIsSelected = false
+        cell.isProfilePost = true
         cell.likeAction = { [ weak self ] post, user in
             guard let id = post.id else {
                 return

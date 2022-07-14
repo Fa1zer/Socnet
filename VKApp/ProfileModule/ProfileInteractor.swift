@@ -9,13 +9,15 @@ import Foundation
 
 final class ProfileInteractor {
     
-    init(dataManager: DataManager, coreDataManager: CoreDataManager) {
+    init(dataManager: DataManager, coreDataManager: CoreDataManager, userDefautsManager: UserDefaultsManager) {
         self.dataManager = dataManager
         self.coreDataManager = coreDataManager
+        self.userDefautsManager = userDefautsManager
     }
     
     private let dataManager: DataManager
     private let coreDataManager: CoreDataManager
+    private let userDefautsManager: UserDefaultsManager
     
     func getUser(didNotComplete: @escaping (RequestErrors) -> Void, didComplete: @escaping (User) -> Void) {
         self.dataManager.getUser(didComplete: didComplete, didNotComplete: didNotComplete)
@@ -63,6 +65,10 @@ final class ProfileInteractor {
     
     func deleteUser(user: User) {
         self.coreDataManager.deleteUser(user: user) { }
+    }
+    
+    func getUserData() -> (image: String, name: String, id: String)? {
+        return self.userDefautsManager.getUserData()
     }
     
 }
