@@ -8,7 +8,7 @@
 import Foundation
 
 final class DataManager {
-        
+    
     private let userDefaultsManager = UserDefaultsManager()
     private let urlConstructor = URLConstructor.default
     private var userToken: String?
@@ -328,7 +328,9 @@ final class DataManager {
         do {
             var request = URLRequest(url: self.urlConstructor.changeUser())
             
-            guard let userToken = userToken else {
+            guard let userToken = self.userToken else {
+                didNotComplete(.badURL)
+                
                 return
             }
             

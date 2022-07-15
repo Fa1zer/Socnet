@@ -19,12 +19,11 @@ final class UserDefaultsManager {
     
     func getUserData() -> (image: String, name: String, id: String)? {
         guard let image = self.userDefauts.string(forKey: UserDefaultsManagerKeys.image.rawValue),
-              let name = self.userDefauts.string(forKey: UserDefaultsManagerKeys.name.rawValue),
-              let id = self.userDefauts.string(forKey: UserDefaultsManagerKeys.id.rawValue) else {
+              let name = self.userDefauts.string(forKey: UserDefaultsManagerKeys.name.rawValue) else {
             return nil
         }
         
-        return (image: image, name: name, id: id)
+        return (image: image, name: name, id: self.userDefauts.string(forKey: UserDefaultsManagerKeys.id.rawValue) ?? "")
     }
     
 }
