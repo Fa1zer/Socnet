@@ -93,16 +93,7 @@ extension SavedViewController: UITableViewDataSource {
             }
             
             self?.presenter.dislike(postID: id) { error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self?.presenter.deletePost(post: post) {
                     self?.presenter.getPosts()

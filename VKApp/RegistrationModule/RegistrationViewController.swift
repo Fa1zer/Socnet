@@ -146,11 +146,11 @@ final class RegistrationViewController: UIViewController {
         if self.presenter.registrationMode == .logIn {
             self.titleLabel.text = NSLocalizedString("Log In Title", comment: "")
             self.registrationButton.setTitle(NSLocalizedString("Log In", comment: ""), for: .normal)
-            self.registrationButton.addTarget(self, action: #selector(self.logIn), for: .touchUpInside)
+            self.registrationButton.addTarget(self, action: #selector(self.signIn), for: .touchUpInside)
         } else {
             self.titleLabel.text = NSLocalizedString("Sign In Title", comment: "")
             self.registrationButton.setTitle(NSLocalizedString("Sign In", comment: ""), for: .normal)
-            self.registrationButton.addTarget(self, action: #selector(self.signIn), for: .touchUpInside)
+            self.registrationButton.addTarget(self, action: #selector(self.logIn), for: .touchUpInside)
         }
         
         self.view.addSubview(self.scrollView)
@@ -215,7 +215,7 @@ final class RegistrationViewController: UIViewController {
             case .passwordTooShort:
                 self.callAlert(title: NSLocalizedString("Password is too short", comment: ""), text: NSLocalizedString("Password must contain at least 8 characters", comment: ""))
             default:
-                self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                self.callAlert(title: NSLocalizedString("User is not registered", comment: ""), text: nil)
             }
         } didComplete: {
             self.translucentView.isHidden = true
@@ -238,7 +238,7 @@ final class RegistrationViewController: UIViewController {
             case .passwordTooShort:
                 self.callAlert(title: NSLocalizedString("Password is too short", comment: ""), text: NSLocalizedString("Password must contain at least 8 characters", comment: ""))
             default:
-                self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                self.callAlert(title: NSLocalizedString("User is already registered", comment: ""), text: nil)
             }
         } didComplete: {
             self.translucentView.isHidden = true

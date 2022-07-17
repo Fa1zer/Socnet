@@ -143,17 +143,8 @@ final class CreatePostViewController: UIViewController {
             userID: self.presenter.userID,
             image: self.imageView.image?.pngData()?.base64EncodedString() ?? "",
             text: self.textView.text
-        )) { [ weak self ] error in
-            switch error {
-            case .statusCodeError(let number):
-                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-            case .decodeFailed:
-                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-            default:
-                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                
-                break
-            }
+        )) { [ weak self ] _ in
+            self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
         } didComplete: { [ weak self ] in
             self?.presenter.goToProfile()
         }

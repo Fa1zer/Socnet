@@ -40,17 +40,8 @@ final class CommentsViewController: UIViewController {
             return
         }
         
-        self.presenter.getComments(postID: id) { [ weak self ] error in
-            switch error {
-            case .statusCodeError(let number):
-                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-            case .decodeFailed:
-                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-            default:
-                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                
-                break
-            }
+        self.presenter.getComments(postID: id) { [ weak self ] _ in
+            self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
         }
     }
     
@@ -79,16 +70,7 @@ final class CommentsViewController: UIViewController {
             let comment = Comment(userID: userID, postID: postID, text: text)
             
             self.presenter.createComment(comment: comment) { [ weak self ] error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self.presenter.comments.append((
                     comment: comment,

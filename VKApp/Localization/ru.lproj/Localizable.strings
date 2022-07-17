@@ -51,3 +51,6 @@
 "No users" = "Нет пользователей";
 "Fields are empty" = "Поля пустые";
 "Complete the fields" = "Заполните поля";
+"Failed to refresh the feed" = "Не удалось обновить ленту";
+"User is not registered" = "Пользователь не зарегистрирован";
+"User is already registered" = "Пользователь уже зарегистрирован";
