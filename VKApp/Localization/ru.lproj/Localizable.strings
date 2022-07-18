@@ -54,3 +54,4 @@
 "Failed to refresh the feed" = "Не удалось обновить ленту";
 "User is not registered" = "Пользователь не зарегистрирован";
 "User is already registered" = "Пользователь уже зарегистрирован";
+"Server error" = "Ошибка сервера";

@@ -146,11 +146,11 @@ final class RegistrationViewController: UIViewController {
         if self.presenter.registrationMode == .logIn {
             self.titleLabel.text = NSLocalizedString("Log In Title", comment: "")
             self.registrationButton.setTitle(NSLocalizedString("Log In", comment: ""), for: .normal)
-            self.registrationButton.addTarget(self, action: #selector(self.signIn), for: .touchUpInside)
+            self.registrationButton.addTarget(self, action: #selector(self.logIn), for: .touchUpInside)
         } else {
             self.titleLabel.text = NSLocalizedString("Sign In Title", comment: "")
             self.registrationButton.setTitle(NSLocalizedString("Sign In", comment: ""), for: .normal)
-            self.registrationButton.addTarget(self, action: #selector(self.logIn), for: .touchUpInside)
+            self.registrationButton.addTarget(self, action: #selector(self.signIn), for: .touchUpInside)
         }
         
         self.view.addSubview(self.scrollView)
@@ -214,8 +214,14 @@ final class RegistrationViewController: UIViewController {
                 self.callAlert(title: NSLocalizedString("Email is not valid", comment: ""), text: nil)
             case .passwordTooShort:
                 self.callAlert(title: NSLocalizedString("Password is too short", comment: ""), text: NSLocalizedString("Password must contain at least 8 characters", comment: ""))
+            case .requestError(.statusCodeError(let statusCode)):
+                if statusCode == 500 {
+                    self.callAlert(title: NSLocalizedString("Server error", comment: ""), text: nil)
+                } else {
+                    self.callAlert(title: NSLocalizedString("User is already registered", comment: ""), text: nil)
+                }
             default:
-                self.callAlert(title: NSLocalizedString("User is not registered", comment: ""), text: nil)
+                self.callAlert(title: NSLocalizedString("User is already registered", comment: ""), text: nil)
             }
         } didComplete: {
             self.translucentView.isHidden = true
@@ -237,8 +243,14 @@ final class RegistrationViewController: UIViewController {
                 self.callAlert(title: NSLocalizedString("Email is not valid", comment: ""), text: nil)
             case .passwordTooShort:
                 self.callAlert(title: NSLocalizedString("Password is too short", comment: ""), text: NSLocalizedString("Password must contain at least 8 characters", comment: ""))
+            case .requestError(.statusCodeError(let statusCode)):
+                if statusCode == 500 {
+                    self.callAlert(title: NSLocalizedString("Server error", comment: ""), text: nil)
+                } else {
+                    self.callAlert(title: NSLocalizedString("User is not registered", comment: ""), text: nil)
+                }
             default:
-                self.callAlert(title: NSLocalizedString("User is already registered", comment: ""), text: nil)
+                self.callAlert(title: NSLocalizedString("User is not registered", comment: ""), text: nil)
             }
         } didComplete: {
             self.translucentView.isHidden = true
