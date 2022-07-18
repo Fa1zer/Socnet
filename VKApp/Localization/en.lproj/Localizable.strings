@@ -19,14 +19,14 @@
 "Email is not valid" = "Email isn't valid.";
 "Password is too short" = "Password is too short.";
 "Password must contain at least 8 characters" = "Password must contain at least 8 characters.";
-"Log In" = "Log In";
-"Sign In" = "Sign In";
+"Log In" = "Sign In";
+"Sign In" = "Log In";
 "Password" = "Password";
 "LOG IN" = "LOG IN";
 "I have an account" = "I have an account";
-"Sign In Title" = "SIGN IN";
+"Sign In Title" = "LOG IN";
 "Back" = "Назад";
-"Log In Title" = "LOG IN";
+"Log In Title" = "SIGN IN";
 "Incorrect data" = "Incorrect data.";
 "Edit" = "Edit";
 "Enter your name" = "Enter your name";
@@ -51,3 +51,7 @@
 "No users" = "No users";
 "Fields are empty" = "Fields are empty";
 "Complete the fields" = "Complete the fields";
+"Failed to refresh the feed" = "Failed to refresh the feed";
+"User is not registered" = "User isn't registered";
+"User is already registered" = "User is already registered";
+"Server error" = "Server error";

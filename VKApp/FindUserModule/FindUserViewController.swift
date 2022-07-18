@@ -57,31 +57,13 @@ final class FindUserViewController: UIViewController {
         switch self.presenter.mode {
         case .subscriptions:
             self.presenter.getUsers()
-            self.presenter.getUserSubscribtions { [ weak self ] error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+            self.presenter.getUserSubscribtions { [ weak self ] _ in
+                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
             }
         case .subscribers:
             self.presenter.getUsers()
-            self.presenter.getUserSubscribers { [ weak self ] error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+            self.presenter.getUserSubscribers { [ weak self ] _ in
+                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
             }
         case .coreDataSubscriptions:
             self.presenter.getUsers()

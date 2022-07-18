@@ -55,31 +55,13 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         if self.presenter.isAlienUser && self.presenter.getUserData()?.id != self.presenter.userID?.uuidString {
-            self.presenter.getSomeUser { [ weak self ] error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+            self.presenter.getSomeUser { [ weak self ] _ in
+                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
             }
         } else {
             self.presenter.isAlienUser = false
             self.presenter.getUser { [ weak self ] error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
             }
         }
     }
@@ -115,31 +97,13 @@ final class ProfileViewController: UIViewController {
         if self.refreshControll.isRefreshing {
             if self.presenter.isAlienUser {
                 self.presenter.getSomeUser { [ weak self ] error in
-                    switch error {
-                    case .statusCodeError(let number):
-                        self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                    case .decodeFailed:
-                        self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-                    default:
-                        self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                        
-                        break
-                    }
+                    self?.callAlert(title: NSLocalizedString("Failed to refresh the feed", comment: ""), text: nil)
                 } didComplete: { [ weak self ] in
                     self?.refreshControll.endRefreshing()
                 }
             } else {
                 self.presenter.getUser { [ weak self ] error in
-                    switch error {
-                    case .statusCodeError(let number):
-                        self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                    case .decodeFailed:
-                        self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-                    default:
-                        self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                        
-                        break
-                    }
+                    self?.callAlert(title: NSLocalizedString("Failed to refresh the feed", comment: ""), text: nil)
                 } didComplete: { [ weak self ] in
                     self?.refreshControll.endRefreshing()
                 }
@@ -166,16 +130,7 @@ extension ProfileViewController: UITableViewDataSource {
             }
             
             self?.presenter.like(postID: id) { error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self?.presenter.save(post: post, user: user)
             }
@@ -186,16 +141,7 @@ extension ProfileViewController: UITableViewDataSource {
             }
             
             self?.presenter.dislike(postID: id) { error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self?.presenter.deletePost(post: post)
             }
@@ -255,31 +201,13 @@ extension ProfileViewController: UITableViewDelegate {
             self?.presenter.goToFindUser(userID: userID, mode: .subscribers)
         } subscribeAction: { [ weak self ] user in
             self?.presenter.subscribe(userID: user.id ?? UUID()) { error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self?.presenter.saveUser(user: user)
             }
         } unsubscribeAction: { [ weak self ] user in
             self?.presenter.unsubscribe(userID: user.id ?? UUID()) { error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self?.presenter.deleteUser(user: user)
             }

@@ -55,16 +55,7 @@ final class FeedViewController: UIViewController {
         super.viewDidLoad()
         
         self.presenter.getAllPosts { [ weak self ] error in
-            switch error {
-            case .statusCodeError(let number):
-                self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-            case .decodeFailed:
-                self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-            default:
-                self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                
-                break
-            }
+            self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
         }
     }
     
@@ -98,16 +89,7 @@ final class FeedViewController: UIViewController {
             self.presenter.getAllPosts { [ weak self ] error in
                 self?.refreshControll.endRefreshing()
                 
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to get data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to refresh the feed", comment: ""), text: nil)
             } didComplete: { [ weak self ] in
                 self?.refreshControll.endRefreshing()
             }
@@ -133,16 +115,7 @@ extension FeedViewController: UITableViewDataSource {
             }
             
             self?.presenter.like(postID: id) { error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self?.presenter.save(post: post, user: user)
             }
@@ -153,16 +126,7 @@ extension FeedViewController: UITableViewDataSource {
             }
             
             self?.presenter.dislike(postID: id) { error in
-                switch error {
-                case .statusCodeError(let number):
-                    self?.callAlert(title: "\(NSLocalizedString("Error", comment: "")) \(number ?? 500)", text: nil)
-                case .decodeFailed:
-                    self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
-                default:
-                    self?.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
-                    
-                    break
-                }
+                self?.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
             } didComplete: {
                 self?.presenter.deletePost(post: post)
             }

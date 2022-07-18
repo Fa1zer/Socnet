@@ -316,12 +316,10 @@ final class EditViewController: UIViewController {
             self.activityIndicatorView.isHidden = true
             
             switch error {
-            case .statusCodeError(let statusCode):
-                self.callAlert(title: NSLocalizedString("Error", comment: "") + String(statusCode ?? 500), text: nil)
             case .encodeFailed:
                 self.callAlert(title: NSLocalizedString("Error", comment: ""), text: NSLocalizedString("Incorrect data", comment: ""))
             default:
-                self.callAlert(title: NSLocalizedString("Error", comment: ""), text: nil)
+                self.callAlert(title: NSLocalizedString("Failed to send data", comment: ""), text: nil)
                 
                 break
             }

@@ -8,7 +8,7 @@
 import Foundation
 
 final class DataManager {
-        
+    
     private let userDefaultsManager = UserDefaultsManager()
     private let urlConstructor = URLConstructor.default
     private var userToken: String?
