@@ -1,4 +1,4 @@
-# VK App
+# Socnet
 
 ## Приложение соцсеть. Api приложния [VK Api](https://github.com/Fa1zer/vk-api).
 
